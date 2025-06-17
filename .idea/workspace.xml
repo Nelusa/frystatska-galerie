@@ -4,16 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e0ddca78-f362-4984-a9a0-c2fdd26e2e2d" name="Changes" comment="feat: initialize Sanity Content Studio with basic configuration and schema types">
+    <list default="true" id="e0ddca78-f362-4984-a9a0-c2fdd26e2e2d" name="Changes" comment="refactor: minor changes">
+      <change afterPath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/components.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/public/galerie-general.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/src/components/layout/SiteHeader.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/src/components/ui/badge.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/src/components/ui/breadcrumb.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/src/components/ui/button.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/src/components/ui/card.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/src/components/ui/navigation-menu.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/src/components/ui/sheet.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/src/lib/utils.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/tailwind.config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/next.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/next.config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/src/lib/sanity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/src/lib/sanity.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/studio/schemaTypes/artwork.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/studio/schemaTypes/artwork.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/studio/schemaTypes/ceramics.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/studio/schemaTypes/ceramics.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/studio/schemaTypes/gifts.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/studio/schemaTypes/gifts.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/studio/schemaTypes/glass.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/studio/schemaTypes/glass.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/src/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/src/app/globals.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/src/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/src/app/layout.tsx" afterDir="false" />
     </list>
     <list id="ba79b076-03e2-495d-94d4-ce4254279456" name="Stránky" comment="">
       <change afterPath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/src/app/about/page.tsx" afterDir="false" />
@@ -26,21 +32,6 @@
       <change afterPath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/src/app/gifts/page.tsx" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/src/app/glass/[slug]/page.tsx" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/src/app/glass/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/src/components/ui/breadcrumb.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/src/app/page.tsx" afterDir="false" />
-    </list>
-    <list id="b14e286c-2f4d-490c-a358-4f073d8fe02b" name="UI" comment="">
-      <change afterPath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/components.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/src/components/site-header.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/src/components/ui/badge.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/src/components/ui/button.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/src/components/ui/card.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/src/components/ui/navigation-menu.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/src/components/ui/sheet.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/src/lib/utils.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/tailwind.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/src/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/src/app/globals.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/src/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/src/app/layout.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/src/app/page.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -50,17 +41,6 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie" />
-  </component>
-  <component name="LineStatusTrackerManager">
-    <file path="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/src/app/page.tsx">
-      <ranges>
-        <range start1="0" end1="1" start2="0" end2="253" changelist="b14e286c-2f4d-490c-a358-4f073d8fe02b" />
-        <range start1="4" end1="26" start2="256" end2="279" changelist="b14e286c-2f4d-490c-a358-4f073d8fe02b" />
-        <range start1="27" end1="100" start2="280" end2="310" changelist="b14e286c-2f4d-490c-a358-4f073d8fe02b" />
-        <range start1="101" end1="102" start2="311" end2="312" changelist="b14e286c-2f4d-490c-a358-4f073d8fe02b" />
-        <range start1="103" end1="103" start2="313" end2="314" changelist="ba79b076-03e2-495d-94d4-ce4254279456" />
-      </ranges>
-    </file>
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
@@ -98,6 +78,8 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/public" />
+      <recent name="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/src/components/layout" />
       <recent name="$PROJECT_DIR$/../../../Důležité dokumenty/Side job/frystatska-galerie/src/app" />
     </key>
   </component>
@@ -139,14 +121,14 @@
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="e0ddca78-f362-4984-a9a0-c2fdd26e2e2d" name="Changes" comment="" />
-      <changelist id="b14e286c-2f4d-490c-a358-4f073d8fe02b" name="UI" comment="" />
+      <changelist id="" name="UI" comment="" />
       <changelist id="ba79b076-03e2-495d-94d4-ce4254279456" name="Stránky" comment="" />
       <created>1750005925408</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1750005925408</updated>
       <workItem from="1750005926701" duration="127000" />
-      <workItem from="1750006059199" duration="27182000" />
+      <workItem from="1750006059199" duration="29942000" />
     </task>
     <task id="LOCAL-00001" summary="feat: initialize Sanity Content Studio with basic configuration and schema types">
       <option name="closed" value="true" />
@@ -156,7 +138,15 @@
       <option name="project" value="LOCAL" />
       <updated>1750086897850</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="refactor: minor changes">
+      <option name="closed" value="true" />
+      <created>1750158681880</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1750158681880</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -180,6 +170,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="feat: initialize Sanity Content Studio with basic configuration and schema types" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: initialize Sanity Content Studio with basic configuration and schema types" />
+    <MESSAGE value="refactor: minor changes" />
+    <MESSAGE value="feat: add UI components, create layout and styling" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add UI components, create layout and styling" />
   </component>
 </project>

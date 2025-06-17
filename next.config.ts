@@ -11,7 +11,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "images.unsplash.com",
+        hostname: "unsplash.com",
         port: "",
         pathname: "/**",
       },
@@ -20,7 +20,6 @@ const nextConfig: NextConfig = {
   rewrites: async () => {
     return {
       beforeFiles: [
-        // České URL
         {
           source: '/darkove-predmety/:path*',
           destination: '/gifts/:path*'
