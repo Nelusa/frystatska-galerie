@@ -5,7 +5,7 @@ import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMe
 import { cn } from "@/lib/utils"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Button } from "@/components/ui/button"
-import { Menu, Palette, Wine, Gift, Users, Phone, Info } from "lucide-react"
+import { Menu, Palette, Wine, Gift, Phone, Info } from "lucide-react"
 import { useEffect, useState } from "react"
 
 const mainNavItems = [
@@ -60,7 +60,7 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
-        <Link href="/public" className="flex items-center space-x-2">
+        <Link href="/" className="flex items-center space-x-2">
           <span className="font-heading text-xl font-bold">Fryštátská Galerie</span>
         </Link>
 
@@ -123,7 +123,7 @@ export function SiteHeader() {
               </SheetTrigger>
               <SheetContent side="left" className="p-0 w-80">
                 <div className="p-6 border-b">
-                  <Link href="/public" className="flex items-center space-x-2">
+                  <Link href="/" className="flex items-center space-x-2">
                     <span className="font-heading text-xl font-bold">Fryštátská Galerie</span>
                   </Link>
                 </div>
