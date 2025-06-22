@@ -11,42 +11,42 @@ import { useEffect, useState } from "react"
 const mainNavItems = [
   {
     title: "Obrazy",
-    href: "/artworks",
+    href: "/obrazy",
     icon: Palette,
     description: "Originální obrazy od českých umělců",
     hasDropdown: true
   },
   {
     title: "Keramika",
-    href: "/ceramics",
+    href: "/keramika",
     icon: Wine,
     description: "Ručně vyráběná keramika a porcelán",
     hasDropdown: true
   },
   {
     title: "Sklo",
-    href: "/glass",
+    href: "/sklo",
     icon: Wine,
     description: "Tradiční české sklo a křišťál",
     hasDropdown: true
   },
   {
     title: "Dárkové předměty",
-    href: "/gifts",
+    href: "/darkove-predmety",
     icon: Gift,
     description: "Dárky pro každou příležitost",
     hasDropdown: true
   },
   {
     title: "O nás",
-    href: "/about",
+    href: "/o-nas",
     icon: Info,
     description: "Poznejte naši galerii",
     hasDropdown: false
   },
   {
     title: "Kontakt",
-    href: "/contact",
+    href: "/kontakt",
     icon: Phone,
     description: "Kontaktujte nás pro více informací",
     hasDropdown: false
