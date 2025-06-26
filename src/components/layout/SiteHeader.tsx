@@ -5,8 +5,9 @@ import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMe
 import { cn } from "@/lib/utils"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Button } from "@/components/ui/button"
-import { Menu, Palette, Wine, Gift, Phone, Info } from "lucide-react"
+import { Menu, Palette, Wine, Gift, Phone, Info, Heart } from "lucide-react"
 import { useEffect, useState } from "react"
+import { useFavorites } from "@/lib/favorites"
 
 const mainNavItems = [
   {
@@ -55,6 +56,7 @@ const mainNavItems = [
 
 export function SiteHeader() {
   const [mounted, setMounted] = useState(false)
+  const { favorites, isLoaded } = useFavorites()
   useEffect(() => setMounted(true), [])
 
   return (
@@ -112,6 +114,20 @@ export function SiteHeader() {
           </NavigationMenu>
         </nav>
 
+        {/* Desktop favorites button */}
+        <div className="hidden md:flex items-center gap-4">
+          <Link href="/favorites">
+            <Button variant="ghost" size="icon" className="relative">
+              <Heart className="h-5 w-5" />
+              {isLoaded && favorites.length > 0 && (
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                  {favorites.length > 99 ? '99+' : favorites.length}
+                </span>
+              )}
+            </Button>
+          </Link>
+        </div>
+
         {/* Mobile menu */}
         <div className="md:hidden">
           {mounted && (
@@ -143,6 +159,21 @@ export function SiteHeader() {
                       </div>
                     </Link>
                   ))}
+                  <Link
+                    href="/favorites"
+                    className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-accent transition-colors"
+                  >
+                    <Heart className="h-5 w-5 text-primary" />
+                    <div>
+                      <div className="font-medium">Oblíbené</div>
+                      <div className="text-sm text-muted-foreground">
+                        {isLoaded && favorites.length > 0 
+                          ? `${favorites.length} ${favorites.length === 1 ? 'produkt' : favorites.length < 5 ? 'produkty' : 'produktů'}`
+                          : 'Vaše oblíbené produkty'
+                        }
+                      </div>
+                    </div>
+                  </Link>
                 </nav>
                 <div className="p-4 border-t mt-auto">
                   <Button className="w-full" size="lg">
