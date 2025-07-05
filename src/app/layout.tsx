@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/layout/SiteHeader";
+import { ReactNode } from "react";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -18,11 +19,11 @@ export const metadata: Metadata = {
   description: "Galerie umění a dárkových předmětů ve Fryštátě",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+interface RootLayoutProps {
+  children: ReactNode;
+}
+
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="cs">
       <body

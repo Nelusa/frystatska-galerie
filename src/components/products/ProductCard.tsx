@@ -1,15 +1,16 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
+import { Badge } from "@/app/hooks/badge"
 import Image from "next/image"
 import Link from "next/link"
 import { Share2 } from "lucide-react"
 import { urlFor, formatPrice } from "@/lib/sanity"
 import { FavoriteButton } from "@/components/ui/favorite-button"
 import {cn} from "@/lib/utils";
+import type { AllProducts } from '@/lib/sanity'
 
 interface ProductCardProps {
-  item: any
+  item: AllProducts
   basePath: string
   variant?: 'featured' | 'grid'
 }

@@ -2,9 +2,9 @@
 
 import { Button } from "@/components/ui/button"
 import { Heart } from "lucide-react"
-import { useFavorites, FavoriteProduct } from "@/lib/favorites"
+import { useFavorites, FavoriteProduct } from "@/lib/useFavorites"
 import { cn } from "@/lib/utils"
-import { useState } from "react"
+import { useState, MouseEvent } from "react"
 
 interface FavoriteButtonProps {
   product: FavoriteProduct
@@ -26,7 +26,7 @@ export function FavoriteButton({
   const { toggleFavorite, isFavorite, isLoaded } = useFavorites()
   const [isAnimating, setIsAnimating] = useState(false)
 
-  const handleClick = (e: React.MouseEvent) => {
+  const handleClick = (e: MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
 

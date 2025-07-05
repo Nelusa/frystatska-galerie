@@ -1,6 +1,6 @@
 "use client"
 
-import { useFavorites } from "@/lib/favorites"
+import { useFavorites } from "@/lib/useFavorites"
 import { ProductCard } from "@/components/products/ProductCard"
 import { Button } from "@/components/ui/button"
 import { Heart, Trash2 } from "lucide-react"
@@ -92,6 +92,7 @@ export default function FavoritesPage() {
           </div>
         </div>
       ) : (
+          //TOOD (NL): Upravit typ
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {favorites.map((product) => (
             <ProductCard

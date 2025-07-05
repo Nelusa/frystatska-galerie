@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+import { Badge } from "@/app/hooks/badge"
 import Link from "next/link"
 import Image from "next/image"
 import { Palette, Cookie, Wine, Gift } from "lucide-react"
@@ -12,6 +12,7 @@ import {
   getCategoryName,
 } from "@/lib/sanity"
 import type { AllProducts } from "@/lib/sanity"
+import { ProductCard } from "@/components/products/ProductCard"
 
 const categories = [
   {
@@ -92,60 +93,18 @@ export default async function Home() {
                 </div>
 
                 <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                  {featuredArtworks.slice(0, 8).map((artwork: AllProducts) => (
-                      <Link key={artwork._id} href={`/${getCategoryName(artwork._type)}/${artwork.slug.current}`}
-                            className="group">
-                        <Card
-                            className="h-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border-border/50">
-                          <div className="aspect-square relative overflow-hidden">
-                            {artwork.image ? (
-                                <Image
-                                    src={urlFor(artwork.image).width(400).height(400).url()}
-                                    alt={artwork.title}
-                                    fill
-                                    className="object-cover transition-transform duration-300 group-hover:scale-105"
-                                />
-                            ) : (
-                                <div
-                                    className="w-full h-full bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
-                                  <div className="text-center text-muted-foreground">
-                                    <Palette className="h-12 w-12 mx-auto mb-2 opacity-50"/>
-                                    <p className="text-sm">{artwork.title}</p>
-                                  </div>
-                                </div>
-                            )}
-                            <div className="absolute top-3 left-3">
-                              <Badge variant="secondary" className="text-xs">
-                                {artwork.category === 'artworks' && 'Obraz'}
-                                {artwork.category === 'ceramics' && 'Keramika'}
-                                {artwork.category === 'glass' && 'Sklo'}
-                                {artwork.category === 'gifts' && 'Dárek'}
-                              </Badge>
-                            </div>
-                          </div>
-                          <CardHeader className="pb-2">
-                            <CardTitle className="text-lg font-heading line-clamp-1">{artwork.title}</CardTitle>
-                            <CardDescription className="text-sm text-muted-foreground">
-                              {artwork.artist}
-                            </CardDescription>
-                          </CardHeader>
-                          <CardContent className="pt-0">
-                            <div className="flex justify-between items-center">
-                              <div className="font-bold text-primary">{formatPrice(artwork.price)}</div>
-                              {artwork.subcategory && (
-                                  <Badge variant="outline" className="text-xs capitalize">
-                                    {artwork.subcategory}
-                                  </Badge>
-                              )}
-                            </div>
-                          </CardContent>
-                        </Card>
-                      </Link>
+                  {featuredArtworks.slice(0, 8).map((product: AllProducts) => (
+                    <ProductCard
+                      key={product._id}
+                      item={product}
+                      basePath={`/${product._type === 'artwork' ? 'artworks' : product._type === 'ceramics' ? 'ceramics' : product._type === 'glass' ? 'glass' : 'gifts'}`}
+                      variant="grid"
+                    />
                   ))}
                 </div>
 
                 <div className="text-center mt-8">
-                  <Link href="/artworks">
+                  <Link href="/all">
                     <Button variant="outline" size="lg">
                       Zobrazit všechna díla
                     </Button>
