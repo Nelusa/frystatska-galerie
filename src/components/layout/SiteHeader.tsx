@@ -7,7 +7,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Button } from "@/components/ui/button"
 import { Menu, Palette, Wine, Gift, Phone, Info, Heart } from "lucide-react"
 import { useEffect, useState } from "react"
-import { useFavorites } from "@/lib/favorites"
+import { useFavorites } from "@/lib/useFavorites"
 
 const mainNavItems = [
   {
@@ -167,7 +167,7 @@ export function SiteHeader() {
                     <div>
                       <div className="font-medium">Oblíbené</div>
                       <div className="text-sm text-muted-foreground">
-                        {isLoaded && favorites.length > 0 
+                        {isLoaded && favorites.length > 0
                           ? `${favorites.length} ${favorites.length === 1 ? 'produkt' : favorites.length < 5 ? 'produkty' : 'produktů'}`
                           : 'Vaše oblíbené produkty'
                         }

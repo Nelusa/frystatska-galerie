@@ -1,30 +1,29 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
+import { Badge } from "@/app/hooks/badge"
 import Image from "next/image"
 import Link from "next/link"
 import { Share2 } from "lucide-react"
-import { urlFor, formatPrice } from "@/lib/sanity"
+import { urlFor, formatPrice, SanityImage, AllProducts } from "@/lib/sanity"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
-import {ComponentType, Fragment} from "react"
+import {ComponentType, Fragment, SVGProps} from "react"
 import { FavoriteButton } from "@/components/ui/favorite-button"
 
-//TODO (NL): Upravit typy
 interface ProductDetailPageProps {
-  product: any
-  relatedProducts: any[]
+  product: AllProducts
+  relatedProducts: AllProducts[]
   breadcrumbItems: Array<{ label: string; href?: string }>
   productTypeConfig: {
     name: string
-    icon: ComponentType<any>
+    icon: ComponentType<SVGProps<SVGSVGElement>>
     colorScheme: string
     features?: Array<{
-      icon: ComponentType<any>
+      icon: ComponentType<SVGProps<SVGSVGElement>>
       title: string
       description: string
     }>
     detailFields?: Array<{
-      icon: ComponentType<any>
+      icon: ComponentType<SVGProps<SVGSVGElement>>
       label: string
       field: string
     }>
@@ -90,12 +89,6 @@ export function ProductDetailPage({
               </div>
 
               <div className="absolute top-4 right-4 flex gap-2">
-                <FavoriteButton
-                  product={product}
-                  variant="secondary"
-                  size="icon"
-                  className="h-10 w-10 backdrop-blur-sm bg-white/80"
-                />
                 <Button size="icon" variant="secondary" className="h-10 w-10 backdrop-blur-sm bg-white/80">
                   <Share2 className="h-4 w-4" />
                 </Button>
@@ -104,7 +97,7 @@ export function ProductDetailPage({
 
             {product.gallery && product.gallery.length > 0 && (
                 <div className="grid grid-cols-4 gap-2">
-                  {product.gallery.slice(0, 4).map((image: any, index: number) => (
+                  {product.gallery.slice(0, 4).map((image: SanityImage, index: number) => (
                       <div key={index} className="aspect-square relative overflow-hidden rounded border cursor-pointer hover:opacity-75 transition-opacity">
                         <Image
                             src={urlFor(image).width(150).height(150).url()}
@@ -167,7 +160,7 @@ export function ProductDetailPage({
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {detailFields.map((field, index) => {
                       const FieldIcon = field.icon
-                      const value = product[field.field]
+                      const value = ((product as unknown) as Record<string, unknown>)[field.field]
                       if (!value) return null
 
                       return (
@@ -175,7 +168,7 @@ export function ProductDetailPage({
                             <FieldIcon className={`h-5 w-5 text-${colorScheme}-600`} />
                             <div>
                               <p className="text-sm font-medium">{field.label}</p>
-                              <p className="text-sm text-muted-foreground">{value}</p>
+                              <p className="text-sm text-muted-foreground">{String(value)}</p>
                             </div>
                           </div>
                       )

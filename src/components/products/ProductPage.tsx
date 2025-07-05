@@ -2,9 +2,10 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
 import {ProductGrid} from "@/components/products/ProductGrid";
+import type { AllProducts } from '@/lib/sanity'
 
 interface ProductPageProps {
-  items: any[]
+  items: AllProducts[]
   title: string
   description: string
   basePath: string

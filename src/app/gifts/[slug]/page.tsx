@@ -1,4 +1,3 @@
-import React from 'react'
 import { getProductBySlug, getProductsByType } from "@/lib/sanity"
 import { productTypeConfigs } from "@/config/productConfigs"
 import { notFound } from "next/navigation"

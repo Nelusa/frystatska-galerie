@@ -1,7 +1,8 @@
 import {ProductCard} from "@/components/products/ProductCard";
+import type { AllProducts } from '@/lib/sanity'
 
 interface ProductGridProps {
-  items: any[]
+  items: AllProducts[]
   basePath: string
   title: string
   emptyMessage?: string
@@ -11,6 +12,13 @@ interface ProductGridProps {
 export function ProductGrid({ items, basePath, title, emptyMessage, showFeatured = true }: ProductGridProps) {
   const featuredItems = items.filter(item => item.featured)
   const hasFeatures = showFeatured && featuredItems.length > 0
+
+  const getProductPath = (product: AllProducts) => {
+    if (basePath === '/all') {
+      return `/${product._type === 'artwork' ? 'artworks' : product._type === 'ceramics' ? 'ceramics' : product._type === 'glass' ? 'glass' : 'gifts'}`
+    }
+    return basePath
+  }
 
   return (
       <>
@@ -22,7 +30,7 @@ export function ProductGrid({ items, basePath, title, emptyMessage, showFeatured
                     <ProductCard
                         key={item._id}
                         item={item}
-                        basePath={basePath}
+                        basePath={getProductPath(item)}
                         variant="featured"
                     />
                 ))}
@@ -45,7 +53,7 @@ export function ProductGrid({ items, basePath, title, emptyMessage, showFeatured
                     <ProductCard
                         key={item._id}
                         item={item}
-                        basePath={basePath}
+                        basePath={getProductPath(item)}
                         variant="grid"
                     />
                 ))}

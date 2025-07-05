@@ -1,25 +1,30 @@
 import { useState, useEffect } from 'react'
+import type { SanityImage } from '@/lib/sanity'
 
 export interface FavoriteProduct {
   _id: string
   title: string
   slug: { current: string }
-  image?: any
+  image?: SanityImage
   price: number
   artist?: string
   _type: string
 }
 
+const FAVORITES_UPDATED_EVENT = 'favorites-updated'
+
 export function useFavorites() {
   const [favorites, setFavorites] = useState<FavoriteProduct[]>([])
   const [isLoaded, setIsLoaded] = useState(false)
 
-  useEffect(() => {
+  // Načtení oblíbených z localStorage
+  const loadFavorites = () => {
     if (typeof window !== 'undefined') {
       const stored = localStorage.getItem('frystatska-galerie-favorites')
       if (stored) {
         try {
-          setFavorites(JSON.parse(stored))
+          const parsed = JSON.parse(stored)
+          setFavorites(parsed)
         } catch (error) {
           console.error('Error parsing favorites from localStorage:', error)
           setFavorites([])
@@ -27,24 +32,44 @@ export function useFavorites() {
       }
       setIsLoaded(true)
     }
-  }, [])
+  }
+
+  const saveFavorites = (newFavorites: FavoriteProduct[]) => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('frystatska-galerie-favorites', JSON.stringify(newFavorites))
+      window.dispatchEvent(new CustomEvent(FAVORITES_UPDATED_EVENT, {
+        detail: { favorites: newFavorites }
+      }))
+    }
+  }
 
   useEffect(() => {
-    if (isLoaded && typeof window !== 'undefined') {
-      localStorage.setItem('frystatska-galerie-favorites', JSON.stringify(favorites))
+    loadFavorites()
+
+    const handleFavoritesUpdate = (event: CustomEvent) => {
+      setFavorites(event.detail.favorites)
     }
-  }, [favorites, isLoaded])
+
+    window.addEventListener(FAVORITES_UPDATED_EVENT, handleFavoritesUpdate as EventListener)
+
+    return () => {
+      window.removeEventListener(FAVORITES_UPDATED_EVENT, handleFavoritesUpdate as EventListener)
+    }
+  }, [])
 
   const addToFavorites = (product: FavoriteProduct) => {
-    setFavorites(prev => {
-      const exists = prev.find(fav => fav._id === product._id)
-      if (exists) return prev
-      return [...prev, product]
-    })
+    const newFavorites = favorites.find(fav => fav._id === product._id)
+      ? favorites
+      : [...favorites, product]
+
+    setFavorites(newFavorites)
+    saveFavorites(newFavorites)
   }
 
   const removeFromFavorites = (productId: string) => {
-    setFavorites(prev => prev.filter(fav => fav._id !== productId))
+    const newFavorites = favorites.filter(fav => fav._id !== productId)
+    setFavorites(newFavorites)
+    saveFavorites(newFavorites)
   }
 
   const toggleFavorite = (product: FavoriteProduct) => {
@@ -62,6 +87,7 @@ export function useFavorites() {
 
   const clearFavorites = () => {
     setFavorites([])
+    saveFavorites([])
   }
 
   return {
