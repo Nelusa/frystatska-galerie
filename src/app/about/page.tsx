@@ -1,10 +1,18 @@
 import Image from "next/image";
-import { Heart, Palette, Users, Award, Clock, MapPin, Star, Sparkles } from "lucide-react";
+import { Heart, Palette, Users, Award, Clock, MapPin, Star, Sparkles, LucideIcon } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import {FeatureProps, StatisticProps} from "@/lib/types";
-import {Feature, Statistic} from "@/components/shared";
+import { Text } from "@/components/ui/text";
+import {Statistic, ItemWithIcon, IconCircle} from "@/components/shared";
+import {IconCircleSize} from "@/components/shared/IconCircle";
+import {StatisticProps} from "@/components/shared/Statistic";
 
-const aboutFeatures: FeatureProps[] = [
+interface AboutFeature {
+  icon: LucideIcon;
+  title: string;
+  description: string;
+}
+
+const aboutFeatures: AboutFeature[] = [
   {
     icon: Palette,
     title: "Umělecká kvalita",
@@ -59,12 +67,12 @@ export default function AboutPage() {
         <section className="relative py-10 md:py-20">
           <div className="container mx-auto px-4 max-w-6xl">
             <div className="text-center mb-16">
-              <h1 className="font-heading text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              <Text as="h1" variant="hero" className="mb-6 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                 O Fryštátské Galerii
-              </h1>
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+              </Text>
+              <Text variant="description" color="neutral" className="max-w-3xl mx-auto leading-relaxed">
                 Rodinná galerie v srdci Karviné, která přináší krásu umění a řemesla do každodenního života
-              </p>
+              </Text>
             </div>
 
             <div className="relative max-w-4xl mx-auto">
@@ -92,17 +100,17 @@ export default function AboutPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-6">
-                    <p className="text-muted-foreground leading-relaxed">
+                    <Text variant="body1" color="neutral" className="leading-relaxed">
                       Fryštátská Galerie vznikla z lásky k umění a touhy přinést krásu do srdce Karviné.
                       Jako rodinná galerie se zaměřujeme na prezentaci a prodej originálních děl od místních umělců.
-                    </p>
-                    <p className="text-muted-foreground leading-relaxed">
+                    </Text>
+                    <Text variant="body1" color="neutral" className="leading-relaxed">
                       Naším cílem je vytvořit místo, kde se setkává tradiční řemeslo s moderním uměním,
                       kde každý návštěvník může objevit něco jedinečného pro svůj domov nebo jako dárek pro své blízké.
-                    </p>
+                    </Text>
                     <div className="flex items-center space-x-2 text-primary">
                       <Heart className="w-5 h-5" />
-                      <span className="font-semibold">Vedoucí galerie: Monika Letochová</span>
+                      <Text variant="h5" color="primary" className="font-semibold">Vedoucí galerie: Monika Letochová</Text>
                     </div>
                   </div>
                 </CardContent>
@@ -115,7 +123,9 @@ export default function AboutPage() {
                 <CardContent>
                   <div className="space-y-6">
                     {aboutFeatures.map((feature, index) => (
-                        <Feature key={index} {...feature} />
+                        <ItemWithIcon key={index} icon={feature.icon} title={feature.title}>
+                          <Text variant="body1" color="neutral" className="leading-relaxed">{feature.description}</Text>
+                        </ItemWithIcon>
                     ))}
                   </div>
                 </CardContent>
@@ -128,12 +138,12 @@ export default function AboutPage() {
         <section className="py-10 md:py-20 bg-card/50">
           <div className="container mx-auto px-4 max-w-4xl">
             <div className="text-center mb-12">
-              <h2 className="font-heading text-3xl md:text-4xl font-bold mb-4 text-foreground">
+              <Text as="h2" variant="h2" className="mb-4">
                 Naše čísla
-              </h2>
-              <p className="text-muted-foreground text-lg">
+              </Text>
+              <Text variant="description" color="neutral">
                 Pár zajímavých čísel o naší galerii
-              </p>
+              </Text>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
               {statistics.map((stat, index) => (
@@ -147,23 +157,21 @@ export default function AboutPage() {
         <section className="py-10 md:py-20">
           <div className="container mx-auto px-4 max-w-6xl">
             <div className="text-center mb-12">
-              <h2 className="font-heading text-3xl md:text-4xl font-bold mb-4 text-foreground">
+              <Text as="h2" variant="h2" className="mb-4">
                 Co v naší galerii najdete
-              </h2>
-              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              </Text>
+              <Text variant="description" color="neutral">
                 Široký výběr uměleckých děl a řemeslných výrobků pro každý vkus
-              </p>
+              </Text>
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {offerings.map((offering, index) => (
                   <Card key={index} className="text-center">
                     <CardContent className="pt-6">
                       <div className="space-y-4">
-                        <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
-                          <offering.icon className="w-8 h-8 text-primary" />
-                        </div>
-                        <h3 className="font-semibold text-foreground">{offering.title}</h3>
-                        <p className="text-muted-foreground">{offering.description}</p>
+                        <IconCircle icon={offering.icon} size={IconCircleSize.Lg} className="mx-auto" />
+                        <Text variant="h4">{offering.title}</Text>
+                        <Text variant="body1" color="neutral">{offering.description}</Text>
                       </div>
                     </CardContent>
                   </Card>
@@ -177,23 +185,21 @@ export default function AboutPage() {
           <div className="container mx-auto px-4 max-w-4xl">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
-                <h2 className="font-heading text-3xl md:text-4xl font-bold mb-6 text-foreground">
+                <Text as="h2" variant="h2" className="mb-6">
                   Navštivte nás
-                </h2>
+                </Text>
                 <div className="space-y-4">
-                  <div className="flex items-center space-x-3">
-                    <MapPin className="w-5 h-5 text-primary" />
-                    <span className="text-muted-foreground">Fryštátská 57, 733 01 Karviná 1-Fryštát</span>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <Clock className="w-5 h-5 text-primary" />
-                    <span className="text-muted-foreground">Po-Pá: 9:00 - 17:00, So: 9:00 - 15:00</span>
-                  </div>
+                  <ItemWithIcon icon={MapPin} title="Adresa">
+                    <Text variant="body1" color="neutral">Fryštátská 57, 733 01 Karviná 1-Fryštát</Text>
+                  </ItemWithIcon>
+                  <ItemWithIcon icon={Clock} title="Otevírací doba">
+                    <Text variant="body1" color="neutral">Po-Pá: 9:00 - 17:00, So: 9:00 - 15:00</Text>
+                  </ItemWithIcon>
                 </div>
-                <p className="text-muted-foreground mt-6 leading-relaxed">
+                <Text variant="body1" color="neutral" className="mt-6 leading-relaxed">
                   Nacházíme se v srdci historického Fryštátu, jen pár kroků od Masarykova náměstí.
                   Přijďte si prohlédnout naši galerii a nechte se inspirovat krásou umění.
-                </p>
+                </Text>
               </div>
               <div className="aspect-square rounded-2xl overflow-hidden shadow-lg">
                 <Image

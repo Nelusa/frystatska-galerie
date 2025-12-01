@@ -1,30 +1,19 @@
-import { Mail, Phone, MapPin, Clock, Instagram, Facebook } from 'lucide-react';
+import {Mail, Phone, MapPin, Clock, Instagram, Facebook, LucideIcon} from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { ContactItemProps, TransportOptionProps, SocialMediaLink, ContactInfo } from "@/lib/types";
+import { Text } from "@/components/ui/text";
+import { ItemWithIcon } from "@/components/shared";
+import {ReactNode} from "react";
 
-const ContactItem = ({ icon: Icon, title, children }: ContactItemProps) => (
-    <div className="flex items-start space-x-4">
-      <div className="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-        <Icon className="w-6 h-6 text-primary" />
-      </div>
-      <div>
-        <h3 className="font-semibold text-foreground mb-1">{title}</h3>
-        {children}
-      </div>
-    </div>
-);
+export interface ContactInfo {
+  icon: LucideIcon;
+  title: string;
+  content: ReactNode;
+}
 
-const TransportOption = ({ emoji, title, description }: TransportOptionProps) => (
-    <div className="flex items-start space-x-3">
-      <div className="flex-shrink-0 w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
-        <span className="text-primary font-semibold text-sm">{emoji}</span>
-      </div>
-      <div>
-        <h3 className="font-semibold text-foreground">{title}</h3>
-        <p className="text-muted-foreground text-sm" dangerouslySetInnerHTML={{ __html: description }} />
-      </div>
-    </div>
-);
+export interface SocialMediaLink {
+  icon: LucideIcon;
+  href: string;
+}
 
 const contactData: ContactInfo[] = [
   {
@@ -32,8 +21,8 @@ const contactData: ContactInfo[] = [
     title: "Adresa",
     content: (
         <>
-          <p className="text-muted-foreground">Fryštátská 57</p>
-          <p className="text-muted-foreground">733 01 Karviná 1-Fryštát</p>
+          <Text variant="body1" color="neutral">Fryštátská 57</Text>
+          <Text variant="body1" color="neutral">733 01 Karviná 1-Fryštát</Text>
         </>
     )
   },
@@ -43,7 +32,7 @@ const contactData: ContactInfo[] = [
     content: (
         <a
             href="tel:+420605416666"
-            className="text-primary hover:text-primary/80 transition-colors text-lg font-medium"
+            className="text-primary hover:text-primary/80 transition-colors text-base font-medium"
         >
           +420 605 416 666
         </a>
@@ -55,7 +44,7 @@ const contactData: ContactInfo[] = [
     content: (
         <a
             href="mailto:info@frystatskagalerie.cz"
-            className="text-primary hover:text-primary/80 transition-colors text-lg font-medium"
+            className="text-primary hover:text-primary/80 transition-colors text-base font-medium"
         >
           info@frystatskagalerie.cz
         </a>
@@ -66,15 +55,15 @@ const contactData: ContactInfo[] = [
     title: "Otevírací doba",
     content: (
         <>
-          <p className="text-muted-foreground">Po-Pá: 9:00 - 17:00</p>
-          <p className="text-muted-foreground">So: 9:00 - 15:00</p>
-          <p className="text-muted-foreground">Ne: Zavřeno</p>
+          <Text variant="body1" color="neutral">Po-Pá: 9:00 - 17:00</Text>
+          <Text variant="body1" color="neutral">So: 9:00 - 15:00</Text>
+          <Text variant="body1" color="neutral">Ne: Zavřeno</Text>
         </>
     )
   }
 ];
 
-const transportOptions: TransportOptionProps[] = [
+const transportOptions = [
   {
     emoji: "🚶",
     title: "Pěšky",
@@ -83,7 +72,7 @@ const transportOptions: TransportOptionProps[] = [
   {
     emoji: "🚌",
     title: "MHD",
-    description: "Nejbližší zastávkou je <strong>Fryštátská</strong> (linky 511, 512, 515). Odtud to máte do galerie necelé 2 minuty chůze."
+    description: "Nejbližší zastávkou je <strong>Fryštát, Univerzita</strong> (linky 511, 512, 515). Odtud to máte do galerie necelé 2 minuty chůze."
   },
   {
     emoji: "🚗",
@@ -102,12 +91,12 @@ export default function ContactsPage() {
       <div className="min-h-screen bg-gradient-to-br from-background to-secondary/20 py-16">
         <div className="container mx-auto px-4 max-w-5xl">
           <div className="text-center mb-16">
-            <h1 className="font-heading text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+            <Text as="h1" variant="hero" className="mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
               Kontakt
-            </h1>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            </Text>
+            <Text variant="body1" color="neutral" className="max-w-2xl mx-auto">
               Jsme tu pro vás! Navštivte nás v srdci Fryštátu nebo nás kontaktujte telefonicky či emailem.
-            </p>
+            </Text>
           </div>
 
           <div className="grid md:grid-cols-2 gap-12">
@@ -119,9 +108,9 @@ export default function ContactsPage() {
                 <CardContent>
                   <div className="space-y-6">
                     {contactData.map((item, index) => (
-                        <ContactItem key={index} icon={item.icon} title={item.title}>
+                        <ItemWithIcon key={index} icon={item.icon} title={item.title}>
                           {item.content}
-                        </ContactItem>
+                        </ItemWithIcon>
                     ))}
                   </div>
                 </CardContent>
@@ -187,7 +176,10 @@ export default function ContactsPage() {
                 <CardContent>
                   <div className="space-y-4">
                     {transportOptions.map((option, index) => (
-                        <TransportOption key={index} {...option} />
+                        <ItemWithIcon key={index} emoji={option.emoji} title={option.title}>
+                          {/*TODO (NL): Odstranit dangerouslySetHTML*/}
+                          <Text variant="body2" color="neutral" dangerouslySetInnerHTML={{ __html: option.description }} />
+                        </ItemWithIcon>
                     ))}
                   </div>
                 </CardContent>
