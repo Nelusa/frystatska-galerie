@@ -1,5 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { Text } from "@/components/ui/text"
 import { Badge } from "@/app/hooks/badge"
 import Image from "next/image"
 import Link from "next/link"
@@ -8,6 +9,7 @@ import { urlFor, formatPrice, SanityImage, AllProducts } from "@/lib/sanity"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
 import {ComponentType, Fragment, SVGProps} from "react"
 import { FavoriteButton } from "@/components/ui/favorite-button"
+import { cn } from "@/lib/utils"
 
 interface ProductDetailPageProps {
   product: AllProducts
@@ -30,6 +32,41 @@ interface ProductDetailPageProps {
   }
 }
 
+const colorSchemeClasses = {
+  purple: {
+    bg50: "bg-purple-50",
+    bg100: "bg-purple-100",
+    text600: "text-purple-600",
+    border100: "border-purple-100",
+    gradientFrom: "from-purple-50",
+    gradientTo: "to-purple-100",
+  },
+  info: {
+    bg50: "bg-info-50",
+    bg100: "bg-info-100",
+    text600: "text-info-600",
+    border100: "border-info-100",
+    gradientFrom: "from-info-50",
+    gradientTo: "to-info-100",
+  },
+  success: {
+    bg50: "bg-success-50",
+    bg100: "bg-success-100",
+    text600: "text-success-600",
+    border100: "border-success-100",
+    gradientFrom: "from-success-50",
+    gradientTo: "to-success-100",
+  },
+  warning: {
+    bg50: "bg-warning-50",
+    bg100: "bg-warning-100",
+    text600: "text-warning-600",
+    border100: "border-warning-100",
+    gradientFrom: "from-warning-50",
+    gradientTo: "to-warning-100",
+  },
+} as const
+
 export function ProductDetailPage({
                                     product,
                                     relatedProducts,
@@ -37,6 +74,7 @@ export function ProductDetailPage({
                                     productTypeConfig
                                   }: ProductDetailPageProps) {
   const { name, icon: Icon, colorScheme, features = [], detailFields = [] } = productTypeConfig
+  const colors = colorSchemeClasses[colorScheme as keyof typeof colorSchemeClasses] || colorSchemeClasses.purple
 
   return (
       <div className="container px-4 md:px-6 py-8">
@@ -71,10 +109,10 @@ export function ProductDetailPage({
                       priority
                   />
               ) : (
-                  <div className={`w-full h-full bg-gradient-to-br from-${colorScheme}-50 to-${colorScheme}-100 flex items-center justify-center`}>
+                  <div className={cn("w-full h-full bg-gradient-to-br flex items-center justify-center", colors.gradientFrom, colors.gradientTo)}>
                     <div className="text-center text-muted-foreground">
                       <Icon className="h-24 w-24 mx-auto mb-4 opacity-50" />
-                      <p className="text-lg">{product.title}</p>
+                      <Text variant="h5">{product.title}</Text>
                     </div>
                   </div>
               )}
@@ -117,46 +155,46 @@ export function ProductDetailPage({
                 <Badge variant="outline" className="text-xs">
                   {product.subcategory || name}
                 </Badge>
-                <Icon className={`h-4 w-4 text-${colorScheme}-600`} />
+                <Icon className={cn("h-4 w-4", colors.text600)} />
               </div>
-              <h1 className="font-heading text-3xl font-bold tracking-tight mb-2">
+              <Text variant="h2" className="tracking-tight mb-2">
                 {product.title}
-              </h1>
+              </Text>
               {product.artist && (
-                  <p className="text-lg text-muted-foreground">
+                  <Text variant="h5" color="neutral">
                     {product.artist}
-                  </p>
+                  </Text>
               )}
             </div>
 
             <div className="space-y-2">
               <div className="flex items-center gap-4">
-                <div className={`text-3xl font-bold text-${colorScheme}-600`}>
+                <Text variant="h2" className="font-bold">
                   {formatPrice(product.price)}
-                </div>
+                </Text>
                 {product.originalPrice && product.originalPrice > product.price && (
-                    <div className="text-lg text-muted-foreground line-through">
+                    <Text variant="h5" color="neutral" className="line-through">
                       {formatPrice(product.originalPrice)}
-                    </div>
+                    </Text>
                 )}
               </div>
               {product.originalPrice && product.originalPrice > product.price && (
-                  <p className="text-sm text-green-600 font-medium">
+                  <Text variant="body2" color="success" className="font-medium">
                     Ušetříte {formatPrice(product.originalPrice - product.price)}
-                  </p>
+                  </Text>
               )}
             </div>
 
             <div>
-              <h3 className="font-semibold mb-2">Popis</h3>
-              <p className="text-muted-foreground leading-relaxed">
+              <Text variant="h5" className="mb-2">Popis</Text>
+              <Text variant="body1" color="neutral" className="leading-relaxed">
                 {product.description}
-              </p>
+              </Text>
             </div>
 
             {detailFields.length > 0 && (
                 <div className="space-y-4">
-                  <h3 className="font-semibold">Specifikace</h3>
+                  <Text variant="h5">Specifikace</Text>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {detailFields.map((field, index) => {
                       const FieldIcon = field.icon
@@ -164,11 +202,11 @@ export function ProductDetailPage({
                       if (!value) return null
 
                       return (
-                          <div key={index} className={`flex items-center gap-3 p-3 bg-${colorScheme}-50 rounded-lg border border-${colorScheme}-100`}>
-                            <FieldIcon className={`h-5 w-5 text-${colorScheme}-600`} />
+                          <div key={index} className={cn("flex items-center gap-3 p-3 rounded-lg border", colors.bg50, colors.border100)}>
+                            <FieldIcon className={cn("h-5 w-5", colors.text600)} />
                             <div>
-                              <p className="text-sm font-medium">{field.label}</p>
-                              <p className="text-sm text-muted-foreground">{String(value)}</p>
+                              <Text variant="label">{field.label}</Text>
+                              <Text variant="body2" color="neutral">{String(value)}</Text>
                             </div>
                           </div>
                       )
@@ -193,7 +231,7 @@ export function ProductDetailPage({
         {relatedProducts.length > 0 && (
             <div className="mt-16">
               <div className="flex items-center justify-between mb-8">
-                <h2 className="font-heading text-2xl font-bold">Podobné {name.toLowerCase()}</h2>
+                <Text variant="h3">Podobné {name.toLowerCase()}</Text>
               </div>
 
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
@@ -209,7 +247,7 @@ export function ProductDetailPage({
                                   className="object-cover transition-transform duration-300 group-hover:scale-105"
                               />
                           ) : (
-                              <div className={`w-full h-full bg-gradient-to-br from-${colorScheme}-50 to-${colorScheme}-100 flex items-center justify-center`}>
+                              <div className={cn("w-full h-full bg-gradient-to-br flex items-center justify-center", colors.gradientFrom, colors.gradientTo)}>
                                 <Icon className="h-8 w-8 text-muted-foreground opacity-50" />
                               </div>
                           )}
@@ -221,7 +259,7 @@ export function ProductDetailPage({
                           </CardDescription>
                         </CardHeader>
                         <CardContent className="pt-0">
-                          <div className={`font-bold text-${colorScheme}-600`}>
+                          <div className="font-bold">
                             {formatPrice(relatedProduct.price)}
                           </div>
                         </CardContent>
@@ -239,13 +277,13 @@ export function ProductDetailPage({
                   const FeatureIcon = feature.icon
                   return (
                       <div key={index} className="space-y-2">
-                        <div className={`w-12 h-12 bg-${colorScheme}-100 rounded-full flex items-center justify-center mx-auto`}>
-                          <FeatureIcon className={`h-6 w-6 text-${colorScheme}-600`} />
+                        <div className={cn("w-12 h-12 rounded-full flex items-center justify-center mx-auto", colors.bg100)}>
+                          <FeatureIcon className={cn("h-6 w-6", colors.text600)} />
                         </div>
-                        <h4 className="font-semibold">{feature.title}</h4>
-                        <p className="text-sm text-muted-foreground">
+                        <Text variant="h5">{feature.title}</Text>
+                        <Text variant="body2" color="neutral">
                           {feature.description}
-                        </p>
+                        </Text>
                       </div>
                   )
                 })}

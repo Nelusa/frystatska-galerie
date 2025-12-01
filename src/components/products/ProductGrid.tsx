@@ -1,4 +1,5 @@
 import {ProductCard} from "@/components/products/ProductCard";
+import { Text } from "@/components/ui/text";
 import type { AllProducts } from '@/lib/sanity'
 
 interface ProductGridProps {
@@ -24,7 +25,7 @@ export function ProductGrid({ items, basePath, title, emptyMessage, showFeatured
       <>
         {hasFeatures && (
             <div className="mb-16">
-              <h2 className="font-heading text-2xl font-bold mb-6">Doporučené výrobky</h2>
+              <Text variant="h3" className="mb-6">Doporučené výrobky</Text>
               <div className="grid gap-6 md:grid-cols-2">
                 {featuredItems.map((item) => (
                     <ProductCard
@@ -39,13 +40,13 @@ export function ProductGrid({ items, basePath, title, emptyMessage, showFeatured
         )}
 
         <div>
-          <h2 className="font-heading text-2xl font-bold mb-6">
+          <Text variant="h3" className="mb-6">
             {hasFeatures ? `Všechny ${title.toLowerCase()}` : title}
-          </h2>
+          </Text>
 
           {items.length === 0 ? (
               <div className="text-center py-12">
-                <p className="text-muted-foreground">{emptyMessage || `Zatím zde nejsou žádné ${title.toLowerCase()}.`}</p>
+                <Text variant="body1" color="neutral">{emptyMessage || `Zatím zde nejsou žádné ${title.toLowerCase()}.`}</Text>
               </div>
           ) : (
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">

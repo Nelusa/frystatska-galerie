@@ -2,8 +2,9 @@
 
 import Link from "next/link"
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "@/components/ui/navigation-menu"
+import { Text } from "@/components/ui/text"
 import { cn } from "@/lib/utils"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet"
 import { Button } from "@/components/ui/button"
 import { Menu, Palette, Wine, Gift, Phone, Info, Heart } from "lucide-react"
 import { useEffect, useState } from "react"
@@ -62,8 +63,9 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
+        {/*TODO (NL): Doplnit logo*/}
         <Link href="/" className="flex items-center space-x-2">
-          <span className="font-heading text-xl font-bold">Fryštátská Galerie</span>
+          <Text variant="h1">FG</Text>
         </Link>
 
         {/* Desktop menu */}
@@ -82,11 +84,11 @@ export function SiteHeader() {
                         <div className="w-[400px] p-4">
                           <div className="flex items-center gap-2 mb-2">
                             <item.icon className="h-5 w-5 text-primary" />
-                            <h3 className="font-semibold">{item.title}</h3>
+                            <Text  variant="h5">{item.title}</Text>
                           </div>
-                          <p className="text-sm text-muted-foreground mb-4">
+                          <Text variant="body2" color="neutral" className="mb-4">
                             {item.description}
-                          </p>
+                          </Text>
                           <Link href={item.href}>
                             <Button variant="outline" className="w-full">
                               Prohlédnout {item.title.toLowerCase()}
@@ -120,9 +122,9 @@ export function SiteHeader() {
             <Button variant="ghost" size="icon" className="relative">
               <Heart className="h-5 w-5" />
               {isLoaded && favorites.length > 0 && (
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                <Text variant="caption" className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full h-5 w-5 flex items-center justify-center">
                   {favorites.length > 99 ? '99+' : favorites.length}
-                </span>
+                </Text>
               )}
             </Button>
           </Link>
@@ -138,9 +140,10 @@ export function SiteHeader() {
                 </Button>
               </SheetTrigger>
               <SheetContent side="left" className="p-0 w-80">
+                <SheetTitle className="sr-only">Navigační menu</SheetTitle>
                 <div className="p-6 border-b">
                   <Link href="/" className="flex items-center space-x-2">
-                    <span className="font-heading text-xl font-bold">Fryštátská Galerie</span>
+                    <Text variant="h4">Fryštátská Galerie</Text>
                   </Link>
                 </div>
                 <nav className="flex flex-col gap-1 p-4">
@@ -148,30 +151,30 @@ export function SiteHeader() {
                     <Link
                       key={item.href}
                       href={item.href}
-                      className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-accent transition-colors"
+                      className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-muted transition-colors"
                     >
                       <item.icon className="h-5 w-5 text-primary" />
                       <div>
-                        <div className="font-medium">{item.title}</div>
-                        <div className="text-sm text-muted-foreground">
+                        <Text variant="label">{item.title}</Text>
+                        <Text variant="body2" color="neutral">
                           {item.description}
-                        </div>
+                        </Text>
                       </div>
                     </Link>
                   ))}
                   <Link
                     href="/favorites"
-                    className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-accent transition-colors"
+                    className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-muted/50 transition-colors"
                   >
                     <Heart className="h-5 w-5 text-primary" />
                     <div>
-                      <div className="font-medium">Oblíbené</div>
-                      <div className="text-sm text-muted-foreground">
+                      <Text variant="label">Oblíbené</Text>
+                      <Text variant="body2" color="neutral">
                         {isLoaded && favorites.length > 0
                           ? `${favorites.length} ${favorites.length === 1 ? 'produkt' : favorites.length < 5 ? 'produkty' : 'produktů'}`
                           : 'Vaše oblíbené produkty'
                         }
-                      </div>
+                      </Text>
                     </div>
                   </Link>
                 </nav>

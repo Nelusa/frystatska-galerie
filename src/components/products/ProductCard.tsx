@@ -1,5 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { Text } from "@/components/ui/text"
 import { Badge } from "@/app/hooks/badge"
 import Image from "next/image"
 import Link from "next/link"
@@ -21,7 +22,7 @@ export function ProductCard({ item, basePath, variant = 'grid' }: ProductCardPro
 
   return (
       <Card className="overflow-hidden group hover:shadow-lg transition-all duration-300">
-        <div className={`${aspectRatio} relative overflow-hidden`}>
+        <div className={cn(aspectRatio, "relative overflow-hidden")}>
           {item.image ? (
               <Image
                   src={urlFor(item.image).width(variant === 'featured' ? 600 : 400).height(variant === 'featured' ? 450 : 533).url()}
@@ -32,13 +33,13 @@ export function ProductCard({ item, basePath, variant = 'grid' }: ProductCardPro
           ) : (
               <div className="w-full h-full bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
                 <div className="text-center text-muted-foreground">
-                  <div className="text-sm mb-2">{variant === 'featured' ? `Obrázek: ${item.title}` : item.title}</div>
-                  <div className="text-xs text-muted-foreground/60">{item.dimensions}</div>
+                  <Text variant="body2" color="neutral" className="mb-2">{variant === 'featured' ? `Obrázek: ${item.title}` : item.title}</Text>
+                  <Text variant="caption" color="neutral">{item.dimensions}</Text>
                 </div>
               </div>
           )}
 
-          <div className={`absolute ${variant === 'featured' ? 'top-4 left-4' : 'top-3 left-3'} flex flex-col gap-1`}>
+          <div className={cn("absolute flex flex-col gap-1", variant === 'featured' ? 'top-4 left-4' : 'top-3 left-3')}>
             {item.featured && (
                 <Badge variant="secondary" className={variant === 'featured' ? '' : 'text-xs'}>
                   Doporučeno
@@ -51,8 +52,8 @@ export function ProductCard({ item, basePath, variant = 'grid' }: ProductCardPro
             )}
           </div>
 
-          <div className={`absolute ${variant === 'featured' ? 'top-4 right-4' : 'top-3 right-3'} opacity-0 group-hover:opacity-100 transition-opacity`}>
-            <div className={`flex ${variant === 'featured' ? 'gap-2' : 'gap-1'}`}>
+          <div className={cn("absolute opacity-0 group-hover:opacity-100 transition-opacity", variant === 'featured' ? 'top-4 right-4' : 'top-3 right-3')}>
+            <div className={cn("flex", variant === 'featured' ? 'gap-2' : 'gap-1')}>
               <FavoriteButton
                 product={item}
                 variant="secondary"
@@ -69,7 +70,7 @@ export function ProductCard({ item, basePath, variant = 'grid' }: ProductCardPro
         <CardHeader className={variant === 'featured' ? '' : 'pb-2'}>
           <div className={variant === 'featured' ? 'flex justify-between items-start' : ''}>
             <div>
-              <CardTitle className={`font-heading ${variant === 'featured' ? 'text-xl' : 'text-lg'} line-clamp-1`}>
+              <CardTitle className={cn("font-heading line-clamp-1", variant === 'featured' ? 'text-xl' : 'text-lg')}>
                 {item.title}
               </CardTitle>
               <CardDescription className="text-sm text-muted-foreground">
@@ -78,7 +79,7 @@ export function ProductCard({ item, basePath, variant = 'grid' }: ProductCardPro
             </div>
             {variant === 'featured' && (
                 <div className="text-right">
-                  <div className="font-bold text-primary text-lg">{formatPrice(item.price)}</div>
+                  <Text variant="h5" color="primary">{formatPrice(item.price)}</Text>
                   {item.subcategory && (
                       <Badge variant="outline" className="text-xs capitalize">{item.subcategory}</Badge>
                   )}
@@ -92,11 +93,11 @@ export function ProductCard({ item, basePath, variant = 'grid' }: ProductCardPro
               <>
                 <div className="flex justify-between items-center mb-3">
                   <div className="flex flex-col">
-                    <div className="font-bold text-primary">{formatPrice(item.price)}</div>
+                    <Text variant="h5" color="primary" className="font-bold">{formatPrice(item.price)}</Text>
                     {item.originalPrice && item.originalPrice > item.price && (
-                        <div className="text-xs text-muted-foreground line-through">
+                        <Text variant="caption" color="neutral" className="line-through">
                           {formatPrice(item.originalPrice)}
-                        </div>
+                        </Text>
                     )}
                   </div>
                   {item.subcategory && (
@@ -106,9 +107,9 @@ export function ProductCard({ item, basePath, variant = 'grid' }: ProductCardPro
               </>
           )}
 
-          <p className={`text-muted-foreground mb-${variant === 'featured' ? '4' : '3'} ${variant === 'featured' ? 'text-sm' : 'text-xs'} line-clamp-2`}>
+          <Text variant={variant === 'featured' ? 'body2' : 'caption'} color="neutral" className={cn("line-clamp-2", variant === 'featured' ? 'mb-4' : 'mb-3')}>
             {item.description}
-          </p>
+          </Text>
 
           {variant === 'featured' && (
               <div className="flex flex-wrap gap-2 text-xs text-muted-foreground mb-4">
@@ -119,12 +120,12 @@ export function ProductCard({ item, basePath, variant = 'grid' }: ProductCardPro
           )}
 
           {variant === 'grid' && (
-              <div className="text-xs text-muted-foreground mb-3">
+              <Text variant="caption" color="neutral" className="mb-3">
                 {[item.technique, item.dimensions, item.material].filter(Boolean).join(' • ')}
-              </div>
+              </Text>
           )}
 
-          <div className={`flex ${variant === 'featured' ? 'gap-2' : ''}`}>
+          <div className={cn("flex", variant === 'featured' && 'gap-2')}>
             <Link href={`${basePath}/${item.slug.current}`} className={variant === 'featured' ? 'flex-1' : 'w-full'}>
               <Button
                   className={variant === 'featured' ? 'w-full' : 'w-full'}
