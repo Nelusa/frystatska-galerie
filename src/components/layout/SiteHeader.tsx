@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "@/components/ui/navigation-menu"
+import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList } from "@/components/ui/navigation-menu"
 import { Text } from "@/components/ui/text"
 import { cn } from "@/lib/utils"
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet"
@@ -74,42 +74,17 @@ export function SiteHeader() {
             <NavigationMenuList>
               {mainNavItems.map((item) => (
                 <NavigationMenuItem key={item.href}>
-                  {item.hasDropdown ? (
-                    <>
-                      <NavigationMenuTrigger className="h-9">
-                        <item.icon className="h-4 w-4 mr-2" />
-                        {item.title}
-                      </NavigationMenuTrigger>
-                      <NavigationMenuContent>
-                        <div className="w-[400px] p-4">
-                          <div className="flex items-center gap-2 mb-2">
-                            <item.icon className="h-5 w-5 text-primary" />
-                            <Text  variant="h5">{item.title}</Text>
-                          </div>
-                          <Text variant="body2" color="neutral" className="mb-4">
-                            {item.description}
-                          </Text>
-                          <Link href={item.href}>
-                            <Button variant="outline" className="w-full">
-                              Prohlédnout {item.title.toLowerCase()}
-                            </Button>
-                          </Link>
-                        </div>
-                      </NavigationMenuContent>
-                    </>
-                  ) : (
-                    <NavigationMenuLink
-                      asChild
-                      className={cn(
-                        "group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
-                      )}
-                    >
-                      <Link href={item.href} className="flex items-center gap-2">
-                        <item.icon className="h-4 w-4" />
-                        {item.title}
-                      </Link>
-                    </NavigationMenuLink>
-                  )}
+                  <NavigationMenuLink
+                    asChild
+                    className={cn(
+                      "group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
+                    )}
+                  >
+                    <Link href={item.href} className="flex items-center gap-2">
+                      <item.icon className="h-4 w-4" />
+                      {item.title}
+                    </Link>
+                  </NavigationMenuLink>
                 </NavigationMenuItem>
               ))}
             </NavigationMenuList>

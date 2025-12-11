@@ -46,7 +46,13 @@ export function ProductGrid({ items, basePath, title, emptyMessage, showFeatured
 
           {items.length === 0 ? (
               <div className="text-center py-12">
-                <Text variant="body1" color="neutral">{emptyMessage || `Zatím zde nejsou žádné ${title.toLowerCase()}.`}</Text>
+                <Text variant="body1" color="neutral">
+                  {emptyMessage || (title === "Sklo" 
+                    ? "Zatím zde nejsou žádné skleněné výrobky." 
+                    : title === "Keramika"
+                    ? "Zatím zde nejsou žádné keramické výrobky."
+                    : `Zatím zde nejsou žádné ${title.toLowerCase()}.`)}
+                </Text>
               </div>
           ) : (
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
