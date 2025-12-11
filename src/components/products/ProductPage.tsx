@@ -52,7 +52,11 @@ export function ProductPage({
 
         <div className="text-center mt-16 py-12 bg-secondary/10 rounded-lg">
           <Text variant="h3" className="mb-4">
-            {ctaTitle || `Zajímá vás některý z ${title.toLowerCase()}?`}
+            {ctaTitle || (title === "Sklo" 
+              ? "Zajímá vás některý ze skleněných výrobků?" 
+              : title === "Keramika"
+              ? "Zajímá vás některý z keramických výrobků?"
+              : `Zajímá vás některý z ${title.toLowerCase()}?`)}
           </Text>
           <Text variant="body1" color="neutral" className="mb-6 max-w-[500px] mx-auto">
             {ctaDescription || `Kontaktujte nás pro více informací, možnost osobní prohlídky nebo rezervace ${title.toLowerCase().slice(0, -1)}u.`}

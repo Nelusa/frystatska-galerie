@@ -1,3 +1,5 @@
+"use client"
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Text } from "@/components/ui/text"
@@ -19,10 +21,12 @@ interface ProductCardProps {
 export function ProductCard({ item, basePath, variant = 'grid' }: ProductCardProps) {
   const aspectRatio = variant === 'featured' ? 'aspect-[4/3]' : 'aspect-[3/4]'
   const iconSize = 'h-6 w-6'
+  const detailUrl = `${basePath}/${item.slug.current}`
 
   return (
-      <Card className="overflow-hidden group hover:shadow-lg transition-all duration-300">
-        <div className={cn(aspectRatio, "relative overflow-hidden")}>
+      <Link href={detailUrl} className="block">
+        <Card className="overflow-hidden group hover:shadow-lg transition-all duration-300 cursor-pointer relative">
+          <div className={cn(aspectRatio, "relative overflow-hidden")}>
           {item.image ? (
               <Image
                   src={urlFor(item.image).width(variant === 'featured' ? 600 : 400).height(variant === 'featured' ? 450 : 533).url()}
@@ -52,7 +56,7 @@ export function ProductCard({ item, basePath, variant = 'grid' }: ProductCardPro
             )}
           </div>
 
-          <div className={cn("absolute opacity-0 group-hover:opacity-100 transition-opacity", variant === 'featured' ? 'top-4 right-4' : 'top-3 right-3')}>
+          <div className={cn("absolute opacity-0 group-hover:opacity-100 transition-opacity z-10 pointer-events-auto", variant === 'featured' ? 'top-4 right-4' : 'top-3 right-3')}>
             <div className={cn("flex", variant === 'featured' ? 'gap-2' : 'gap-1')}>
               <FavoriteButton
                 product={item}
@@ -60,7 +64,11 @@ export function ProductCard({ item, basePath, variant = 'grid' }: ProductCardPro
                 size="icon"
                 className={cn(iconSize, "p-1")}
               />
-              <Button size="icon" variant="secondary" className={cn(iconSize, "p-1")}>
+              <Button 
+                size="icon" 
+                variant="secondary" 
+                className={cn(iconSize, "p-1")}
+              >
                 <Share2 className={iconSize} />
               </Button>
             </div>
@@ -125,10 +133,10 @@ export function ProductCard({ item, basePath, variant = 'grid' }: ProductCardPro
               </Text>
           )}
 
-          <div className={cn("flex", variant === 'featured' && 'gap-2')}>
-            <Link href={`${basePath}/${item.slug.current}`} className={variant === 'featured' ? 'flex-1' : 'w-full'}>
+          <div className={cn("flex relative z-10", variant === 'featured' && 'gap-2')}>
+            <Link href={detailUrl} className={cn(variant === 'featured' ? 'flex-1' : 'w-full')} onClick={(e) => e.stopPropagation()}>
               <Button
-                  className={variant === 'featured' ? 'w-full' : 'w-full'}
+                  className={cn(variant === 'featured' ? 'w-full' : 'w-full', 'mt-4')}
                   size="sm"
                   disabled={!item.inStock}
               >
@@ -136,14 +144,15 @@ export function ProductCard({ item, basePath, variant = 'grid' }: ProductCardPro
               </Button>
             </Link>
             {variant === 'featured' && (
-                <Link href="/kontakt">
-                  <Button variant="outline" size="sm">
+                <Link href="/kontakt" onClick={(e) => e.stopPropagation()}>
+                  <Button variant="outline" size="sm" className="mt-4">
                     Kontakt
                   </Button>
                 </Link>
             )}
           </div>
         </CardContent>
-      </Card>
+        </Card>
+      </Link>
   )
 }
