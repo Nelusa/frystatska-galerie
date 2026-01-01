@@ -22,7 +22,7 @@ export default async function ArtworkDetailPage({ params }: Props) {
 
   const breadcrumbItems = [
     { label: "Domů", href: "/" },
-    { label: "Obrazy", href: "/obrazy" },
+    { label: "Obrazy", href: "/artworks" },
     { label: artwork.title }
   ]
 

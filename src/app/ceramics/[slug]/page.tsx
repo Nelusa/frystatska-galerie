@@ -22,7 +22,7 @@ export default async function CeramicDetailPage({ params }: Props) {
 
   const breadcrumbItems = [
     { label: "Domů", href: "/" },
-    { label: "Keramika", href: "/keramika" },
+    { label: "Keramika", href: "/ceramics" },
     { label: ceramic.title }
   ]
 

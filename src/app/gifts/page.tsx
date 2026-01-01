@@ -9,7 +9,7 @@ export default async function GiftsPage() {
           items={giftItems}
           title="Dárkové předměty"
           description="Originální dárkové předměty pro každou příležitost. Každý kus je jedinečný a přinese radost vašim blízkým."
-          basePath="/darkove-predmety"
+          basePath="/gifts"
           ctaTitle="Zajímá vás některý z dárků?"
           ctaDescription="Kontaktujte nás pro více informací, možnost osobní prohlídky nebo rezervace dárku."
       />

@@ -6,6 +6,7 @@ import { Text } from "@/components/ui/text"
 import { Badge } from "@/app/hooks/badge"
 import Image from "next/image"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { Share2 } from "lucide-react"
 import { urlFor, formatPrice } from "@/lib/sanity"
 import { FavoriteButton } from "@/components/ui/favorite-button"
@@ -19,6 +20,7 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ item, basePath, variant = 'grid' }: ProductCardProps) {
+  const router = useRouter()
   const aspectRatio = variant === 'featured' ? 'aspect-[4/3]' : 'aspect-[3/4]'
   const iconSize = 'h-6 w-6'
   const detailUrl = `${basePath}/${item.slug.current}`
@@ -134,7 +136,7 @@ export function ProductCard({ item, basePath, variant = 'grid' }: ProductCardPro
           )}
 
           <div className={cn("flex relative z-10", variant === 'featured' && 'gap-2')}>
-            <Link href={detailUrl} className={cn(variant === 'featured' ? 'flex-1' : 'w-full')} onClick={(e) => e.stopPropagation()}>
+            <div className={cn(variant === 'featured' ? 'flex-1' : 'w-full')} onClick={(e) => e.stopPropagation()}>
               <Button
                   className={cn(variant === 'featured' ? 'w-full' : 'w-full', 'mt-4')}
                   size="sm"
@@ -142,13 +144,20 @@ export function ProductCard({ item, basePath, variant = 'grid' }: ProductCardPro
               >
                 {item.inStock ? 'Zobrazit detail' : 'Prodáno'}
               </Button>
-            </Link>
+            </div>
             {variant === 'featured' && (
-                <Link href="/kontakt" onClick={(e) => e.stopPropagation()}>
-                  <Button variant="outline" size="sm" className="mt-4">
-                    Kontakt
-                  </Button>
-                </Link>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="mt-4"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    e.preventDefault()
+                    router.push('/contact')
+                  }}
+                >
+                  Kontakt
+                </Button>
             )}
           </div>
         </CardContent>

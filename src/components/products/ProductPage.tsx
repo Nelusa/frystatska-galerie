@@ -62,7 +62,7 @@ export function ProductPage({
             {ctaDescription || `Kontaktujte nás pro více informací, možnost osobní prohlídky nebo rezervace ${title.toLowerCase().slice(0, -1)}u.`}
           </Text>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/kontakt">
+            <Link href="/contact">
               <Button size="lg">
                 {ctaButtonText}
               </Button>

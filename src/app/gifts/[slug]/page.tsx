@@ -22,7 +22,7 @@ export default async function GiftDetailPage({ params }: Props) {
 
   const breadcrumbItems = [
     { label: "Domů", href: "/" },
-    { label: "Dárkové předměty", href: "/darkove-predmety" },
+    { label: "Dárkové předměty", href: "/gifts" },
     { label: giftItem.title }
   ]
 
