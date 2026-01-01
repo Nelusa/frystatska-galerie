@@ -22,7 +22,7 @@ export default async function GlassDetailPage({ params }: Props) {
 
   const breadcrumbItems = [
     { label: "Domů", href: "/" },
-    { label: "Sklo", href: "/sklo" },
+    { label: "Sklo", href: "/glass" },
     { label: glassItem.title }
   ]
 

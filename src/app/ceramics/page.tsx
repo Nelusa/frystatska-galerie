@@ -9,7 +9,7 @@ export default async function CeramicsPage() {
           items={ceramicsItems}
           title="Keramika"
           description="Ručně vyráběná keramika od místních umělců. Každý kus je originál a přinese do vašeho domova jedinečný design."
-          basePath="/keramika"
+          basePath="/ceramics"
       />
   )
 }

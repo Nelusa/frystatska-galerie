@@ -9,7 +9,7 @@ export default async function ArtworkPage() {
           items={paintings}
           title="Obrazy"
           description="Originální umělecká díla od místních umělců. Každý obraz je jedinečný a přinese do vašeho domova kus umělecké krásy."
-          basePath="/obrazy"
+          basePath="/artworks"
           ctaTitle="Zajímá vás některý z obrazů?"
           ctaDescription="Kontaktujte nás pro více informací, možnost osobní prohlídky nebo rezervace obrazu."
       />

@@ -13,42 +13,42 @@ import { useFavorites } from "@/lib/useFavorites"
 const mainNavItems = [
   {
     title: "Obrazy",
-    href: "/obrazy",
+    href: "/artworks",
     icon: Palette,
     description: "Originální obrazy od českých umělců",
     hasDropdown: true
   },
   {
     title: "Keramika",
-    href: "/keramika",
+    href: "/ceramics",
     icon: Wine,
     description: "Ručně vyráběná keramika a porcelán",
     hasDropdown: true
   },
   {
     title: "Sklo",
-    href: "/sklo",
+    href: "/glass",
     icon: Wine,
     description: "Tradiční české sklo a křišťál",
     hasDropdown: true
   },
   {
     title: "Dárkové předměty",
-    href: "/darkove-predmety",
+    href: "/gifts",
     icon: Gift,
     description: "Dárky pro každou příležitost",
     hasDropdown: true
   },
   {
     title: "O nás",
-    href: "/o-nas",
+    href: "/about",
     icon: Info,
     description: "Poznejte naši galerii",
     hasDropdown: false
   },
   {
     title: "Kontakt",
-    href: "/kontakt",
+    href: "/contact",
     icon: Phone,
     description: "Kontaktujte nás pro více informací",
     hasDropdown: false
