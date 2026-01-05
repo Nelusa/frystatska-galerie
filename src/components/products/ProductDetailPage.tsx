@@ -1,10 +1,8 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
 import { Text } from "@/components/ui/text"
 import { Badge } from "@/app/hooks/badge"
 import Image from "next/image"
 import Link from "next/link"
-import { Share2 } from "lucide-react"
 import { urlFor, formatPrice, SanityImage, AllProducts } from "@/lib/sanity"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
 import {ComponentType, Fragment, SVGProps} from "react"
@@ -99,17 +97,18 @@ export function ProductDetailPage({
 
         <div className="grid gap-8 lg:grid-cols-2">
           <div className="space-y-4">
-            <div className="aspect-square relative overflow-hidden rounded-lg border">
+            <div className="relative w-full min-h-[400px] max-h-[800px] flex items-center justify-center overflow-hidden rounded-lg border bg-muted/30">
               {product.image ? (
                   <Image
-                      src={urlFor(product.image).width(600).height(600).url()}
+                      src={urlFor(product.image).width(1200).url()}
                       alt={product.title}
-                      fill
-                      className="object-cover"
+                      width={1200}
+                      height={1200}
+                      className="object-contain w-full h-auto max-h-[800px]"
                       priority
                   />
               ) : (
-                  <div className={cn("w-full h-full bg-gradient-to-br flex items-center justify-center", colors.gradientFrom, colors.gradientTo)}>
+                  <div className={cn("w-full h-full min-h-[400px] bg-gradient-to-br flex items-center justify-center", colors.gradientFrom, colors.gradientTo)}>
                     <div className="text-center text-muted-foreground">
                       <Icon className="h-24 w-24 mx-auto mb-4 opacity-50" />
                       <Text variant="h5">{product.title}</Text>
@@ -125,23 +124,18 @@ export function ProductDetailPage({
                     <Badge variant="destructive">Prodáno</Badge>
                 )}
               </div>
-
-              <div className="absolute top-4 right-4 flex gap-2">
-                <Button size="icon" variant="secondary" className="h-10 w-10 backdrop-blur-sm bg-white/80">
-                  <Share2 className="h-4 w-4" />
-                </Button>
-              </div>
             </div>
 
             {product.gallery && product.gallery.length > 0 && (
                 <div className="grid grid-cols-4 gap-2">
                   {product.gallery.slice(0, 4).map((image: SanityImage, index: number) => (
-                      <div key={index} className="aspect-square relative overflow-hidden rounded border cursor-pointer hover:opacity-75 transition-opacity">
+                      <div key={index} className="relative w-full min-h-[100px] flex items-center justify-center overflow-hidden rounded border cursor-pointer hover:opacity-75 transition-opacity bg-muted/30">
                         <Image
-                            src={urlFor(image).width(150).height(150).url()}
+                            src={urlFor(image).width(300).url()}
                             alt={`${product.title} - detail ${index + 1}`}
-                            fill
-                            className="object-cover"
+                            width={300}
+                            height={300}
+                            className="object-contain w-full h-auto"
                         />
                       </div>
                   ))}

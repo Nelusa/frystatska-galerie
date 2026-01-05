@@ -63,11 +63,10 @@ const offerings = [
 export default function AboutPage() {
   return (
       <div className="min-h-screen bg-gradient-to-br from-background to-secondary/20">
-        {/* Hero Section */}
         <section className="relative py-10 md:py-20">
           <div className="container mx-auto px-4 max-w-6xl">
             <div className="text-center mb-16">
-              <Text as="h1" variant="hero" className="mb-6 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              <Text as="h1" variant="hero" className="mb-4 tracking-tighter">
                 O Fryštátské Galerii
               </Text>
               <Text variant="description" color="neutral" className="max-w-3xl mx-auto leading-relaxed">
@@ -80,8 +79,8 @@ export default function AboutPage() {
                 <Image
                     width={800}
                     height={450}
-                    src="/galerie-general.jpg"
-                    alt="Fryštátská Galerie - interiér"
+                    src="/gallery/gallery-1.jpg"
+                    alt="Fryštátská Galerie - interiér s obrazy a keramikou"
                     className="w-full h-full object-cover"
                     priority
                 />
@@ -90,7 +89,6 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Main Content */}
         <section className="py-10 md:py-20">
           <div className="container mx-auto px-4 max-w-6xl">
             <div className="grid lg:grid-cols-2 gap-12">
@@ -134,7 +132,6 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Statistics */}
         <section className="py-10 md:py-20 bg-card/50">
           <div className="container mx-auto px-4 max-w-4xl">
             <div className="text-center mb-12">
@@ -153,7 +150,6 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Offerings */}
         <section className="py-10 md:py-20">
           <div className="container mx-auto px-4 max-w-6xl">
             <div className="text-center mb-12">
@@ -180,7 +176,6 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Location */}
         <section className="py-10 md:py-20 bg-card/50">
           <div className="container mx-auto px-4 max-w-4xl">
             <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -193,7 +188,7 @@ export default function AboutPage() {
                     <Text variant="body1" color="neutral">Fryštátská 57, 733 01 Karviná 1-Fryštát</Text>
                   </ItemWithIcon>
                   <ItemWithIcon icon={Clock} title="Otevírací doba">
-                    <Text variant="body1" color="neutral">Po-Pá: 9:00 - 17:00, So: 9:00 - 15:00</Text>
+                    <Text variant="body1" color="neutral">Po-Pá: 9:30 - 16:30</Text>
                   </ItemWithIcon>
                 </div>
                 <Text variant="body1" color="neutral" className="mt-6 leading-relaxed">
@@ -205,8 +200,8 @@ export default function AboutPage() {
                 <Image
                     width={400}
                     height={400}
-                    src="/galerie-general.jpg"
-                    alt="Fryštátská Galerie - exteriér"
+                    src="/gallery/gallery-2.jpg"
+                    alt="Fryštátská Galerie - výstavní prostory"
                     className="w-full h-full object-cover"
                 />
               </div>

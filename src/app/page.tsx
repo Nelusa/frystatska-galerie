@@ -7,7 +7,6 @@ import { Palette, Cookie, Wine, Gift } from "lucide-react"
 import {
   getFeaturedArtworks,
   getHomepageContent,
-  urlFor,
 } from "@/lib/sanity"
 import type { AllProducts } from "@/lib/sanity"
 import { ProductCard } from "@/components/products/ProductCard"
@@ -55,7 +54,7 @@ export default async function Home() {
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center space-y-4 text-center">
               <div className="space-y-2">
-                <Text as="h1" variant="hero" className="tracking-tighter">
+                <Text as="h1" variant="hero" className="mb-6 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                   {homepageContent?.hero?.title || "Fryštátská Galerie"}
                 </Text>
                 <Text variant="description" color="neutral" className="mx-auto max-w-[700px]">
@@ -119,7 +118,7 @@ export default async function Home() {
                 Naše kolekce
               </Text>
               <Text variant="description" color="neutral" className="max-w-[600px] mx-auto">
-                Každá kategorie představuje pečlivě vybrané umělecké díla a řemeslné výrobky
+                Každá kategorie představuje pečlivě vybraná umělecká díla a řemeslné výrobky
               </Text>
             </div>
 
@@ -170,22 +169,15 @@ export default async function Home() {
                 </div>
               </div>
               <div className="lg:order-first">
-                <div
-                    className="aspect-square rounded-lg bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
-                  {homepageContent?.aboutSection?.image ? (
-                      <Image
-                          src={urlFor(homepageContent.aboutSection.image).width(600).height(600).url()}
-                          alt="O galerii"
-                          width={600}
-                          height={600}
-                          className="rounded-lg object-cover"
-                      />
-                  ) : (
-                      <div className="text-center text-muted-foreground">
-                        <Palette className="h-24 w-24 mx-auto mb-4 opacity-50"/>
-                        <Text variant="body2" color="neutral">Zde bude obrázek galerie</Text>
-                      </div>
-                  )}
+                <div className="aspect-square rounded-lg overflow-hidden shadow-lg">
+                  <Image
+                      src="/gallery/gallery-3.jpg"
+                      alt="Fryštátská Galerie - interiér s obrazy"
+                      width={600}
+                      height={600}
+                      className="w-full h-full object-cover"
+                      priority
+                  />
                 </div>
               </div>
             </div>

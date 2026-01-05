@@ -40,7 +40,7 @@ const contactData: ContactInfo[] = [
   },
   {
     icon: Mail,
-    title: "Email",
+    title: "E-mail",
     content: (
         <a
             href="mailto:info@frystatskagalerie.cz"
@@ -55,8 +55,8 @@ const contactData: ContactInfo[] = [
     title: "Otevírací doba",
     content: (
         <>
-          <Text variant="body1" color="neutral">Po-Pá: 9:00 - 17:00</Text>
-          <Text variant="body1" color="neutral">So: 9:00 - 15:00</Text>
+          <Text variant="body1" color="neutral">Po-Pá: 9:30 - 16:30</Text>
+          <Text variant="body1" color="neutral">So: Zavřeno</Text>
           <Text variant="body1" color="neutral">Ne: Zavřeno</Text>
         </>
     )
@@ -72,7 +72,7 @@ const transportOptions = [
   {
     emoji: "🚌",
     title: "MHD",
-    description: "Nejbližší zastávkou je <strong>Fryštát, Univerzita</strong> (linky 511, 512, 515). Odtud to máte do galerie necelé 2 minuty chůze."
+    description: "Nejbližší zastávkou je <strong>Fryštát - Univerzita</strong> (linky 511, 512, 515). Odtud to máte do galerie necelé 2 minuty chůze."
   },
   {
     emoji: "🚗",
@@ -91,11 +91,11 @@ export default function ContactsPage() {
       <div className="min-h-screen bg-gradient-to-br from-background to-secondary/20 py-16">
         <div className="container mx-auto px-4 max-w-5xl">
           <div className="text-center mb-16">
-            <Text as="h1" variant="hero" className="mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+            <Text as="h1" variant="hero" className="mb-4 tracking-tighter">
               Kontakt
             </Text>
             <Text variant="body1" color="neutral" className="max-w-2xl mx-auto">
-              Jsme tu pro vás! Navštivte nás v srdci Fryštátu nebo nás kontaktujte telefonicky či emailem.
+              Jsme tu pro vás! Navštivte nás v srdci Fryštátu nebo nás kontaktujte telefonicky či e-mailem.
             </Text>
           </div>
 

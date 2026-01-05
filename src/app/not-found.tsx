@@ -7,19 +7,18 @@ export default function NotFound() {
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-16">
       <div className="max-w-2xl w-full text-center space-y-8">
-        {/* 404 Number */}
         <div className="space-y-6">
           <div className="flex flex-col items-center space-y-2">
             <Search className="h-16 w-16 md:h-20 md:w-20 text-primary/40" />
-            <Text 
-              as="h1" 
-              variant="hero" 
+            <Text
+              as="h1"
+              variant="hero"
               className="text-8xl md:text-[10rem] font-bold text-primary/20 select-none"
             >
               404
             </Text>
           </div>
-          
+
           <div className="space-y-2">
             <Text as="h2" variant="h2" className="text-3xl md:text-4xl font-bold">
               Stránka nenalezena
@@ -30,7 +29,6 @@ export default function NotFound() {
           </div>
         </div>
 
-        {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
           <Button asChild size="lg" className="gap-2">
             <Link href="/">
@@ -46,42 +44,41 @@ export default function NotFound() {
           </Button>
         </div>
 
-        {/* Quick Links */}
         <div className="pt-8 border-t">
           <Text variant="body2" color="neutral" className="mb-4">
             Možná hledáte:
           </Text>
           <div className="flex flex-wrap justify-center items-center gap-4">
-            <Link 
-              href="/artworks" 
+            <Link
+              href="/artworks"
               className="text-primary hover:text-primary/80 transition-colors text-sm font-medium"
             >
               Obrazy
             </Link>
             <span className="text-muted-foreground text-sm">•</span>
-            <Link 
-              href="/ceramics" 
+            <Link
+              href="/ceramics"
               className="text-primary hover:text-primary/80 transition-colors text-sm font-medium"
             >
               Keramika
             </Link>
             <span className="text-muted-foreground text-sm">•</span>
-            <Link 
-              href="/glass" 
+            <Link
+              href="/glass"
               className="text-primary hover:text-primary/80 transition-colors text-sm font-medium"
             >
               Sklo
             </Link>
             <span className="text-muted-foreground text-sm">•</span>
-            <Link 
-              href="/gifts" 
+            <Link
+              href="/gifts"
               className="text-primary hover:text-primary/80 transition-colors text-sm font-medium"
             >
               Dárkové předměty
             </Link>
             <span className="text-muted-foreground text-sm">•</span>
-            <Link 
-              href="/contact" 
+            <Link
+              href="/contact"
               className="text-primary hover:text-primary/80 transition-colors text-sm font-medium"
             >
               Kontakt
@@ -92,3 +89,5 @@ export default function NotFound() {
     </div>
   )
 }
+
+

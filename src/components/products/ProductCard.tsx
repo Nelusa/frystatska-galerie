@@ -7,7 +7,6 @@ import { Badge } from "@/app/hooks/badge"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { Share2 } from "lucide-react"
 import { urlFor, formatPrice } from "@/lib/sanity"
 import { FavoriteButton } from "@/components/ui/favorite-button"
 import {cn} from "@/lib/utils";
@@ -28,13 +27,14 @@ export function ProductCard({ item, basePath, variant = 'grid' }: ProductCardPro
   return (
       <Link href={detailUrl} className="block">
         <Card className="overflow-hidden group hover:shadow-lg transition-all duration-300 cursor-pointer relative">
-          <div className={cn(aspectRatio, "relative overflow-hidden")}>
+          <div className={cn(aspectRatio, "relative overflow-hidden bg-muted/30 flex items-center justify-center")}>
           {item.image ? (
               <Image
-                  src={urlFor(item.image).width(variant === 'featured' ? 600 : 400).height(variant === 'featured' ? 450 : 533).url()}
+                  src={urlFor(item.image).width(variant === 'featured' ? 800 : 600).url()}
                   alt={item.title}
-                  fill
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  width={variant === 'featured' ? 800 : 600}
+                  height={variant === 'featured' ? 600 : 800}
+                  className="object-contain w-full h-full transition-transform duration-300 group-hover:scale-105"
               />
           ) : (
               <div className="w-full h-full bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
@@ -59,21 +59,12 @@ export function ProductCard({ item, basePath, variant = 'grid' }: ProductCardPro
           </div>
 
           <div className={cn("absolute opacity-0 group-hover:opacity-100 transition-opacity z-10 pointer-events-auto", variant === 'featured' ? 'top-4 right-4' : 'top-3 right-3')}>
-            <div className={cn("flex", variant === 'featured' ? 'gap-2' : 'gap-1')}>
-              <FavoriteButton
-                product={item}
-                variant="secondary"
-                size="icon"
-                className={cn(iconSize, "p-1")}
-              />
-              <Button 
-                size="icon" 
-                variant="secondary" 
-                className={cn(iconSize, "p-1")}
-              >
-                <Share2 className={iconSize} />
-              </Button>
-            </div>
+            <FavoriteButton
+              product={item}
+              variant="secondary"
+              size="icon"
+              className={cn(iconSize, "p-1")}
+            />
           </div>
         </div>
 

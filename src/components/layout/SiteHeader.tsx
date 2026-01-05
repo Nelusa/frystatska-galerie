@@ -6,7 +6,7 @@ import { Text } from "@/components/ui/text"
 import { cn } from "@/lib/utils"
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet"
 import { Button } from "@/components/ui/button"
-import { Menu, Palette, Wine, Gift, Phone, Info, Heart } from "lucide-react"
+import { Menu, Palette, Wine, Gift, Phone, Info, Heart, Images } from "lucide-react"
 import { useEffect, useState } from "react"
 import { useFavorites } from "@/lib/useFavorites"
 
@@ -44,6 +44,13 @@ const mainNavItems = [
     href: "/about",
     icon: Info,
     description: "Poznejte naši galerii",
+    hasDropdown: false
+  },
+  {
+    title: "Fotky",
+    href: "/photos",
+    icon: Images,
+    description: "Fotky z naší galerie",
     hasDropdown: false
   },
   {
