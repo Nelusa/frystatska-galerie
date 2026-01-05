@@ -69,7 +69,7 @@ export default function FavoritesPage() {
           <Button
             variant="outline"
             onClick={clearFavorites}
-            className="text-destructive hover:text-destructive"
+            className="text-destructive hover:text-destructive transition-all duration-300"
           >
             <Trash2 className="h-4 w-4 mr-2" />
             Vymazat vše

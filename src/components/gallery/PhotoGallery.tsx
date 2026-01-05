@@ -61,7 +61,7 @@ export function PhotoGallery({ images, columns = 3 }: PhotoGalleryProps) {
           <Button
             variant="ghost"
             size="icon"
-            className="absolute top-4 right-4 text-white hover:bg-white/20"
+            className="absolute top-4 right-4 text-white hover:bg-white/20 transition-all duration-300"
             onClick={(e) => {
               e.stopPropagation()
               setSelectedImage(null)
@@ -88,7 +88,7 @@ export function PhotoGallery({ images, columns = 3 }: PhotoGalleryProps) {
               <Button
                 variant="ghost"
                 size="icon"
-                className="absolute left-4 text-white hover:bg-white/20"
+                className="absolute left-4 text-white hover:bg-white/20 transition-all duration-300"
                 onClick={(e) => {
                   e.stopPropagation()
                   setSelectedImage(selectedImage > 0 ? selectedImage - 1 : images.length - 1)
@@ -99,7 +99,7 @@ export function PhotoGallery({ images, columns = 3 }: PhotoGalleryProps) {
               <Button
                 variant="ghost"
                 size="icon"
-                className="absolute right-4 text-white hover:bg-white/20"
+                className="absolute right-4 text-white hover:bg-white/20 transition-all duration-300"
                 onClick={(e) => {
                   e.stopPropagation()
                   setSelectedImage(selectedImage < images.length - 1 ? selectedImage + 1 : 0)

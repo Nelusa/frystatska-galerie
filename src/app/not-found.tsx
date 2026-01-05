@@ -51,35 +51,35 @@ export default function NotFound() {
           <div className="flex flex-wrap justify-center items-center gap-4">
             <Link
               href="/artworks"
-              className="text-primary hover:text-primary/80 transition-colors text-sm font-medium"
+              className="text-primary hover:text-primary/80 transition-all duration-300 text-sm font-medium"
             >
               Obrazy
             </Link>
             <span className="text-muted-foreground text-sm">•</span>
             <Link
               href="/ceramics"
-              className="text-primary hover:text-primary/80 transition-colors text-sm font-medium"
+              className="text-primary hover:text-primary/80 transition-all duration-300 text-sm font-medium"
             >
               Keramika
             </Link>
             <span className="text-muted-foreground text-sm">•</span>
             <Link
               href="/glass"
-              className="text-primary hover:text-primary/80 transition-colors text-sm font-medium"
+              className="text-primary hover:text-primary/80 transition-all duration-300 text-sm font-medium"
             >
               Sklo
             </Link>
             <span className="text-muted-foreground text-sm">•</span>
             <Link
               href="/gifts"
-              className="text-primary hover:text-primary/80 transition-colors text-sm font-medium"
+              className="text-primary hover:text-primary/80 transition-all duration-300 text-sm font-medium"
             >
               Dárkové předměty
             </Link>
             <span className="text-muted-foreground text-sm">•</span>
             <Link
               href="/contact"
-              className="text-primary hover:text-primary/80 transition-colors text-sm font-medium"
+              className="text-primary hover:text-primary/80 transition-all duration-300 text-sm font-medium"
             >
               Kontakt
             </Link>
