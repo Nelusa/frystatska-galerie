@@ -98,7 +98,7 @@ export function ProductCard({ item, basePath, variant = "grid" }: ProductCardPro
                   {item.subcategory && (
                       <Badge
                         variant="outline"
-                        className="text-xs capitalize">{item.subcategory}</Badge>
+                        className="text-xs lowercase">{item.subcategory}</Badge>
                   )}
                 </div>
             )}
@@ -126,14 +126,14 @@ export function ProductCard({ item, basePath, variant = "grid" }: ProductCardPro
                   {item.subcategory && (
                       <Badge
                         variant="outline"
-                        className="text-xs capitalize">{item.subcategory}</Badge>
+                        className="text-xs lowercase">{item.subcategory}</Badge>
                   )}
                 </div>
               </>
           )}
 
           <Text
-            variant={variant === "featured" ? "body2" : "caption"}
+            variant="body2"
             color="neutral"
             className={cn("line-clamp-2", variant === "featured" ? "mb-4" : "mb-3")}>
             {item.description}
@@ -169,9 +169,9 @@ export function ProductCard({ item, basePath, variant = "grid" }: ProductCardPro
               </Button>
             </div>
             {variant === "featured" && (
-                <Button 
-                  variant="outline" 
-                  size="sm" 
+                <Button
+                  variant="outline"
+                  size="sm"
                   className="mt-4"
                   onClick={(e) => {
                     e.stopPropagation()
