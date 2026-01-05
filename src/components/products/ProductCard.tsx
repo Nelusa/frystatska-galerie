@@ -61,9 +61,9 @@ export function ProductCard({ item, basePath, variant = 'grid' }: ProductCardPro
           <div className={cn("absolute opacity-0 group-hover:opacity-100 transition-opacity z-10 pointer-events-auto", variant === 'featured' ? 'top-4 right-4' : 'top-3 right-3')}>
             <FavoriteButton
               product={item}
-              variant="secondary"
+              variant="default"
               size="icon"
-              className={cn(iconSize, "p-1")}
+              className={cn(iconSize, "p-1 bg-purple-100 hover:bg-purple-200 text-purple-800 border-purple-200 transition-all duration-300")}
             />
           </div>
         </div>

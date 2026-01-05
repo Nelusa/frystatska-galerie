@@ -32,7 +32,7 @@ const contactData: ContactInfo[] = [
     content: (
         <a
             href="tel:+420605416666"
-            className="text-primary hover:text-primary/80 transition-colors text-base font-medium"
+            className="text-primary hover:text-primary/80 transition-all duration-300 text-base font-medium"
         >
           +420 605 416 666
         </a>
@@ -44,7 +44,7 @@ const contactData: ContactInfo[] = [
     content: (
         <a
             href="mailto:info@frystatskagalerie.cz"
-            className="text-primary hover:text-primary/80 transition-colors text-base font-medium"
+            className="text-primary hover:text-primary/80 transition-all duration-300 text-base font-medium"
         >
           info@frystatskagalerie.cz
         </a>
@@ -88,7 +88,7 @@ const socialMedia: SocialMediaLink[] = [
 
 export default function ContactsPage() {
   return (
-      <div className="min-h-screen bg-gradient-to-br from-background to-secondary/20 py-16">
+      <div className="min-h-screen bg-gradient-to-br from-background to-secondary/20 py-20">
         <div className="container mx-auto px-4 max-w-5xl">
           <div className="text-center mb-16">
             <Text as="h1" variant="hero" className="mb-4 tracking-tighter">
@@ -126,7 +126,7 @@ export default function ContactsPage() {
                         <a
                             key={index}
                             href={social.href}
-                            className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center hover:bg-primary/20 transition-colors"
+                            className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center hover:bg-primary/20 transition-all duration-300"
                         >
                           <social.icon className="w-6 h-6 text-primary" />
                         </a>
@@ -160,7 +160,7 @@ export default function ContactsPage() {
                         href="https://maps.google.com/?q=Fryštátská+57,+733+01+Karviná+1-Fryštát"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors font-medium"
+                        className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-all duration-300 font-medium"
                     >
                       <MapPin className="w-4 h-4" />
                       Otevřít v Google Maps

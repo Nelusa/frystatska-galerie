@@ -22,7 +22,6 @@ export const productTypeConfigs = {
   artwork: {
     name: "obrazy",
     icon: Palette,
-    colorScheme: "purple",
     detailFields: [
       { icon: Paintbrush, label: "Technika", field: "technique" },
       { icon: Ruler, label: "Rozměry", field: "dimensions" },
@@ -50,7 +49,6 @@ export const productTypeConfigs = {
   ceramics: {
     name: "keramika",
     icon: Package,
-    colorScheme: "info",
     detailFields: [
       { icon: Thermometer, label: "Materiál", field: "material" },
       { icon: Ruler, label: "Rozměry", field: "dimensions" },
@@ -78,7 +76,6 @@ export const productTypeConfigs = {
   glass: {
     name: "sklo",
     icon: Wine,
-    colorScheme: "success",
     detailFields: [
       { icon: Sparkles, label: "Typ skla", field: "material" },
       { icon: Ruler, label: "Rozměry", field: "dimensions" },
@@ -111,7 +108,6 @@ export const productTypeConfigs = {
   gifts: {
     name: "darkove-predmety",
     icon: Gift,
-    colorScheme: "warning",
     detailFields: [
       { icon: Package, label: "Materiál", field: "material" },
       { icon: Package, label: "Rozměry", field: "dimensions" },
