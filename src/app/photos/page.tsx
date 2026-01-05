@@ -1,5 +1,5 @@
-import { Text } from "@/components/ui/text"
 import { PhotoGallery } from "@/components/gallery/PhotoGallery"
+import { Text } from "@/components/ui/text"
 
 const galleryImages = [
   {
@@ -74,15 +74,23 @@ export default function GalleryPage() {
       <section className="py-10 md:py-20">
         <div className="container mx-auto px-4 max-w-7xl">
           <div className="text-center mb-12">
-            <Text as="h1" variant="hero" className="mb-4 tracking-tighter">
+            <Text
+              as="h1"
+              variant="hero"
+              className="mb-4 tracking-tighter">
               Fotky naší galerie
             </Text>
-            <Text variant="description" color="neutral" className="max-w-2xl mx-auto">
+            <Text
+              variant="description"
+              color="neutral"
+              className="max-w-2xl mx-auto">
               Prohlédněte si naši galerii a nechte se inspirovat atmosférou Fryštátské Galerie
             </Text>
           </div>
 
-          <PhotoGallery images={galleryImages} columns={3} />
+          <PhotoGallery
+            images={galleryImages}
+            columns={3} />
         </div>
       </section>
     </div>

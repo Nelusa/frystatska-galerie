@@ -1,14 +1,16 @@
 "use client"
 
-import {useFavorites} from "@/lib/useFavorites"
+import { Fragment } from "react";
+
+import { Heart, Trash2 } from "lucide-react"
+import Link from "next/link"
+
 import { ProductCard } from "@/components/products/ProductCard"
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
 import { Button } from "@/components/ui/button"
 import { Text } from "@/components/ui/text"
-import { Heart, Trash2 } from "lucide-react"
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
-import Link from "next/link"
-import {Fragment} from "react";
-import {AllProducts} from "@/lib/sanity";
+import { AllProducts } from "@/lib/sanity";
+import { useFavorites } from "@/lib/useFavorites"
 
 export default function FavoritesPage() {
   const { favorites, clearFavorites, isLoaded } = useFavorites()
@@ -19,7 +21,9 @@ export default function FavoritesPage() {
         <div className="flex items-center justify-center min-h-[400px]">
           <div className="text-center">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
-            <Text variant="body1" color="neutral">Načítání...</Text>
+            <Text
+              variant="body1"
+              color="neutral">Načítání...</Text>
           </div>
         </div>
       </div>
@@ -56,11 +60,15 @@ export default function FavoritesPage() {
         <div className="flex items-center gap-3">
           <Heart className="h-8 w-8 text-red-500" />
           <div>
-            <Text as="h1" variant="h1">Oblíbené produkty</Text>
-            <Text variant="body1" color="neutral">
+            <Text
+              as="h1"
+              variant="h1">Oblíbené produkty</Text>
+            <Text
+              variant="body1"
+              color="neutral">
               {favorites.length === 0
                 ? "Zatím nemáte žádné oblíbené produkty"
-                : `${favorites.length} ${favorites.length === 1 ? 'produkt' : favorites.length < 5 ? 'produkty' : 'produktů'}`
+                : `${favorites.length} ${favorites.length === 1 ? "produkt" : favorites.length < 5 ? "produkty" : "produktů"}`
               }
             </Text>
           </div>
@@ -80,8 +88,13 @@ export default function FavoritesPage() {
       {favorites.length === 0 ? (
         <div className="text-center py-16">
           <Heart className="h-16 w-16 text-muted-foreground/30 mx-auto mb-4" />
-          <Text variant="h4" className="mb-2">Žádné oblíbené produkty</Text>
-          <Text variant="body1" color="neutral" className="mb-6">
+          <Text
+            variant="h4"
+            className="mb-2">Žádné oblíbené produkty</Text>
+          <Text
+            variant="body1"
+            color="neutral"
+            className="mb-6">
             Zatím jste si neuložili žádné produkty do oblíbených.
           </Text>
           <div className="flex gap-3 justify-center">
@@ -100,7 +113,7 @@ export default function FavoritesPage() {
             <ProductCard
               key={product._id}
               item={product as AllProducts}
-              basePath={`/${product._type === 'artwork' ? 'artworks' : product._type === 'ceramics' ? 'ceramics' : product._type === 'glass' ? 'glass' : 'gifts'}`}
+              basePath={`/${product._type === "artwork" ? "artworks" : product._type === "ceramics" ? "ceramics" : product._type === "glass" ? "glass" : "gifts"}`}
               variant="grid"
             />
           ))}

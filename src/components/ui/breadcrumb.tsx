@@ -1,16 +1,21 @@
 import * as React from "react"
-import { ChevronRight, MoreHorizontal } from "lucide-react"
 import { forwardRef, ComponentProps, ReactNode } from "react"
 
-import { cn } from "@/lib/utils"
 import { Slot } from "@radix-ui/react-slot"
+import { ChevronRight, MoreHorizontal } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+
 
 const Breadcrumb = forwardRef<
   HTMLElement,
   ComponentProps<"nav"> & {
     separator?: ReactNode
   }
->(({ ...props }, ref) => <nav ref={ref} aria-label="breadcrumb" {...props} />)
+>(({ ...props }, ref) => <nav
+  ref={ref}
+  aria-label="breadcrumb"
+  {...props} />)
 Breadcrumb.displayName = "Breadcrumb"
 
 const BreadcrumbList = forwardRef<

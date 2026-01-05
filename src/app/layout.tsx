@@ -1,8 +1,11 @@
-import type { Metadata } from "next";
+import { ReactNode } from "react";
+
 import { Playfair_Display, Inter } from "next/font/google";
+
 import "./globals.css";
 import { SiteHeader } from "@/components/layout/SiteHeader";
-import { ReactNode } from "react";
+
+import type { Metadata } from "next";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],

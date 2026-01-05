@@ -1,12 +1,14 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Text } from "@/components/ui/text"
-import { Badge } from "@/app/hooks/badge"
+import { ComponentType, Fragment, SVGProps } from "react"
+
 import Image from "next/image"
 import Link from "next/link"
-import { urlFor, formatPrice, SanityImage, AllProducts } from "@/lib/sanity"
+
+import { Badge } from "@/app/hooks/badge"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
-import {ComponentType, Fragment, SVGProps} from "react"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { FavoriteButton } from "@/components/ui/favorite-button"
+import { Text } from "@/components/ui/text"
+import { urlFor, formatPrice, SanityImage, AllProducts } from "@/lib/sanity"
 
 interface ProductDetailPageProps {
   product: AllProducts
@@ -62,12 +64,12 @@ export function ProductDetailPage({
             <div className="relative w-full min-h-[400px] max-h-[800px] flex items-center justify-center overflow-hidden rounded-lg border bg-muted/30">
               {product.image ? (
                   <Image
-                      src={urlFor(product.image).width(1200).url()}
-                      alt={product.title}
-                      width={1200}
-                      height={1200}
-                      className="object-contain w-full h-auto max-h-[800px]"
-                      priority
+                    src={urlFor(product.image).width(1200).url()}
+                    alt={product.title}
+                    width={1200}
+                    height={1200}
+                    className="object-contain w-full h-auto max-h-[800px]"
+                    priority
                   />
               ) : (
                   <div className="w-full h-full min-h-[400px] bg-gradient-to-br from-purple-50 to-purple-100 flex items-center justify-center">
@@ -91,13 +93,15 @@ export function ProductDetailPage({
             {product.gallery && product.gallery.length > 0 && (
                 <div className="grid grid-cols-4 gap-2">
                   {product.gallery.slice(0, 4).map((image: SanityImage, index: number) => (
-                      <div key={index} className="relative w-full min-h-[100px] flex items-center justify-center overflow-hidden rounded border cursor-pointer hover:opacity-75 transition-opacity duration-300 bg-muted/30">
+                      <div
+                        key={index}
+                        className="relative w-full min-h-[100px] flex items-center justify-center overflow-hidden rounded border cursor-pointer hover:opacity-75 transition-opacity duration-300 bg-muted/30">
                         <Image
-                            src={urlFor(image).width(300).url()}
-                            alt={`${product.title} - detail ${index + 1}`}
-                            width={300}
-                            height={300}
-                            className="object-contain w-full h-auto"
+                          src={urlFor(image).width(300).url()}
+                          alt={`${product.title} - detail ${index + 1}`}
+                          width={300}
+                          height={300}
+                          className="object-contain w-full h-auto"
                         />
                       </div>
                   ))}
@@ -109,7 +113,9 @@ export function ProductDetailPage({
             <div>
               <div className="flex items-center justify-between gap-2 mb-2">
                 <div className="flex items-center gap-2">
-                  <Badge variant="outline" className="text-xs">
+                  <Badge
+                    variant="outline"
+                    className="text-xs">
                     {product.subcategory || name}
                   </Badge>
                   <Icon className="h-4 w-4 text-primary" />
@@ -122,11 +128,15 @@ export function ProductDetailPage({
                   className="bg-purple-100 hover:bg-purple-200 text-purple-800 border-purple-200 flex-shrink-0 transition-all duration-300"
                 />
               </div>
-              <Text variant="h2" className="tracking-tight mb-2">
+              <Text
+                variant="h2"
+                className="tracking-tight mb-2">
                 {product.title}
               </Text>
               {product.artist && (
-                  <Text variant="h5" color="neutral">
+                  <Text
+                    variant="h5"
+                    color="neutral">
                     {product.artist}
                   </Text>
               )}
@@ -134,25 +144,38 @@ export function ProductDetailPage({
 
             <div className="space-y-2">
               <div className="flex items-center gap-4">
-                <Text variant="h2" className="font-bold">
+                <Text
+                  variant="h2"
+                  className="font-bold">
                   {formatPrice(product.price)}
                 </Text>
                 {product.originalPrice && product.originalPrice > product.price && (
-                    <Text variant="h5" color="neutral" className="line-through">
+                    <Text
+                      variant="h5"
+                      color="neutral"
+                      className="line-through">
                       {formatPrice(product.originalPrice)}
                     </Text>
                 )}
               </div>
               {product.originalPrice && product.originalPrice > product.price && (
-                  <Text variant="body2" color="success" className="font-medium">
+                  <Text
+                    variant="body2"
+                    color="success"
+                    className="font-medium">
                     Ušetříte {formatPrice(product.originalPrice - product.price)}
                   </Text>
               )}
             </div>
 
             <div>
-              <Text variant="h5" className="mb-2">Popis</Text>
-              <Text variant="body1" color="neutral" className="leading-relaxed">
+              <Text
+                variant="h5"
+                className="mb-2">Popis</Text>
+              <Text
+                variant="body1"
+                color="neutral"
+                className="leading-relaxed">
                 {product.description}
               </Text>
             </div>
@@ -167,11 +190,15 @@ export function ProductDetailPage({
                       if (!value) return null
 
                       return (
-                          <div key={index} className="flex items-center gap-3 p-3 rounded-lg border bg-card shadow-sm">
+                          <div
+                            key={index}
+                            className="flex items-center gap-3 p-3 rounded-lg border bg-card shadow-sm">
                             <FieldIcon className="h-5 w-5 text-primary" />
                             <div>
                               <Text variant="label">{field.label}</Text>
-                              <Text variant="body2" color="neutral">{String(value)}</Text>
+                              <Text
+                                variant="body2"
+                                color="neutral">{String(value)}</Text>
                             </div>
                           </div>
                       )
@@ -191,15 +218,17 @@ export function ProductDetailPage({
 
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
                 {relatedProducts.map((relatedProduct) => (
-                    <Link key={relatedProduct._id} href={`/${name.toLowerCase()}/${relatedProduct.slug.current}`}>
+                    <Link
+                      key={relatedProduct._id}
+                      href={`/${name.toLowerCase()}/${relatedProduct.slug.current}`}>
                       <Card className="group hover:shadow-lg transition-all duration-300">
                         <div className="aspect-square relative overflow-hidden">
                           {relatedProduct.image ? (
                               <Image
-                                  src={urlFor(relatedProduct.image).width(300).height(300).url()}
-                                  alt={relatedProduct.title}
-                                  fill
-                                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                                src={urlFor(relatedProduct.image).width(300).height(300).url()}
+                                alt={relatedProduct.title}
+                                fill
+                                className="object-cover transition-transform duration-300 group-hover:scale-105"
                               />
                           ) : (
                               <div className="w-full h-full bg-gradient-to-br from-purple-50 to-purple-100 flex items-center justify-center">
@@ -227,16 +256,20 @@ export function ProductDetailPage({
 
         {features.length > 0 && (
             <div className="mt-16 border-t pt-8">
-              <div className={`grid grid-cols-1 md:grid-cols-3 gap-6 text-center`}>
+              <div className={"grid grid-cols-1 md:grid-cols-3 gap-6 text-center"}>
                 {features.map((feature, index) => {
                   const FeatureIcon = feature.icon
                   return (
-                      <div key={index} className="space-y-2">
+                      <div
+                        key={index}
+                        className="space-y-2">
                         <div className="w-12 h-12 rounded-full flex items-center justify-center mx-auto bg-secondary/30">
                           <FeatureIcon className="h-6 w-6 text-primary" />
                         </div>
                         <Text variant="h5">{feature.title}</Text>
-                        <Text variant="body2" color="neutral">
+                        <Text
+                          variant="body2"
+                          color="neutral">
                           {feature.description}
                         </Text>
                       </div>

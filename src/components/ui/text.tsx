@@ -1,24 +1,26 @@
+import { forwardRef, ElementType, ComponentPropsWithoutRef, ReactNode } from "react"
+
 import { cva } from "class-variance-authority"
+
 import { cn } from "@/lib/utils"
-import {forwardRef, ElementType, ComponentPropsWithoutRef, ReactNode} from "react"
 
 export type TextVariant =
-    | 'inherit'
-    | 'hero'
-    | 'h1'
-    | 'h2'
-    | 'h3'
-    | 'h4'
-    | 'h5'
-    | 'h6'
-    | 'body1'
-    | 'body2'
-    | 'description'
-    | 'label'
-    | 'caption'
-    | 'notification';
+    | "inherit"
+    | "hero"
+    | "h1"
+    | "h2"
+    | "h3"
+    | "h4"
+    | "h5"
+    | "h6"
+    | "body1"
+    | "body2"
+    | "description"
+    | "label"
+    | "caption"
+    | "notification";
 
-export type TextColor = 'inherit' | 'base' | 'neutral' | 'primary' | 'success' | 'info' | 'warn' | 'error' | 'white';
+export type TextColor = "inherit" | "base" | "neutral" | "primary" | "success" | "info" | "warn" | "error" | "white";
 
 export interface TextBaseProps {
   children?: ReactNode;
@@ -70,26 +72,26 @@ export interface TextProps<T extends ElementType> extends TextBaseProps {
 }
 
 const getDefaultElement = (variant?: TextVariant): ElementType => {
-  if (!variant || variant === 'inherit') return 'div'
+  if (!variant || variant === "inherit") return "div"
 
   const variantToElement: Record<TextVariant, ElementType> = {
-    inherit: 'div',
-    hero: 'h1',
-    h1: 'h1',
-    h2: 'h2',
-    h3: 'h3',
-    h4: 'h4',
-    h5: 'h5',
-    h6: 'h6',
-    description: 'p',
-    body1: 'p',
-    body2: 'p',
-    label: 'label',
-    caption: 'span',
-    notification: 'span',
+    inherit: "div",
+    hero: "h1",
+    h1: "h1",
+    h2: "h2",
+    h3: "h3",
+    h4: "h4",
+    h5: "h5",
+    h6: "h6",
+    description: "p",
+    body1: "p",
+    body2: "p",
+    label: "label",
+    caption: "span",
+    notification: "span",
   }
 
-  return variantToElement[variant] || 'div'
+  return variantToElement[variant] || "div"
 }
 
 const Text = forwardRef<HTMLDivElement, PropsAs<TextProps<ElementType>, ElementType>>(

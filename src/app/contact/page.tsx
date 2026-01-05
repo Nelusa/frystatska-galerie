@@ -1,8 +1,10 @@
-import {Mail, Phone, MapPin, Clock, Instagram, Facebook, LucideIcon} from 'lucide-react';
+import { ReactNode } from "react";
+
+import { Mail, Phone, MapPin, Clock, Instagram, Facebook, LucideIcon } from "lucide-react";
+
+import { ItemWithIcon } from "@/components/shared";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Text } from "@/components/ui/text";
-import { ItemWithIcon } from "@/components/shared";
-import {ReactNode} from "react";
 
 export interface ContactInfo {
   icon: LucideIcon;
@@ -21,8 +23,12 @@ const contactData: ContactInfo[] = [
     title: "Adresa",
     content: (
         <>
-          <Text variant="body1" color="neutral">Fryštátská 57</Text>
-          <Text variant="body1" color="neutral">733 01 Karviná 1-Fryštát</Text>
+          <Text
+            variant="body1"
+            color="neutral">Fryštátská 57</Text>
+          <Text
+            variant="body1"
+            color="neutral">733 01 Karviná 1-Fryštát</Text>
         </>
     )
   },
@@ -31,8 +37,8 @@ const contactData: ContactInfo[] = [
     title: "Telefon",
     content: (
         <a
-            href="tel:+420605416666"
-            className="text-primary hover:text-primary/80 transition-all duration-300 text-base font-medium"
+          href="tel:+420605416666"
+          className="text-primary hover:text-primary/80 transition-all duration-300 text-base font-medium"
         >
           +420 605 416 666
         </a>
@@ -43,8 +49,8 @@ const contactData: ContactInfo[] = [
     title: "E-mail",
     content: (
         <a
-            href="mailto:info@frystatskagalerie.cz"
-            className="text-primary hover:text-primary/80 transition-all duration-300 text-base font-medium"
+          href="mailto:info@frystatskagalerie.cz"
+          className="text-primary hover:text-primary/80 transition-all duration-300 text-base font-medium"
         >
           info@frystatskagalerie.cz
         </a>
@@ -55,9 +61,15 @@ const contactData: ContactInfo[] = [
     title: "Otevírací doba",
     content: (
         <>
-          <Text variant="body1" color="neutral">Po-Pá: 9:30 - 16:30</Text>
-          <Text variant="body1" color="neutral">So: Zavřeno</Text>
-          <Text variant="body1" color="neutral">Ne: Zavřeno</Text>
+          <Text
+            variant="body1"
+            color="neutral">Po-Pá: 9:30 - 16:30</Text>
+          <Text
+            variant="body1"
+            color="neutral">So: Zavřeno</Text>
+          <Text
+            variant="body1"
+            color="neutral">Ne: Zavřeno</Text>
         </>
     )
   }
@@ -91,10 +103,16 @@ export default function ContactsPage() {
       <div className="min-h-screen bg-gradient-to-br from-background to-secondary/20 py-20">
         <div className="container mx-auto px-4 max-w-5xl">
           <div className="text-center mb-16">
-            <Text as="h1" variant="hero" className="mb-4 tracking-tighter">
+            <Text
+              as="h1"
+              variant="hero"
+              className="mb-4 tracking-tighter">
               Kontakt
             </Text>
-            <Text variant="body1" color="neutral" className="max-w-2xl mx-auto">
+            <Text
+              variant="body1"
+              color="neutral"
+              className="max-w-2xl mx-auto">
               Jsme tu pro vás! Navštivte nás v srdci Fryštátu nebo nás kontaktujte telefonicky či e-mailem.
             </Text>
           </div>
@@ -108,7 +126,10 @@ export default function ContactsPage() {
                 <CardContent>
                   <div className="space-y-6">
                     {contactData.map((item, index) => (
-                        <ItemWithIcon key={index} icon={item.icon} title={item.title}>
+                        <ItemWithIcon
+                          key={index}
+                          icon={item.icon}
+                          title={item.title}>
                           {item.content}
                         </ItemWithIcon>
                     ))}
@@ -124,9 +145,9 @@ export default function ContactsPage() {
                   <div className="flex space-x-4">
                     {socialMedia.map((social, index) => (
                         <a
-                            key={index}
-                            href={social.href}
-                            className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center hover:bg-primary/20 transition-all duration-300"
+                          key={index}
+                          href={social.href}
+                          className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center hover:bg-primary/20 transition-all duration-300"
                         >
                           <social.icon className="w-6 h-6 text-primary" />
                         </a>
@@ -144,23 +165,23 @@ export default function ContactsPage() {
                 <CardContent>
                   <div className="aspect-video rounded-xl overflow-hidden border border-border">
                     <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2573.1234567890123!2d18.54123456789012!3d49.85432109876543!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4713e33c12345678%3A0xabcdef1234567890!2sFry%C5%A1t%C3%A1tsk%C3%A1%2057%2C%20733%2001%20Karvin%C3%A1%201-Fry%C5%A1t%C3%A1t!5e0!3m2!1scs!2scz!4v1234567890123"
-                        width="100%"
-                        height="100%"
-                        style={{ border: 0 }}
-                        allowFullScreen
-                        loading="lazy"
-                        referrerPolicy="no-referrer-when-downgrade"
-                        title="Fryštátská Galerie - mapa"
-                        className="w-full h-full"
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2573.1234567890123!2d18.54123456789012!3d49.85432109876543!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4713e33c12345678%3A0xabcdef1234567890!2sFry%C5%A1t%C3%A1tsk%C3%A1%2057%2C%20733%2001%20Karvin%C3%A1%201-Fry%C5%A1t%C3%A1t!5e0!3m2!1scs!2scz!4v1234567890123"
+                      width="100%"
+                      height="100%"
+                      style={{ border: 0 }}
+                      allowFullScreen
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                      title="Fryštátská Galerie - mapa"
+                      className="w-full h-full"
                     />
                   </div>
                   <div className="mt-4 text-center">
                     <a
-                        href="https://maps.google.com/?q=Fryštátská+57,+733+01+Karviná+1-Fryštát"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-all duration-300 font-medium"
+                      href="https://maps.google.com/?q=Fryštátská+57,+733+01+Karviná+1-Fryštát"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-all duration-300 font-medium"
                     >
                       <MapPin className="w-4 h-4" />
                       Otevřít v Google Maps
@@ -176,9 +197,15 @@ export default function ContactsPage() {
                 <CardContent>
                   <div className="space-y-4">
                     {transportOptions.map((option, index) => (
-                        <ItemWithIcon key={index} emoji={option.emoji} title={option.title}>
+                        <ItemWithIcon
+                          key={index}
+                          emoji={option.emoji}
+                          title={option.title}>
                           {/*TODO (NL): Odstranit dangerouslySetHTML*/}
-                          <Text variant="body2" color="neutral" dangerouslySetInnerHTML={{ __html: option.description }} />
+                          <Text
+                            variant="body2"
+                            color="neutral"
+                            dangerouslySetInnerHTML={{ __html: option.description }} />
                         </ItemWithIcon>
                     ))}
                   </div>
