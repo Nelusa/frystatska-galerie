@@ -43,6 +43,10 @@ const nextConfig: NextConfig = {
         {
           source: '/o-nas/:path*',
           destination: '/about/:path*'
+        },
+        {
+          source: '/fotky/:path*',
+          destination: '/photos/:path*'
         }
       ],
       afterFiles: [],

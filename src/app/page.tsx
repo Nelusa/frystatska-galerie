@@ -126,9 +126,9 @@ export default async function Home() {
               {categories.map((category, index) => (
                   <Link key={index} href={category.href} className="group">
                     <Card
-                        className="h-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border-border/50">
+                        className="h-full transition-all duration-1000 hover:shadow-lg hover:-translate-y-1 border-border/50">
                       <CardHeader className="text-center pb-4">
-                        <div className="mx-auto mb-4 transition-transform duration-300 group-hover:scale-110">
+                        <div className="mx-auto mb-4 transition-transform duration-1000 group-hover:scale-110">
                           {category.icon}
                         </div>
                         <CardTitle className="font-heading text-xl">{category.title}</CardTitle>
