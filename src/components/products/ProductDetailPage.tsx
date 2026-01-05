@@ -7,7 +7,6 @@ import { urlFor, formatPrice, SanityImage, AllProducts } from "@/lib/sanity"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
 import {ComponentType, Fragment, SVGProps} from "react"
 import { FavoriteButton } from "@/components/ui/favorite-button"
-import { cn } from "@/lib/utils"
 
 interface ProductDetailPageProps {
   product: AllProducts
@@ -16,7 +15,6 @@ interface ProductDetailPageProps {
   productTypeConfig: {
     name: string
     icon: ComponentType<SVGProps<SVGSVGElement>>
-    colorScheme: string
     features?: Array<{
       icon: ComponentType<SVGProps<SVGSVGElement>>
       title: string
@@ -30,49 +28,13 @@ interface ProductDetailPageProps {
   }
 }
 
-const colorSchemeClasses = {
-  purple: {
-    bg50: "bg-purple-50",
-    bg100: "bg-purple-100",
-    text600: "text-purple-600",
-    border100: "border-purple-100",
-    gradientFrom: "from-purple-50",
-    gradientTo: "to-purple-100",
-  },
-  info: {
-    bg50: "bg-info-50",
-    bg100: "bg-info-100",
-    text600: "text-info-600",
-    border100: "border-info-100",
-    gradientFrom: "from-info-50",
-    gradientTo: "to-info-100",
-  },
-  success: {
-    bg50: "bg-success-50",
-    bg100: "bg-success-100",
-    text600: "text-success-600",
-    border100: "border-success-100",
-    gradientFrom: "from-success-50",
-    gradientTo: "to-success-100",
-  },
-  warning: {
-    bg50: "bg-warning-50",
-    bg100: "bg-warning-100",
-    text600: "text-warning-600",
-    border100: "border-warning-100",
-    gradientFrom: "from-warning-50",
-    gradientTo: "to-warning-100",
-  },
-} as const
-
 export function ProductDetailPage({
                                     product,
                                     relatedProducts,
                                     breadcrumbItems,
                                     productTypeConfig
                                   }: ProductDetailPageProps) {
-  const { name, icon: Icon, colorScheme, features = [], detailFields = [] } = productTypeConfig
-  const colors = colorSchemeClasses[colorScheme as keyof typeof colorSchemeClasses] || colorSchemeClasses.purple
+  const { name, icon: Icon, features = [], detailFields = [] } = productTypeConfig
 
   return (
       <div className="container px-4 md:px-6 py-8">
@@ -108,7 +70,7 @@ export function ProductDetailPage({
                       priority
                   />
               ) : (
-                  <div className={cn("w-full h-full min-h-[400px] bg-gradient-to-br flex items-center justify-center", colors.gradientFrom, colors.gradientTo)}>
+                  <div className="w-full h-full min-h-[400px] bg-gradient-to-br from-purple-50 to-purple-100 flex items-center justify-center">
                     <div className="text-center text-muted-foreground">
                       <Icon className="h-24 w-24 mx-auto mb-4 opacity-50" />
                       <Text variant="h5">{product.title}</Text>
@@ -129,7 +91,7 @@ export function ProductDetailPage({
             {product.gallery && product.gallery.length > 0 && (
                 <div className="grid grid-cols-4 gap-2">
                   {product.gallery.slice(0, 4).map((image: SanityImage, index: number) => (
-                      <div key={index} className="relative w-full min-h-[100px] flex items-center justify-center overflow-hidden rounded border cursor-pointer hover:opacity-75 transition-opacity bg-muted/30">
+                      <div key={index} className="relative w-full min-h-[100px] flex items-center justify-center overflow-hidden rounded border cursor-pointer hover:opacity-75 transition-opacity duration-300 bg-muted/30">
                         <Image
                             src={urlFor(image).width(300).url()}
                             alt={`${product.title} - detail ${index + 1}`}
@@ -145,11 +107,20 @@ export function ProductDetailPage({
 
           <div className="space-y-6">
             <div>
-              <div className="flex items-center gap-2 mb-2">
-                <Badge variant="outline" className="text-xs">
-                  {product.subcategory || name}
-                </Badge>
-                <Icon className={cn("h-4 w-4", colors.text600)} />
+              <div className="flex items-center justify-between gap-2 mb-2">
+                <div className="flex items-center gap-2">
+                  <Badge variant="outline" className="text-xs">
+                    {product.subcategory || name}
+                  </Badge>
+                  <Icon className="h-4 w-4 text-primary" />
+                </div>
+                <FavoriteButton
+                  product={product}
+                  variant="default"
+                  size="sm"
+                  showText={true}
+                  className="bg-purple-100 hover:bg-purple-200 text-purple-800 border-purple-200 flex-shrink-0 transition-all duration-300"
+                />
               </div>
               <Text variant="h2" className="tracking-tight mb-2">
                 {product.title}
@@ -189,15 +160,15 @@ export function ProductDetailPage({
             {detailFields.length > 0 && (
                 <div className="space-y-4">
                   <Text variant="h5">Specifikace</Text>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {detailFields.map((field, index) => {
                       const FieldIcon = field.icon
                       const value = ((product as unknown) as Record<string, unknown>)[field.field]
                       if (!value) return null
 
                       return (
-                          <div key={index} className={cn("flex items-center gap-3 p-3 rounded-lg border", colors.bg50, colors.border100)}>
-                            <FieldIcon className={cn("h-5 w-5", colors.text600)} />
+                          <div key={index} className="flex items-center gap-3 p-3 rounded-lg border bg-card shadow-sm">
+                            <FieldIcon className="h-5 w-5 text-primary" />
                             <div>
                               <Text variant="label">{field.label}</Text>
                               <Text variant="body2" color="neutral">{String(value)}</Text>
@@ -209,16 +180,6 @@ export function ProductDetailPage({
                 </div>
             )}
 
-            <div className="space-y-4 pt-4">
-              <div className="flex gap-3">
-                <FavoriteButton
-                  product={product}
-                  variant="outline"
-                  size="lg"
-                  showText={true}
-                />
-              </div>
-            </div>
           </div>
         </div>
 
@@ -241,7 +202,7 @@ export function ProductDetailPage({
                                   className="object-cover transition-transform duration-300 group-hover:scale-105"
                               />
                           ) : (
-                              <div className={cn("w-full h-full bg-gradient-to-br flex items-center justify-center", colors.gradientFrom, colors.gradientTo)}>
+                              <div className="w-full h-full bg-gradient-to-br from-purple-50 to-purple-100 flex items-center justify-center">
                                 <Icon className="h-8 w-8 text-muted-foreground opacity-50" />
                               </div>
                           )}
@@ -271,8 +232,8 @@ export function ProductDetailPage({
                   const FeatureIcon = feature.icon
                   return (
                       <div key={index} className="space-y-2">
-                        <div className={cn("w-12 h-12 rounded-full flex items-center justify-center mx-auto", colors.bg100)}>
-                          <FeatureIcon className={cn("h-6 w-6", colors.text600)} />
+                        <div className="w-12 h-12 rounded-full flex items-center justify-center mx-auto bg-secondary/30">
+                          <FeatureIcon className="h-6 w-6 text-primary" />
                         </div>
                         <Text variant="h5">{feature.title}</Text>
                         <Text variant="body2" color="neutral">
