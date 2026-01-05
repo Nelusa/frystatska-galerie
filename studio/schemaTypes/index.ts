@@ -1,9 +1,9 @@
-import { artwork } from './artwork'
-import { ceramics } from './ceramics'
-import { glass } from './glass'
-import { gifts } from './gifts'
-import { homepageContent } from './homepageContent'
-import { seasonalBanner } from './seasonalBanner'
+import { artwork } from "./artwork"
+import { ceramics } from "./ceramics"
+import { gifts } from "./gifts"
+import { glass } from "./glass"
+import { homepageContent } from "./homepageContent"
+import { seasonalBanner } from "./seasonalBanner"
 
 export const schemaTypes = [
   artwork,

@@ -1,5 +1,6 @@
+import { LucideIcon } from "lucide-react";
+
 import { cn } from "@/lib/utils";
-import {LucideIcon} from "lucide-react";
 
 export enum IconCircleSize {
   Base = "base",
@@ -30,7 +31,8 @@ export const IconCircle = ({ icon: Icon, emoji, size = IconCircleSize.Base, clas
   };
 
   return (
-    <div className={cn(
+    <div
+      className={cn(
       "flex-shrink-0 bg-primary/10 rounded-full flex items-center justify-center",
       sizeClasses[size],
       className

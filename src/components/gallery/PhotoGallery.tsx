@@ -1,8 +1,10 @@
 "use client"
 
-import Image from "next/image"
 import { useState } from "react"
+
 import { X } from "lucide-react"
+import Image from "next/image"
+
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
@@ -69,7 +71,9 @@ export function PhotoGallery({ images, columns = 3 }: PhotoGalleryProps) {
           >
             <X className="h-6 w-6" />
           </Button>
-          <div className="relative max-w-7xl max-h-[90vh] w-full h-full" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="relative max-w-7xl max-h-[90vh] w-full h-full"
+            onClick={(e) => e.stopPropagation()}>
             <Image
               src={images[selectedImage].src}
               alt={images[selectedImage].alt}

@@ -1,14 +1,15 @@
-import { createClient } from '@sanity/client'
-import imageUrlBuilder from '@sanity/image-url'
-import type { SanityImageSource } from '@sanity/image-url/lib/types/types'
+import { createClient } from "@sanity/client"
+import imageUrlBuilder from "@sanity/image-url"
+
+import type { SanityImageSource } from "@sanity/image-url/lib/types/types"
 
 // ========== SANITY KLIENT ==========
 
 export const client = createClient({
-  projectId: 'lbgdxh20',
-  dataset: 'production',
+  projectId: "lbgdxh20",
+  dataset: "production",
   useCdn: true,
-  apiVersion: '2025-06-16',
+  apiVersion: "2025-06-16",
 })
 
 const builder = imageUrlBuilder(client)
@@ -82,18 +83,18 @@ const seasonalBannerFields = `
 // ========== TYPY ==========
 
 export interface SanityImage {
-  _type: 'image'
+  _type: "image"
   asset: {
     _ref: string
-    _type: 'reference'
+    _type: "reference"
   }
   hotspot?: { x: number; y: number; height: number; width: number }
   crop?: { top: number; bottom: number; left: number; right: number }
 }
 
 export interface SanityBlock {
-  _type: 'block'
-  children: Array<{ _type: 'span'; text: string; marks?: string[] }>
+  _type: "block"
+  children: Array<{ _type: "span"; text: string; marks?: string[] }>
   markDefs?: unknown[]
   style?: string
 }
@@ -124,16 +125,16 @@ export interface BaseArtwork {
 }
 
 export interface Artwork extends BaseArtwork {
-  _type: 'artwork'
+  _type: "artwork"
 }
 export interface Ceramics extends BaseArtwork {
-  _type: 'ceramics'
+  _type: "ceramics"
 }
 export interface Glass extends BaseArtwork {
-  _type: 'glass'
+  _type: "glass"
 }
 export interface Gifts extends BaseArtwork {
-  _type: 'gifts'
+  _type: "gifts"
   giftWrapping: boolean
   occasions?: string[]
 }
@@ -158,14 +159,14 @@ export interface HomepageContent {
   ctaSection: {
     title: string
     description: string
-    buttons: Array<{ text: string; link: string; style: 'primary' | 'secondary' }>
+    buttons: Array<{ text: string; link: string; style: "primary" | "secondary" }>
   }
   featuredCategories?: Array<{
     title: string
     description: string
     link: string
     image?: SanityImage
-    icon: 'palette' | 'cookie' | 'wine' | 'gift'
+    icon: "palette" | "cookie" | "wine" | "gift"
   }>
   seo?: {
     metaTitle?: string
@@ -179,9 +180,9 @@ export interface SeasonalBanner {
   _id: string
   title: string
   type:
-      | 'christmas' | 'newyear' | 'valentine'
-      | 'spring' | 'summer' | 'autumn' | 'winter'
-      | 'sale' | 'general'
+      | "christmas" | "newyear" | "valentine"
+      | "spring" | "summer" | "autumn" | "winter"
+      | "sale" | "general"
   content: {
     message: string
     subMessage?: string
@@ -189,7 +190,7 @@ export interface SeasonalBanner {
     actionButton?: { text: string; link: string }
   }
   styling: {
-    backgroundColor: 'red' | 'green' | 'blue' | 'yellow' | 'orange' | 'purple' | 'dark' | 'light'
+    backgroundColor: "red" | "green" | "blue" | "yellow" | "orange" | "purple" | "dark" | "light"
     priority: number
   }
   schedule: {
@@ -309,16 +310,16 @@ export async function getProductsByType(type: string): Promise<AllProducts[]> {
   return client.fetch(queries.productsByType(type))
 }
 export async function getArtworksByCategory(): Promise<Artwork[]> {
-  return client.fetch(queries.productsByType('artwork'))
+  return client.fetch(queries.productsByType("artwork"))
 }
 export async function getCeramics(): Promise<Ceramics[]> {
-  return client.fetch(queries.productsByType('ceramics'))
+  return client.fetch(queries.productsByType("ceramics"))
 }
 export async function getGlass(): Promise<Glass[]> {
-  return client.fetch(queries.productsByType('glass'))
+  return client.fetch(queries.productsByType("glass"))
 }
 export async function getGifts(): Promise<Gifts[]> {
-  return client.fetch(queries.productsByType('gifts'))
+  return client.fetch(queries.productsByType("gifts"))
 }
 export async function getFeaturedProducts(): Promise<AllProducts[]> {
   return client.fetch(queries.featuredProducts)
@@ -348,24 +349,24 @@ export async function searchProducts(searchTerm: string): Promise<AllProducts[]>
 // ========== HELPER FUNKCE ==========
 
 export function formatPrice(price: number): string {
-  return new Intl.NumberFormat('cs-CZ', {
-    style: 'currency',
-    currency: 'CZK',
+  return new Intl.NumberFormat("cs-CZ", {
+    style: "currency",
+    currency: "CZK",
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
   }).format(price)
 }
 
 export function truncateText(text: string, maxLength: number): string {
-  return text.length <= maxLength ? text : text.substring(0, maxLength).trim() + '...'
+  return text.length <= maxLength ? text : text.substring(0, maxLength).trim() + "..."
 }
 
 export function getCategoryName(type: string): string {
   const categoryNames = {
-    'artwork': 'obrazy',
-    'ceramics': 'keramika',
-    'glass': 'sklo',
-    'gifts': 'darkove-predmety'
+    "artwork": "obrazy",
+    "ceramics": "keramika",
+    "glass": "sklo",
+    "gifts": "darkove-predmety"
   }
   return categoryNames[type as keyof typeof categoryNames] || type
 }

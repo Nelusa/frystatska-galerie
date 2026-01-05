@@ -1,5 +1,5 @@
-import { getAllProducts } from "@/lib/sanity"
 import { ProductPage } from "@/components/products/ProductPage"
+import { getAllProducts } from "@/lib/sanity"
 
 export default async function AllProductsPage() {
   const allProducts = await getAllProducts()

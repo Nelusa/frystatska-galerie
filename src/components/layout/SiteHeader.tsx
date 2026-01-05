@@ -1,14 +1,17 @@
 "use client"
 
-import Link from "next/link"
-import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList } from "@/components/ui/navigation-menu"
-import { Text } from "@/components/ui/text"
-import { cn } from "@/lib/utils"
-import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet"
-import { Button } from "@/components/ui/button"
-import { Menu, Palette, Wine, Gift, Phone, Info, Heart, Images } from "lucide-react"
 import { useEffect, useState } from "react"
+
+import { Menu, Palette, Wine, Gift, Phone, Info, Heart, Images } from "lucide-react"
+import Link from "next/link"
+
+import { Button } from "@/components/ui/button"
+import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList } from "@/components/ui/navigation-menu"
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet"
+import { Text } from "@/components/ui/text"
 import { useFavorites } from "@/lib/useFavorites"
+import { cn } from "@/lib/utils"
+
 
 const mainNavItems = [
   {
@@ -71,7 +74,9 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
         {/*TODO (NL): Doplnit logo*/}
-        <Link href="/" className="flex items-center space-x-2">
+        <Link
+          href="/"
+          className="flex items-center space-x-2">
           <Text variant="h1">FG</Text>
         </Link>
 
@@ -87,7 +92,9 @@ export function SiteHeader() {
                       "group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-all duration-300 hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
                     )}
                   >
-                    <Link href={item.href} className="flex items-center gap-2">
+                    <Link
+                      href={item.href}
+                      className="flex items-center gap-2">
                       <item.icon className="h-4 w-4" />
                       {item.title}
                     </Link>
@@ -101,11 +108,16 @@ export function SiteHeader() {
         {/* Desktop favorites button */}
         <div className="hidden md:flex items-center gap-4">
           <Link href="/favorites">
-            <Button variant="ghost" size="icon" className="relative">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="relative">
               <Heart className="h-5 w-5" />
               {isLoaded && favorites.length > 0 && (
-                <Text variant="caption" className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full h-5 w-5 flex items-center justify-center">
-                  {favorites.length > 99 ? '99+' : favorites.length}
+                <Text
+                  variant="caption"
+                  className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full h-5 w-5 flex items-center justify-center">
+                  {favorites.length > 99 ? "99+" : favorites.length}
                 </Text>
               )}
             </Button>
@@ -117,14 +129,21 @@ export function SiteHeader() {
           {mounted && (
             <Sheet>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" aria-label="Otevřít menu">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  aria-label="Otevřít menu">
                   <Menu className="h-6 w-6" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="left" className="p-0 w-80">
+              <SheetContent
+                side="left"
+                className="p-0 w-80">
                 <SheetTitle className="sr-only">Navigační menu</SheetTitle>
                 <div className="p-6 border-b">
-                  <Link href="/" className="flex items-center space-x-2">
+                  <Link
+                    href="/"
+                    className="flex items-center space-x-2">
                     <Text variant="h4">Fryštátská Galerie</Text>
                   </Link>
                 </div>
@@ -138,7 +157,9 @@ export function SiteHeader() {
                       <item.icon className="h-5 w-5 text-primary" />
                       <div>
                         <Text variant="label">{item.title}</Text>
-                        <Text variant="body2" color="neutral">
+                        <Text
+                          variant="body2"
+                          color="neutral">
                           {item.description}
                         </Text>
                       </div>
@@ -151,17 +172,21 @@ export function SiteHeader() {
                     <Heart className="h-5 w-5 text-primary" />
                     <div>
                       <Text variant="label">Oblíbené</Text>
-                      <Text variant="body2" color="neutral">
+                      <Text
+                        variant="body2"
+                        color="neutral">
                         {isLoaded && favorites.length > 0
-                          ? `${favorites.length} ${favorites.length === 1 ? 'produkt' : favorites.length < 5 ? 'produkty' : 'produktů'}`
-                          : 'Vaše oblíbené produkty'
+                          ? `${favorites.length} ${favorites.length === 1 ? "produkt" : favorites.length < 5 ? "produkty" : "produktů"}`
+                          : "Vaše oblíbené produkty"
                         }
                       </Text>
                     </div>
                   </Link>
                 </nav>
                 <div className="p-4 border-t mt-auto">
-                  <Button className="w-full" size="lg">
+                  <Button
+                    className="w-full"
+                    size="lg">
                     <Phone className="h-4 w-4 mr-2" />
                     Kontaktovat
                   </Button>

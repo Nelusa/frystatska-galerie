@@ -1,7 +1,8 @@
+import { Home, Search, ArrowLeft } from "lucide-react"
 import Link from "next/link"
+
 import { Button } from "@/components/ui/button"
 import { Text } from "@/components/ui/text"
-import { Home, Search, ArrowLeft } from "lucide-react"
 
 export default function NotFound() {
   return (
@@ -20,23 +21,36 @@ export default function NotFound() {
           </div>
 
           <div className="space-y-2">
-            <Text as="h2" variant="h2" className="text-3xl md:text-4xl font-bold">
+            <Text
+              as="h2"
+              variant="h2"
+              className="text-3xl md:text-4xl font-bold">
               Stránka nenalezena
             </Text>
-            <Text variant="body1" color="neutral" className="text-lg max-w-md mx-auto">
+            <Text
+              variant="body1"
+              color="neutral"
+              className="text-lg max-w-md mx-auto">
               Omlouváme se, ale stránka, kterou hledáte, neexistuje nebo byla přesunuta.
             </Text>
           </div>
         </div>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
-          <Button asChild size="lg" className="gap-2">
+          <Button
+            asChild
+            size="lg"
+            className="gap-2">
             <Link href="/">
               <Home className="h-5 w-5" />
               Domů
             </Link>
           </Button>
-          <Button asChild variant="outline" size="lg" className="gap-2">
+          <Button
+            asChild
+            variant="outline"
+            size="lg"
+            className="gap-2">
             <Link href="/artworks">
               <ArrowLeft className="h-5 w-5" />
               Procházet produkty
@@ -45,7 +59,10 @@ export default function NotFound() {
         </div>
 
         <div className="pt-8 border-t">
-          <Text variant="body2" color="neutral" className="mb-4">
+          <Text
+            variant="body2"
+            color="neutral"
+            className="mb-4">
             Možná hledáte:
           </Text>
           <div className="flex flex-wrap justify-center items-center gap-4">

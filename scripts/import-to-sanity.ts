@@ -1,13 +1,13 @@
 #!/usr/bin/env tsx
 
-import { createClient } from '@sanity/client'
-import * as fs from 'fs'
-import * as path from 'path'
+import { createClient } from "@sanity/client"
+import * as fs from "fs"
+import * as path from "path"
 
-const envLocalPath = path.join(__dirname, '..', '.env.local')
+const envLocalPath = path.join(__dirname, "..", ".env.local")
 if (fs.existsSync(envLocalPath)) {
-  const envContent = fs.readFileSync(envLocalPath, 'utf-8')
-  envContent.split('\n').forEach(line => {
+  const envContent = fs.readFileSync(envLocalPath, "utf-8")
+  envContent.split("\n").forEach(line => {
     const match = line.match(/^([^=]+)=(.*)$/)
     if (match) {
       const key = match[1].trim()
@@ -22,39 +22,39 @@ if (fs.existsSync(envLocalPath)) {
 const SANITY_API_TOKEN = process.env.SANITY_API_TOKEN || process.env.SANITY_STUDIO_API_TOKEN
 
 if (!SANITY_API_TOKEN) {
-  console.error('❌ Chybí SANITY_API_TOKEN!')
-  console.error('   Nastavte ho v .env.local nebo jako environment variable')
-  console.error('   Token najdete v Sanity Dashboard: https://www.sanity.io/manage')
+  console.error("❌ Chybí SANITY_API_TOKEN!")
+  console.error("   Nastavte ho v .env.local nebo jako environment variable")
+  console.error("   Token najdete v Sanity Dashboard: https://www.sanity.io/manage")
   process.exit(1)
 }
 
 const client = createClient({
-  projectId: 'lbgdxh20',
-  dataset: 'production',
+  projectId: "lbgdxh20",
+  dataset: "production",
   useCdn: false,
-  apiVersion: '2025-06-16',
+  apiVersion: "2025-06-16",
   token: SANITY_API_TOKEN,
 })
 
 function generateSlug(title: string, romanNumeral?: string): string {
   let slug = title
     .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/\s*-\s*/g, '-')
-    .replace(/\s+/g, '-')
-    .replace(/[^a-z0-9-]/g, '')
-    .replace(/-+/g, '-')
-    .replace(/^-|-$/g, '')
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/\s*-\s*/g, "-")
+    .replace(/\s+/g, "-")
+    .replace(/[^a-z0-9-]/g, "")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "")
   
   if (romanNumeral) {
-    slug += '-' + romanNumeral.toLowerCase()
+    slug += "-" + romanNumeral.toLowerCase()
   }
   
   return slug.slice(0, 96)
 }
 
-type ProductType = 'artwork' | 'ceramics' | 'glass' | 'gifts'
+type ProductType = "artwork" | "ceramics" | "glass" | "gifts"
 
 interface BaseProductData {
   type: ProductType
@@ -74,20 +74,20 @@ interface BaseProductData {
 }
 
 interface ArtworkData extends BaseProductData {
-  type: 'artwork'
+  type: "artwork"
 }
 
 interface CeramicsData extends BaseProductData {
-  type: 'ceramics'
+  type: "ceramics"
 }
 
 interface GlassData extends BaseProductData {
-  type: 'glass'
+  type: "glass"
   collection?: string
 }
 
 interface GiftsData extends BaseProductData {
-  type: 'gifts'
+  type: "gifts"
   occasions?: string[]
   giftWrapping?: boolean
 }
@@ -98,23 +98,23 @@ interface ImportData {
   products: ProductData[]
 }
 
-type ImportResult = 'success' | 'skipped' | 'error'
+type ImportResult = "success" | "skipped" | "error"
 
 async function createProduct(product: ProductData, updateMode: boolean = false, titleCounts?: Map<string, number>): Promise<ImportResult> {
   let finalTitle = product.title
   let romanNumeral: string | undefined
   
-  if (product.type === 'ceramics' && product.dimensions) {
+  if (product.type === "ceramics" && product.dimensions) {
     const dimensionMatch = product.dimensions.match(/(\d+)\s*x\s*(\d+)/i)
     if (dimensionMatch) {
       const firstDimension = parseInt(dimensionMatch[1], 10)
       if (firstDimension < 15) {
-        finalTitle = product.title + ' - malý'
+        finalTitle = product.title + " - malý"
       } else {
-        finalTitle = product.title + ' - velký'
+        finalTitle = product.title + " - velký"
       }
     }
-  } else if (product.type === 'artwork') {
+  } else if (product.type === "artwork") {
     const hasDuplicates = titleCounts && (titleCounts.get(product.title) || 0) > 1
     
     if (hasDuplicates) {
@@ -123,16 +123,16 @@ async function createProduct(product: ProductData, updateMode: boolean = false, 
         if (dimensionMatch) {
           const firstDimension = parseInt(dimensionMatch[1], 10)
           if (firstDimension < 40) {
-            romanNumeral = 'I'
+            romanNumeral = "I"
           } else {
-            romanNumeral = 'II'
+            romanNumeral = "II"
           }
         }
       } else if (product.price !== undefined) {
         if (product.price < 5000) {
-          romanNumeral = 'I'
+          romanNumeral = "I"
         } else {
-          romanNumeral = 'II'
+          romanNumeral = "II"
         }
       }
     }
@@ -146,7 +146,7 @@ async function createProduct(product: ProductData, updateMode: boolean = false, 
     description: product.description,
     price: product.price,
     slug: {
-      _type: 'slug',
+      _type: "slug",
       current: slug,
     },
     published: product.published !== undefined ? product.published : true,
@@ -162,15 +162,15 @@ async function createProduct(product: ProductData, updateMode: boolean = false, 
   if (product.year) document.year = product.year
   if (product.subcategory) document.subcategory = product.subcategory
 
-  if (product.type === 'glass' && 'collection' in product && product.collection) {
+  if (product.type === "glass" && "collection" in product && product.collection) {
     document.collection = product.collection
   }
 
-  if (product.type === 'gifts') {
-    if ('occasions' in product && product.occasions) {
+  if (product.type === "gifts") {
+    if ("occasions" in product && product.occasions) {
       document.occasions = product.occasions
     }
-    document.giftWrapping = 'giftWrapping' in product ? product.giftWrapping : true
+    document.giftWrapping = "giftWrapping" in product ? product.giftWrapping : true
   }
 
   try {
@@ -186,27 +186,27 @@ async function createProduct(product: ProductData, updateMode: boolean = false, 
         
         await client.patch(existing._id).set(updateDoc).commit()
         console.log(`🔄 Aktualizováno: "${product.title}" (ID: ${existing._id})`)
-        return 'success'
+        return "success"
       } else {
         console.log(`⚠️  Přeskočeno: "${product.title}" (slug "${slug}" již existuje)`)
-        return 'skipped'
+        return "skipped"
       }
     }
 
     const result = await client.create(document)
     console.log(`✅ Vytvořeno: "${product.title}" (ID: ${result._id})`)
-    return 'success'
+    return "success"
   } catch (error: any) {
     console.error(`❌ Chyba při vytváření "${product.title}":`, error.message)
-    return 'error'
+    return "error"
   }
 }
 
 async function deleteAllProducts(): Promise<void> {
-  console.log('🗑️  Mažu všechny existující produkty...')
-  console.log('⚠️  POZOR: Mazání dokumentů NESMAŽE obrázky (assets zůstanou zachované)\n')
+  console.log("🗑️  Mažu všechny existující produkty...")
+  console.log("⚠️  POZOR: Mazání dokumentů NESMAŽE obrázky (assets zůstanou zachované)\n")
   
-  const types = ['artwork', 'ceramics', 'glass', 'gifts']
+  const types = ["artwork", "ceramics", "glass", "gifts"]
   let deletedCount = 0
   
   for (const type of types) {
@@ -224,14 +224,14 @@ async function deleteAllProducts(): Promise<void> {
   }
   
   console.log(`\n✨ Smazáno celkem ${deletedCount} produktů`)
-  console.log('💡 Obrázky (assets) zůstaly zachované v Sanity\n')
+  console.log("💡 Obrázky (assets) zůstaly zachované v Sanity\n")
 }
 
 async function main() {
   const args = process.argv.slice(2)
-  const cleanFlag = args.includes('--clean') || args.includes('--clear') || process.env.CLEAN === 'true'
-  const updateFlag = args.includes('--update') || args.includes('--up')
-  const dataFile = args.find(arg => !arg.startsWith('--')) || path.join(__dirname, 'data.json')
+  const cleanFlag = args.includes("--clean") || args.includes("--clear") || process.env.CLEAN === "true"
+  const updateFlag = args.includes("--update") || args.includes("--up")
+  const dataFile = args.find(arg => !arg.startsWith("--")) || path.join(__dirname, "data.json")
   
   if (cleanFlag) {
     await deleteAllProducts()
@@ -239,8 +239,8 @@ async function main() {
   
   if (!fs.existsSync(dataFile)) {
     console.error(`❌ Soubor ${dataFile} neexistuje!`)
-    console.error('   Vytvořte soubor data.json nebo použijte: npm run import:sanity <cesta-k-souboru>')
-    console.error('   Pro smazání existujících dat použijte: npm run import:sanity --clean')
+    console.error("   Vytvořte soubor data.json nebo použijte: npm run import:sanity <cesta-k-souboru>")
+    console.error("   Pro smazání existujících dat použijte: npm run import:sanity --clean")
     process.exit(1)
   }
 
@@ -248,7 +248,7 @@ async function main() {
   
   let data: ImportData
   try {
-    const fileContent = fs.readFileSync(dataFile, 'utf-8')
+    const fileContent = fs.readFileSync(dataFile, "utf-8")
     data = JSON.parse(fileContent)
   } catch (error: any) {
     console.error(`❌ Chyba při čtení souboru: ${error.message}`)
@@ -256,13 +256,13 @@ async function main() {
   }
 
   if (!data.products || !Array.isArray(data.products)) {
-    console.error('❌ Neplatný formát dat! Očekává se objekt s polem "products" (array)')
+    console.error("❌ Neplatný formát dat! Očekává se objekt s polem \"products\" (array)")
     process.exit(1)
   }
 
   const titleCounts = new Map<string, number>()
   data.products.forEach(product => {
-    if (product.type === 'artwork') {
+    if (product.type === "artwork") {
       const count = titleCounts.get(product.title) || 0
       titleCounts.set(product.title, count + 1)
     }
@@ -282,16 +282,16 @@ async function main() {
         continue
       }
 
-      if (!['artwork', 'ceramics', 'glass', 'gifts'].includes(product.type)) {
+      if (!["artwork", "ceramics", "glass", "gifts"].includes(product.type)) {
         console.error(`❌ Neplatný typ produktu: ${product.type}`)
         errorCount++
         continue
       }
 
       const result = await createProduct(product, updateFlag, titleCounts)
-      if (result === 'success') {
+      if (result === "success") {
         successCount++
-      } else if (result === 'skipped') {
+      } else if (result === "skipped") {
         skipCount++
         if (cleanFlag) {
           console.error(`⚠️  Přeskočeno (i po mazání): "${product.title}" - možná duplikát v JSON`)
@@ -304,19 +304,19 @@ async function main() {
     }
   }
 
-  console.log(`\n✨ Import dokončen!`)
-  console.log(`   ✅ ${updateFlag ? 'Aktualizováno/Vytvořeno' : 'Vytvořeno'}: ${successCount}`)
+  console.log("\n✨ Import dokončen!")
+  console.log(`   ✅ ${updateFlag ? "Aktualizováno/Vytvořeno" : "Vytvořeno"}: ${successCount}`)
   console.log(`   ⚠️  Přeskočeno: ${skipCount}`)
   console.log(`   ❌ Chyby: ${errorCount}`)
   if (updateFlag) {
-    console.log(`\n💡 Obrázky byly zachovány - pouze data byla aktualizována`)
+    console.log("\n💡 Obrázky byly zachovány - pouze data byla aktualizována")
   } else {
-    console.log(`\n💡 Tip: Obrázky můžete nyní přidat ručně v Sanity Studio`)
+    console.log("\n💡 Tip: Obrázky můžete nyní přidat ručně v Sanity Studio")
   }
 }
 
 main().catch((error) => {
-  console.error('❌ Kritická chyba:', error)
+  console.error("❌ Kritická chyba:", error)
   process.exit(1)
 })
 

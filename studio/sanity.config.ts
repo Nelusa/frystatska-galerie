@@ -1,14 +1,15 @@
-import {defineConfig} from 'sanity'
-import {structureTool} from 'sanity/structure'
-import {visionTool} from '@sanity/vision'
-import {schemaTypes} from './schemaTypes'
+import { visionTool } from "@sanity/vision"
+import { defineConfig } from "sanity"
+import { structureTool } from "sanity/structure"
+
+import { schemaTypes } from "./schemaTypes"
 
 export default defineConfig({
-  name: 'default',
-  title: 'frystatska-galerie',
+  name: "default",
+  title: "frystatska-galerie",
 
-  projectId: 'lbgdxh20',
-  dataset: 'production',
+  projectId: "lbgdxh20",
+  dataset: "production",
 
   plugins: [structureTool(), visionTool()],
 

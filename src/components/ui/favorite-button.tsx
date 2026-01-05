@@ -1,10 +1,13 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
+import { useState, MouseEvent } from "react"
+
 import { Heart } from "lucide-react"
+
+import { Button } from "@/components/ui/button"
 import { useFavorites, FavoriteProduct } from "@/lib/useFavorites"
 import { cn } from "@/lib/utils"
-import { useState, MouseEvent } from "react"
+
 
 interface FavoriteButtonProps {
   product: FavoriteProduct
