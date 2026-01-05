@@ -71,7 +71,7 @@ const galleryImages = [
 export default function GalleryPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background to-secondary/20">
-      <section className="py-10 md:py-20">
+      <section className="py-16 md:py-20">
         <div className="container mx-auto px-4 max-w-7xl">
           <div className="text-center mb-12">
             <Text

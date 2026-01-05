@@ -5,6 +5,7 @@ import { Mail, Phone, MapPin, Clock, Instagram, Facebook, LucideIcon } from "luc
 import { ItemWithIcon } from "@/components/shared";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Text } from "@/components/ui/text";
+import { businessInfo, getFullOpeningHours } from "@/config/businessInfo";
 
 export interface ContactInfo {
   icon: LucideIcon;
@@ -25,10 +26,10 @@ const contactData: ContactInfo[] = [
         <>
           <Text
             variant="body1"
-            color="neutral">Fryštátská 57</Text>
+            color="neutral">{businessInfo.address.street}</Text>
           <Text
             variant="body1"
-            color="neutral">733 01 Karviná 1-Fryštát</Text>
+            color="neutral">{businessInfo.address.city}</Text>
         </>
     )
   },
@@ -37,10 +38,10 @@ const contactData: ContactInfo[] = [
     title: "Telefon",
     content: (
         <a
-          href="tel:+420605416666"
+          href={businessInfo.phone.href}
           className="text-primary hover:text-primary/80 transition-all duration-300 text-base font-medium"
         >
-          +420 605 416 666
+          {businessInfo.phone.display}
         </a>
     )
   },
@@ -49,10 +50,10 @@ const contactData: ContactInfo[] = [
     title: "E-mail",
     content: (
         <a
-          href="mailto:info@frystatskagalerie.cz"
+          href={businessInfo.email.href}
           className="text-primary hover:text-primary/80 transition-all duration-300 text-base font-medium"
         >
-          info@frystatskagalerie.cz
+          {businessInfo.email.display}
         </a>
     )
   },
@@ -61,15 +62,12 @@ const contactData: ContactInfo[] = [
     title: "Otevírací doba",
     content: (
         <>
-          <Text
-            variant="body1"
-            color="neutral">Po-Pá: 9:30 - 16:30</Text>
-          <Text
-            variant="body1"
-            color="neutral">So: Zavřeno</Text>
-          <Text
-            variant="body1"
-            color="neutral">Ne: Zavřeno</Text>
+          {getFullOpeningHours().map((hours, index) => (
+            <Text
+              key={index}
+              variant="body1"
+              color="neutral">{hours}</Text>
+          ))}
         </>
     )
   }

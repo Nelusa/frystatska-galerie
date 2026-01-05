@@ -68,15 +68,15 @@ export default async function Home() {
                   {homepageContent?.hero?.subtitle || "Objevte krásu umění v srdci Karviné. Naše galerie nabízí jedinečný výběr obrazů, keramiky, skla a dárkových předmětů."}
                 </Text>
               </div>
-              <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                <Link href={homepageContent?.hero?.primaryButton?.link || "/artworks"}>
+              <div className="flex flex-col sm:flex-row gap-4 pt-4 w-full sm:w-auto">
+                <Link href={homepageContent?.hero?.primaryButton?.link || "/artworks"} className="w-full sm:w-auto">
                   <Button
                     size="lg"
                     className="w-full sm:w-auto">
                     {homepageContent?.hero?.primaryButton?.text || "Prohlédnout kolekci"}
                   </Button>
                 </Link>
-                <Link href={homepageContent?.hero?.secondaryButton?.link || "/contact"}>
+                <Link href={homepageContent?.hero?.secondaryButton?.link || "/contact"} className="w-full sm:w-auto">
                   <Button
                     variant="outline"
                     size="lg"
@@ -161,7 +161,7 @@ export default async function Home() {
                         <CardTitle className="font-heading text-xl">{category.title}</CardTitle>
                       </CardHeader>
                       <CardContent className="pt-0">
-                        <CardDescription className="text-center text-sm leading-relaxed">
+                        <CardDescription className="text-center text-sm">
                           {category.description}
                         </CardDescription>
                       </CardContent>

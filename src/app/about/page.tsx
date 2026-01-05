@@ -6,6 +6,7 @@ import { IconCircleSize } from "@/components/shared/IconCircle";
 import { StatisticProps } from "@/components/shared/Statistic";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Text } from "@/components/ui/text";
+import { businessInfo, getShortOpeningHours } from "@/config/businessInfo";
 
 interface AboutFeature {
   icon: LucideIcon;
@@ -233,14 +234,14 @@ export default function AboutPage() {
                     title="Adresa">
                     <Text
                       variant="body1"
-                      color="neutral">Fryštátská 57, 733 01 Karviná 1-Fryštát</Text>
+                      color="neutral">{businessInfo.address.full}</Text>
                   </ItemWithIcon>
                   <ItemWithIcon
                     icon={Clock}
                     title="Otevírací doba">
                     <Text
                       variant="body1"
-                      color="neutral">Po-Pá: 9:30 - 16:30</Text>
+                      color="neutral">{getShortOpeningHours()}</Text>
                   </ItemWithIcon>
                 </div>
                 <Text
