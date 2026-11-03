@@ -2,7 +2,6 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 
 import { Badge } from "@/app/hooks/badge"
 import { Button } from "@/components/ui/button"
@@ -20,16 +19,17 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ item, basePath, variant = "grid" }: ProductCardProps) {
-  const router = useRouter()
   const aspectRatio = variant === "featured" ? "aspect-[4/3]" : "aspect-[3/4]"
   const iconSize = "h-6 w-6"
   const detailUrl = `${basePath}/${item.slug.current}`
 
   return (
-      <Link
-        href={detailUrl}
-        className="block">
-        <Card className="overflow-hidden group hover:shadow-lg transition-all duration-300 cursor-pointer relative">
+      <div className="block relative group">
+        <Link
+          href={detailUrl}
+          aria-label={`Zobrazit detail: ${item.title}`}
+          className="absolute inset-0 z-10 rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary" />
+        <Card className="overflow-hidden group-hover:shadow-lg transition-all duration-300 cursor-pointer relative">
           <div className={cn(aspectRatio, "relative overflow-hidden bg-muted/30 flex items-center justify-center")}>
           {item.image ? (
               <Image
@@ -70,7 +70,7 @@ export function ProductCard({ item, basePath, variant = "grid" }: ProductCardPro
             )}
           </div>
 
-          <div className={cn("absolute opacity-0 group-hover:opacity-100 transition-opacity z-10 pointer-events-auto", variant === "featured" ? "top-4 right-4" : "top-3 right-3")}>
+          <div className={cn("absolute opacity-0 group-hover:opacity-100 transition-opacity z-20 pointer-events-auto focus-within:opacity-100", variant === "featured" ? "top-4 right-4" : "top-3 right-3")}>
             <FavoriteButton
               product={item}
               variant="default"
@@ -156,35 +156,34 @@ export function ProductCard({ item, basePath, variant = "grid" }: ProductCardPro
               </Text>
           )}
 
-          <div className={cn("flex relative z-10", variant === "featured" && "gap-2")}>
-            <div
-              className={cn(variant === "featured" ? "flex-1" : "w-full")}
-              onClick={(e) => e.stopPropagation()}>
-              <Button
-                className={cn(variant === "featured" ? "w-full" : "w-full", "mt-4")}
-                size="sm"
-                disabled={!item.inStock}
-              >
-                {item.inStock ? "Zobrazit detail" : "Prodáno"}
-              </Button>
+          <div className={cn("flex relative z-20", variant === "featured" && "gap-2")}>
+            <div className={variant === "featured" ? "flex-1" : "w-full"}>
+              {item.inStock ? (
+                <Button
+                  asChild
+                  className="w-full mt-4"
+                  size="sm">
+                  <Link href={detailUrl}>Zobrazit detail</Link>
+                </Button>
+              ) : (
+                <Button
+                  className="w-full mt-4"
+                  size="sm"
+                  disabled>Prodáno</Button>
+              )}
             </div>
             {variant === "featured" && (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="mt-4"
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    e.preventDefault()
-                    router.push("/contact")
-                  }}
-                >
-                  Kontakt
-                </Button>
+              <Button
+                asChild
+                variant="outline"
+                size="sm"
+                className="mt-4">
+                <Link href="/contact">Kontakt</Link>
+              </Button>
             )}
           </div>
         </CardContent>
         </Card>
-      </Link>
+      </div>
   )
 }

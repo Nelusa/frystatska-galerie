@@ -8,7 +8,7 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbP
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { FavoriteButton } from "@/components/ui/favorite-button"
 import { Text } from "@/components/ui/text"
-import { urlFor, formatPrice, SanityImage, AllProducts } from "@/lib/sanity"
+import { urlFor, formatPrice, SanityImage, AllProducts, getCategoryUrl } from "@/lib/sanity"
 
 interface ProductDetailPageProps {
   product: AllProducts
@@ -92,9 +92,13 @@ export function ProductDetailPage({
 
             {product.gallery && product.gallery.length > 0 && (
                 <div className="grid grid-cols-4 gap-2">
-                  {product.gallery.slice(0, 4).map((image: SanityImage, index: number) => (
-                      <div
+                  {product.gallery.map((image: SanityImage, index: number) => (
+                      <a
                         key={index}
+                        href={urlFor(image).width(2400).url()}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`Zvětšit fotku: ${product.title}, detail ${index + 1} (nová karta)`}
                         className="relative w-full min-h-[100px] flex items-center justify-center overflow-hidden rounded border cursor-pointer hover:opacity-75 transition-opacity duration-300 bg-muted/30">
                         <Image
                           src={urlFor(image).width(300).url()}
@@ -103,7 +107,7 @@ export function ProductDetailPage({
                           height={300}
                           className="object-contain w-full h-auto"
                         />
-                      </div>
+                      </a>
                   ))}
                 </div>
             )}
@@ -175,7 +179,7 @@ export function ProductDetailPage({
               <Text
                 variant="body1"
                 color="neutral"
-                className="leading-relaxed">
+                className="leading-relaxed whitespace-pre-line">
                 {product.description}
               </Text>
             </div>
@@ -220,7 +224,7 @@ export function ProductDetailPage({
                 {relatedProducts.map((relatedProduct) => (
                     <Link
                       key={relatedProduct._id}
-                      href={`/${name.toLowerCase()}/${relatedProduct.slug.current}`}>
+                      href={`${getCategoryUrl(relatedProduct._type)}/${relatedProduct.slug.current}`}>
                       <Card className="group hover:shadow-lg transition-all duration-300">
                         <div className="aspect-square relative overflow-hidden">
                           {relatedProduct.image ? (

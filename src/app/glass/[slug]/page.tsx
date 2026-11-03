@@ -10,7 +10,7 @@ interface Props {
 
 export default async function GlassDetailPage({ params }: Props) {
   const { slug } = await params
-  const glassItem = await getProductBySlug(slug)
+  const glassItem = await getProductBySlug(slug, "glass")
 
   if (!glassItem || glassItem._type !== "glass") {
     notFound()

@@ -1,3 +1,4 @@
+import { PortableText } from "@portabletext/react"
 import { Palette, Cookie, Wine, Gift } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
@@ -6,9 +7,11 @@ import { ProductCard } from "@/components/products/ProductCard"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Text } from "@/components/ui/text"
+import { contentLink } from "@/lib/contentLinks"
 import {
   getFeaturedArtworks,
   getHomepageContent,
+  urlFor,
 } from "@/lib/sanity"
 import type { AllProducts } from "@/lib/sanity"
 
@@ -69,14 +72,18 @@ export default async function Home() {
                 </Text>
               </div>
               <div className="flex flex-col sm:flex-row gap-4 pt-4 w-full sm:w-auto">
-                <Link href={homepageContent?.hero?.primaryButton?.link || "/artworks"} className="w-full sm:w-auto">
+                <Link
+                  href={contentLink(homepageContent?.hero?.primaryButton?.link, "/artworks")}
+                  className="w-full sm:w-auto">
                   <Button
                     size="lg"
                     className="w-full sm:w-auto">
                     {homepageContent?.hero?.primaryButton?.text || "Prohlédnout kolekci"}
                   </Button>
                 </Link>
-                <Link href={homepageContent?.hero?.secondaryButton?.link || "/contact"} className="w-full sm:w-auto">
+                <Link
+                  href={contentLink(homepageContent?.hero?.secondaryButton?.link, "/contact")}
+                  className="w-full sm:w-auto">
                   <Button
                     variant="outline"
                     size="lg"
@@ -182,6 +189,23 @@ export default async function Home() {
                   {homepageContent?.aboutSection?.title || "Umění s tradicí"}
                 </Text>
                 <div className="flex flex-col gap-y-4 text-muted-foreground">
+                  {homepageContent?.aboutSection?.content?.length ? (
+                    <PortableText
+                      value={homepageContent.aboutSection.content}
+                      components={{
+                        block: ({ children }) => <Text
+                          variant="body1"
+                          color="neutral"
+                          className="leading-relaxed">{children}</Text>,
+                        marks: {
+                          link: ({ value, children }) => <a
+                            href={contentLink(value?.href, "/about")}
+                            className="underline">{children}</a>,
+                        },
+                      }}
+                    />
+                  ) : (
+                    <>
                   <Text
                     variant="body1"
                     color="neutral"
@@ -196,7 +220,9 @@ export default async function Home() {
                     Spolupracujeme s místními umělci, abychom vám mohli nabídnout
                     tu nejširší paletu uměleckých děl a řemeslných výrobků nejvyšší kvality.
                   </Text>
-                  <Link href={homepageContent?.aboutSection?.button?.link || "/about"}>
+                    </>
+                  )}
+                  <Link href={contentLink(homepageContent?.aboutSection?.button?.link, "/about")}>
                     <Button
                       variant="outline"
                       size="lg">
@@ -208,8 +234,10 @@ export default async function Home() {
               <div className="lg:order-first">
                 <div className="aspect-square rounded-lg overflow-hidden shadow-lg">
                   <Image
-                    src="/gallery/gallery-3.jpg"
-                    alt="Fryštátská Galerie - interiér s obrazy"
+                    src={homepageContent?.aboutSection?.image?.asset?._ref
+                      ? urlFor(homepageContent.aboutSection.image).width(1200).height(1200).fit("crop").url()
+                      : "/gallery/gallery-3.jpg"}
+                    alt={homepageContent?.aboutSection?.image?.alt || "Fryštátská Galerie - interiér s obrazy"}
                     width={600}
                     height={600}
                     className="w-full h-full object-cover"
@@ -241,7 +269,7 @@ export default async function Home() {
                     homepageContent.ctaSection.buttons.map((button, index) => (
                         <Link
                           key={index}
-                          href={button.link}>
+                          href={contentLink(button.link, "/contact")}>
                           <Button
                             size="lg"
                             variant={button.style === "primary" ? "default" : "outline"}

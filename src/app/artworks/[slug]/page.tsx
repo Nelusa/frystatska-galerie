@@ -10,7 +10,7 @@ interface Props {
 
 export default async function ArtworkDetailPage({ params }: Props) {
   const { slug } = await params
-  const artwork = await getProductBySlug(slug)
+  const artwork = await getProductBySlug(slug, "artwork")
 
   if (!artwork || artwork._type !== "artwork") {
     notFound()

@@ -10,7 +10,7 @@ interface Props {
 
 export default async function CeramicDetailPage({ params }: Props) {
   const { slug } = await params
-  const ceramic = await getProductBySlug(slug)
+  const ceramic = await getProductBySlug(slug, "ceramics")
 
   if (!ceramic || ceramic._type !== "ceramics") {
     notFound()
