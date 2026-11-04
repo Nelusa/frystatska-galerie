@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-import { Mail, Phone, MapPin, Clock, Instagram, Facebook, LucideIcon } from "lucide-react";
+import { Mail, Phone, MapPin, Clock, LucideIcon } from "lucide-react";
 
 import { ItemWithIcon } from "@/components/shared";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
@@ -11,11 +11,6 @@ export interface ContactInfo {
   icon: LucideIcon;
   title: string;
   content: ReactNode;
-}
-
-export interface SocialMediaLink {
-  icon: LucideIcon;
-  href: string;
 }
 
 const contactData: ContactInfo[] = [
@@ -39,7 +34,7 @@ const contactData: ContactInfo[] = [
     content: (
         <a
           href={businessInfo.phone.href}
-          className="text-primary hover:text-primary/80 transition-all duration-300 text-base font-medium"
+          className="text-primary hover:text-primary/80 transition-colors duration-150 text-base font-medium"
         >
           {businessInfo.phone.display}
         </a>
@@ -51,7 +46,7 @@ const contactData: ContactInfo[] = [
     content: (
         <a
           href={businessInfo.email.href}
-          className="text-primary hover:text-primary/80 transition-all duration-300 text-base font-medium"
+          className="text-primary hover:text-primary/80 transition-colors duration-150 text-base font-medium"
         >
           {businessInfo.email.display}
         </a>
@@ -82,7 +77,7 @@ const transportOptions = [
   {
     emoji: "🚌",
     title: "MHD",
-    description: "Nejbližší zastávkou je <strong>Fryštát - Univerzita</strong> (linky 511, 512, 515). Odtud to máte do galerie necelé 2 minuty chůze."
+    description: "Nejbližší zastávkou je Fryštát – Univerzita (linky 511, 512, 515). Odtud to máte do galerie necelé 2 minuty chůze."
   },
   {
     emoji: "🚗",
@@ -91,10 +86,7 @@ const transportOptions = [
   }
 ];
 
-const socialMedia: SocialMediaLink[] = [
-  { icon: Instagram, href: "#" },
-  { icon: Facebook, href: "#" }
-];
+const mapQuery = encodeURIComponent(businessInfo.address.full);
 
 export default function ContactsPage() {
   return (
@@ -135,24 +127,6 @@ export default function ContactsPage() {
                 </CardContent>
               </Card>
 
-              <Card>
-                <CardHeader>
-                  <CardTitle>Sledujte nás</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex space-x-4">
-                    {socialMedia.map((social, index) => (
-                        <a
-                          key={index}
-                          href={social.href}
-                          className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center hover:bg-primary/20 transition-all duration-300"
-                        >
-                          <social.icon className="w-6 h-6 text-primary" />
-                        </a>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
             </div>
 
             <div className="space-y-8">
@@ -163,7 +137,7 @@ export default function ContactsPage() {
                 <CardContent>
                   <div className="aspect-video rounded-xl overflow-hidden border border-border">
                     <iframe
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2573.1234567890123!2d18.54123456789012!3d49.85432109876543!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4713e33c12345678%3A0xabcdef1234567890!2sFry%C5%A1t%C3%A1tsk%C3%A1%2057%2C%20733%2001%20Karvin%C3%A1%201-Fry%C5%A1t%C3%A1t!5e0!3m2!1scs!2scz!4v1234567890123"
+                      src={`https://maps.google.com/maps?q=${mapQuery}&output=embed`}
                       width="100%"
                       height="100%"
                       style={{ border: 0 }}
@@ -176,10 +150,10 @@ export default function ContactsPage() {
                   </div>
                   <div className="mt-4 text-center">
                     <a
-                      href="https://maps.google.com/?q=Fryštátská+57,+733+01+Karviná+1-Fryštát"
+                      href={`https://www.google.com/maps/search/?api=1&query=${mapQuery}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-all duration-300 font-medium"
+                      className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors duration-150 font-medium"
                     >
                       <MapPin className="w-4 h-4" />
                       Otevřít v Google Maps
@@ -199,11 +173,10 @@ export default function ContactsPage() {
                           key={index}
                           emoji={option.emoji}
                           title={option.title}>
-                          {/*TODO (NL): Odstranit dangerouslySetHTML*/}
                           <Text
                             variant="body2"
                             color="neutral"
-                            dangerouslySetInnerHTML={{ __html: option.description }} />
+                            >{option.description}</Text>
                         </ItemWithIcon>
                     ))}
                   </div>

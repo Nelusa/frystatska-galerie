@@ -168,3 +168,52 @@
     @apply font-heading
   }
 }
+
+.gallery-nav-link, .gallery-mobile-nav-link {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  border-radius: .375rem;
+  color: inherit;
+  transition: background-color 150ms ease, color 150ms ease;
+}
+
+.gallery-nav-link {
+  min-height: 2.5rem;
+  padding-inline: .65rem;
+  white-space: nowrap;
+  font-size: .875rem;
+  font-weight: 500;
+}
+
+.gallery-mobile-nav-link {
+  gap: .75rem;
+  padding: .75rem 1rem;
+}
+
+.gallery-mobile-nav-link > svg { flex: none; }
+
+.gallery-nav-link[aria-current], .gallery-mobile-nav-link[aria-current] {
+  background: #efe3d3;
+  color: #613f2e;
+}
+
+@media (hover: hover) {
+  .gallery-nav-link:hover, .gallery-mobile-nav-link:hover {
+    background: #e8d9c8;
+    color: #613f2e;
+  }
+}
+
+a:focus-visible, button:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

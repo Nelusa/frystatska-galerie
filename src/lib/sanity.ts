@@ -211,19 +211,19 @@ export interface SeasonalBanner {
 
 export const queries = {
   allProducts: `
-    *[_type in ["artwork", "ceramics", "glass", "gifts"] && published == true]
+    *[_type in ["artwork", "ceramics", "glass", "gifts"] && published == true && defined(slug.current) && slug.current != ""]
     | order(_createdAt desc) {
       ${productFields}
     }
   `,
   productsByType: `
-    *[_type == $type && published == true]
+    *[_type == $type && published == true && defined(slug.current) && slug.current != ""]
     | order(_createdAt desc) {
       ${productFields}
     }
   `,
   featuredProducts: `
-    *[_type in ["artwork", "ceramics", "glass", "gifts"] && featured == true && published == true]
+    *[_type in ["artwork", "ceramics", "glass", "gifts"] && featured == true && published == true && defined(slug.current) && slug.current != ""]
     | order(_createdAt desc) {
       ${productFields}
     }

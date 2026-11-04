@@ -1,303 +1,208 @@
 import { PortableText } from "@portabletext/react"
-import { Palette, Cookie, Wine, Gift } from "lucide-react"
+import { ArrowDown, ArrowRight, ArrowUpRight } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 
 import { ProductCard } from "@/components/products/ProductCard"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Text } from "@/components/ui/text"
+import { businessInfo, openingHours } from "@/config/businessInfo"
 import { contentLink } from "@/lib/contentLinks"
-import {
-  getFeaturedArtworks,
-  getHomepageContent,
-  urlFor,
-} from "@/lib/sanity"
-import type { AllProducts } from "@/lib/sanity"
+import { getCategoryUrl, getFeaturedArtworks, getHomepageContent, urlFor } from "@/lib/sanity"
+import { hasSanityImage } from "@/lib/sanityImage"
 
 const categories = [
-  {
-    title: "Obrazy",
-    description: "Originální obrazy od českých umělců",
-    icon: <Palette className="h-12 w-12 text-primary" />,
-    href: "/artworks",
-    image: "/images/paintings-preview.jpg"
-  },
-  {
-    title: "Keramika",
-    description: "Ručně vyráběná keramika s jedinečným designem",
-    icon: <Cookie className="h-12 w-12 text-primary" />,
-    href: "/ceramics",
-    image: "/images/ceramics-preview.jpg"
-  },
-  {
-    title: "Sklo",
-    description: "Tradiční české sklo a křišťál",
-    icon: <Wine className="h-12 w-12 text-primary" />,
-    href: "/glass",
-    image: "/images/glass-preview.jpg"
-  },
-  {
-    title: "Dárkové předměty",
-    description: "Dárky pro každou příležitost",
-    icon: <Gift className="h-12 w-12 text-primary" />,
-    href: "/gifts",
-    image: "/images/gifts-preview.jpg"
-  }
+  { title: "Obrazy", href: "/artworks", image: "/gallery/gallery-7.jpg", position: "center 56%" },
+  { title: "Keramika", href: "/ceramics", image: "/gallery/gallery-14.jpg", position: "center 64%" },
+  { title: "Sklo", href: "/glass", image: "/gallery/gallery-5.jpg", position: "center 50%" },
+  { title: "Dárkové předměty", href: "/gifts", image: "/gallery/gallery-3.jpg", position: "center 63%" },
 ]
 
 export default async function Home() {
-  const [featuredArtworks, homepageContent] = await Promise.all([
-    getFeaturedArtworks(),
-    getHomepageContent(),
-  ])
+  const [featured, content] = await Promise.all([getFeaturedArtworks(), getHomepageContent()])
+  const aboutImage = content?.aboutSection?.image
+  const visitButtons = content?.ctaSection?.buttons ?? [
+    { text: "Kontakt a cesta k nám", link: "/contact", style: "primary" },
+    { text: "Procházet galerii", link: "/artworks", style: "secondary" },
+  ]
 
   return (
-      <div className="flex flex-col">
-        <section className="relative bg-gradient-to-b from-background to-secondary/20 py-16 md:py-24">
-          <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center space-y-4 text-center">
-              <div className="space-y-2">
-                <Text
-                  as="h1"
-                  variant="hero"
-                  className="mb-6 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                  {homepageContent?.hero?.title || "Fryštátská Galerie"}
-                </Text>
-                <Text
-                  variant="description"
-                  color="neutral"
-                  className="mx-auto max-w-[700px]">
-                  {homepageContent?.hero?.subtitle || "Objevte krásu umění v srdci Karviné. Naše galerie nabízí jedinečný výběr obrazů, keramiky, skla a dárkových předmětů."}
-                </Text>
+    <div className="gallery-home">
+      <section
+        className="gh-wrap gh-hero"
+        aria-labelledby="gallery-title">
+        <div className="gh-hero-copy">
+          <p className="gh-label"><span /> Galerie v Karviné-Fryštátě</p>
+          <h1 id="gallery-title">{content?.hero?.title || "Fryštátská galerie"}</h1>
+          <p className="gh-intro">{content?.hero?.subtitle || "Obrazy, keramika a sklo v srdci Fryštátu. Zastavte se u nás a prohlédněte si, co právě máme v galerii."}</p>
+          <div className="gh-actions">
+            <Link
+              className="gh-button"
+              href={contentLink(content?.hero?.primaryButton?.link, "#kolekce")}>
+              {content?.hero?.primaryButton?.text || "Prohlédnout kolekce"}<ArrowDown
+                aria-hidden="true"
+                size={17} />
+            </Link>
+            <Link
+              className="gh-link"
+              href={contentLink(content?.hero?.secondaryButton?.link, "/contact")}>
+              {content?.hero?.secondaryButton?.text || "Naplánovat návštěvu"}<ArrowUpRight
+                aria-hidden="true"
+                size={16} />
+            </Link>
+          </div>
+        </div>
+        <figure className="gh-hero-figure">
+          <div className="gh-hero-image">
+            <Image
+              src="/gallery/gallery-11.jpg"
+              alt="Stěna Fryštátské galerie s obrazy v rámech"
+              fill
+              priority
+              sizes="(max-width: 760px) 94vw, 52vw" />
+          </div>
+          <figcaption><span>Uvnitř galerie</span><span>{businessInfo.address.street} · Karviná</span></figcaption>
+        </figure>
+      </section>
+
+      <section
+        id="kolekce"
+        className="gh-wrap gh-collections"
+        aria-labelledby="collections-title">
+        <div className="gh-section-head">
+          <h2 id="collections-title">Naše kolekce</h2>
+          <Link
+            href="/all"
+            className="gh-link">Celá nabídka <ArrowRight
+              aria-hidden="true"
+              size={16} /></Link>
+        </div>
+        <div className="gh-category-grid">
+          {categories.map((category) => (
+            <Link
+              key={category.href}
+              href={category.href}
+              className="gh-category">
+              <div className="gh-category-image">
+                <Image
+                  src={category.image}
+                  alt=""
+                  fill
+                  sizes="(max-width: 760px) 46vw, 25vw"
+                  style={{ objectPosition: category.position }} />
               </div>
-              <div className="flex flex-col sm:flex-row gap-4 pt-4 w-full sm:w-auto">
-                <Link
-                  href={contentLink(homepageContent?.hero?.primaryButton?.link, "/artworks")}
-                  className="w-full sm:w-auto">
-                  <Button
-                    size="lg"
-                    className="w-full sm:w-auto">
-                    {homepageContent?.hero?.primaryButton?.text || "Prohlédnout kolekci"}
-                  </Button>
-                </Link>
-                <Link
-                  href={contentLink(homepageContent?.hero?.secondaryButton?.link, "/contact")}
-                  className="w-full sm:w-auto">
-                  <Button
-                    variant="outline"
-                    size="lg"
-                    className="w-full sm:w-auto">
-                    {homepageContent?.hero?.secondaryButton?.text || "Kontaktujte nás"}
-                  </Button>
-                </Link>
-              </div>
-            </div>
+              <div className="gh-category-caption"><h3>{category.title}</h3><ArrowUpRight
+                aria-hidden="true"
+                size={17} /></div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {featured.length > 0 && (
+        <section
+          className="gh-wrap gh-featured"
+          aria-labelledby="featured-title">
+          <div className="gh-section-head">
+            <h2 id="featured-title">Doporučená díla</h2>
+            <Link
+              href="/all"
+              className="gh-link">Všechna díla <ArrowRight
+                aria-hidden="true"
+                size={16} /></Link>
+          </div>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {featured.slice(0, 8).map((item) => (
+              <ProductCard
+                key={item._id}
+                item={item}
+                basePath={getCategoryUrl(item._type)}
+                variant="grid" />
+            ))}
           </div>
         </section>
+      )}
 
-        {featuredArtworks.length > 0 && (
-            <section className="py-16 md:py-24 bg-secondary/5">
-              <div className="container px-4 md:px-6">
-                <div className="text-center mb-12">
-                  <Text
-                    variant="h2"
-                    className="mb-4 tracking-tighter">
-                    Doporučená díla
-                  </Text>
-                  <Text
-                    variant="description"
-                    color="neutral"
-                    className="max-w-[600px] mx-auto">
-                    Nejnovější a nejkrásnější kousky z naší kolekce
-                  </Text>
-                </div>
-
-                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                  {featuredArtworks.slice(0, 8).map((product: AllProducts) => (
-                    <ProductCard
-                      key={product._id}
-                      item={product}
-                      basePath={`/${product._type === "artwork" ? "artworks" : product._type === "ceramics" ? "ceramics" : product._type === "glass" ? "glass" : "gifts"}`}
-                      variant="grid"
-                    />
-                  ))}
-                </div>
-
-                <div className="text-center mt-8">
-                  <Link href="/all">
-                    <Button
-                      variant="outline"
-                      size="lg">
-                      Zobrazit všechna díla
-                    </Button>
-                  </Link>
-                </div>
-              </div>
-            </section>
-        )}
-
-        <section className="py-16 md:py-24">
-          <div className="container px-4 md:px-6">
-            <div className="text-center mb-12">
-              <Text
-                variant="h2"
-                className="mb-4 tracking-tighter">
-                Naše kolekce
-              </Text>
-              <Text
-                variant="description"
-                color="neutral"
-                className="max-w-[600px] mx-auto">
-                Každá kategorie představuje pečlivě vybraná umělecká díla a řemeslné výrobky
-              </Text>
+      <section
+        className="gh-story"
+        aria-labelledby="story-title">
+        <div className="gh-wrap gh-story-grid">
+          <div className="gh-story-image">
+            <Image
+              src={hasSanityImage(aboutImage) ? urlFor(aboutImage).width(1200).height(1200).fit("crop").url() : "/gallery/gallery-3.jpg"}
+              alt={aboutImage?.alt || "Police s keramikou a obrazy ve Fryštátské galerii"}
+              fill
+              sizes="(max-width: 760px) 94vw, 44vw"
+            />
+          </div>
+          <div className="gh-story-copy">
+            <p className="gh-label"><span /> O galerii</p>
+            <h2 id="story-title">{content?.aboutSection?.title || "Umění s tradicí"}</h2>
+            <div className="gh-prose">
+              {content?.aboutSection?.content?.length ? (
+                <PortableText
+                  value={content.aboutSection.content}
+                  components={{
+                    marks: {
+                      link: ({ value, children }) => <a href={contentLink(value?.href, "/about")}>{children}</a>,
+                    },
+                  }}
+                />
+              ) : (
+                <>
+                  <p>Fryštátská Galerie je místem, kde se setkává tradiční řemeslo s moderním uměním. Již více než 15 let přinášíme našim zákazníkům jedinečné umělecké zážitky.</p>
+                  <p>Spolupracujeme s místními umělci, abychom vám mohli nabídnout tu nejširší paletu uměleckých děl a řemeslných výrobků nejvyšší kvality.</p>
+                </>
+              )}
             </div>
+            <div className="gh-actions">
+              <Link
+                className="gh-link"
+                href={contentLink(content?.aboutSection?.button?.link, "/about")}>
+                {content?.aboutSection?.button?.text || "Více o nás"}<ArrowRight
+                  aria-hidden="true"
+                  size={16} />
+              </Link>
+              <Link
+                className="gh-link"
+                href="/photos">Fotky galerie <ArrowUpRight
+                  aria-hidden="true"
+                  size={16} /></Link>
+            </div>
+          </div>
+        </div>
+      </section>
 
-            <div className="grid gap-6 md:gap-8 md:grid-cols-2 lg:grid-cols-4">
-              {categories.map((category, index) => (
-                  <Link
-                    key={index}
-                    href={category.href}
-                    className="group">
-                    <Card
-                      className="h-full transition-all duration-1000 hover:shadow-lg hover:-translate-y-1 border-border/50">
-                      <CardHeader className="text-center pb-4">
-                        <div className="mx-auto mb-4 transition-transform duration-1000 group-hover:scale-110">
-                          {category.icon}
-                        </div>
-                        <CardTitle className="font-heading text-xl">{category.title}</CardTitle>
-                      </CardHeader>
-                      <CardContent className="pt-0">
-                        <CardDescription className="text-center text-sm">
-                          {category.description}
-                        </CardDescription>
-                      </CardContent>
-                    </Card>
-                  </Link>
+      <section
+        className="gh-visit"
+        aria-labelledby="visit-title">
+        <div className="gh-wrap gh-visit-grid">
+          <div>
+            <p className="gh-label"><span /> Fryštátská 57 · Karviná</p>
+            <h2 id="visit-title">{content?.ctaSection?.title || "Navštivte nás"}</h2>
+            {content?.ctaSection?.description && <p className="gh-intro">{content.ctaSection.description}</p>}
+            <div className="gh-actions">
+              {visitButtons.map((button, index) => (
+                <Link
+                  key={index}
+                  href={contentLink(button.link, "/contact")}
+                  className={button.style === "primary" ? "gh-button" : "gh-link"}>
+                  {button.text}<ArrowUpRight
+                    aria-hidden="true"
+                    size={16} />
+                </Link>
               ))}
             </div>
           </div>
-        </section>
-
-        <section className="py-16 md:py-24 bg-secondary/10">
-          <div className="container px-4 md:px-6">
-            <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
-              <div className="space-y-6">
-                <Text
-                  variant="h2"
-                  className="tracking-tighter">
-                  {homepageContent?.aboutSection?.title || "Umění s tradicí"}
-                </Text>
-                <div className="flex flex-col gap-y-4 text-muted-foreground">
-                  {homepageContent?.aboutSection?.content?.length ? (
-                    <PortableText
-                      value={homepageContent.aboutSection.content}
-                      components={{
-                        block: ({ children }) => <Text
-                          variant="body1"
-                          color="neutral"
-                          className="leading-relaxed">{children}</Text>,
-                        marks: {
-                          link: ({ value, children }) => <a
-                            href={contentLink(value?.href, "/about")}
-                            className="underline">{children}</a>,
-                        },
-                      }}
-                    />
-                  ) : (
-                    <>
-                  <Text
-                    variant="body1"
-                    color="neutral"
-                    className="leading-relaxed">
-                    Fryštátská Galerie je místem, kde se setkává tradiční řemeslo s moderním uměním.
-                    Již více než 15 let přinášíme našim zákazníkům jedinečné umělecké zážitky.
-                  </Text>
-                  <Text
-                    variant="body1"
-                    color="neutral"
-                    className="leading-relaxed">
-                    Spolupracujeme s místními umělci, abychom vám mohli nabídnout
-                    tu nejširší paletu uměleckých děl a řemeslných výrobků nejvyšší kvality.
-                  </Text>
-                    </>
-                  )}
-                  <Link href={contentLink(homepageContent?.aboutSection?.button?.link, "/about")}>
-                    <Button
-                      variant="outline"
-                      size="lg">
-                      {homepageContent?.aboutSection?.button?.text || "Více o nás"}
-                    </Button>
-                  </Link>
-                </div>
-              </div>
-              <div className="lg:order-first">
-                <div className="aspect-square rounded-lg overflow-hidden shadow-lg">
-                  <Image
-                    src={homepageContent?.aboutSection?.image?.asset?._ref
-                      ? urlFor(homepageContent.aboutSection.image).width(1200).height(1200).fit("crop").url()
-                      : "/gallery/gallery-3.jpg"}
-                    alt={homepageContent?.aboutSection?.image?.alt || "Fryštátská Galerie - interiér s obrazy"}
-                    width={600}
-                    height={600}
-                    className="w-full h-full object-cover"
-                    priority
-                  />
-                </div>
-              </div>
-            </div>
+          <div className="gh-hours">
+            <h3>Otevírací doba</h3>
+            <dl>
+              {openingHours.map(({ label, hours }) => (
+                <div key={label}><dt>{label}</dt><dd>{hours}</dd></div>
+              ))}
+            </dl>
+            <a href={businessInfo.phone.href}>{businessInfo.phone.display}</a>
           </div>
-        </section>
-
-        <section className="py-16 md:py-24">
-          <div className="container px-4 md:px-6">
-            <div className="text-center space-y-6">
-              <Text
-                as="h2"
-                variant="h2"
-                className="tracking-tighter">
-                {homepageContent?.ctaSection?.title || "Navštivte nás"}
-              </Text>
-              <Text
-                variant="body1"
-                color="neutral"
-                className="text-lg max-w-[600px] mx-auto">
-                {homepageContent?.ctaSection?.description || "Naše galerie je otevřena každý den. Přijďte si prohlédnout naše kolekce osobně a nechte se inspirovat krásou umění."}
-              </Text>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                {homepageContent?.ctaSection?.buttons ? (
-                    homepageContent.ctaSection.buttons.map((button, index) => (
-                        <Link
-                          key={index}
-                          href={contentLink(button.link, "/contact")}>
-                          <Button
-                            size="lg"
-                            variant={button.style === "primary" ? "default" : "outline"}
-                          >
-                            {button.text}
-                          </Button>
-                        </Link>
-                    ))
-                ) : (
-                    <>
-                      <Link href="/contact">
-                        <Button size="lg">
-                          Kontakt a otevírací doba
-                        </Button>
-                      </Link>
-                      <Link href="/artworks">
-                        <Button
-                          variant="outline"
-                          size="lg">
-                          Procházet galerii
-                        </Button>
-                      </Link>
-                    </>
-                )}
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
+        </div>
+      </section>
+    </div>
   )
 }

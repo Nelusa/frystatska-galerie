@@ -1,16 +1,15 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 import { Menu, Palette, Wine, Gift, Phone, Info, Heart, Images } from "lucide-react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 
 import { Button } from "@/components/ui/button"
-import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList } from "@/components/ui/navigation-menu"
-import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet"
+import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetDescription } from "@/components/ui/sheet"
 import { Text } from "@/components/ui/text"
 import { useFavorites } from "@/lib/useFavorites"
-import { cn } from "@/lib/utils"
 
 
 const mainNavItems = [
@@ -18,116 +17,109 @@ const mainNavItems = [
     title: "Obrazy",
     href: "/artworks",
     icon: Palette,
-    description: "Originální obrazy od českých umělců",
-    hasDropdown: true
+    description: "Originální obrazy od českých umělců"
   },
   {
     title: "Keramika",
     href: "/ceramics",
     icon: Wine,
-    description: "Ručně vyráběná keramika a porcelán",
-    hasDropdown: true
+    description: "Ručně vyráběná keramika a porcelán"
   },
   {
     title: "Sklo",
     href: "/glass",
     icon: Wine,
-    description: "Tradiční české sklo a křišťál",
-    hasDropdown: true
+    description: "Tradiční české sklo a křišťál"
   },
   {
     title: "Dárkové předměty",
     href: "/gifts",
     icon: Gift,
-    description: "Dárky pro každou příležitost",
-    hasDropdown: true
+    description: "Dárky pro každou příležitost"
   },
   {
     title: "O nás",
     href: "/about",
     icon: Info,
-    description: "Poznejte naši galerii",
-    hasDropdown: false
+    description: "Poznejte naši galerii"
   },
   {
     title: "Fotky",
     href: "/photos",
     icon: Images,
-    description: "Fotky z naší galerie",
-    hasDropdown: false
+    description: "Fotky z naší galerie"
   },
   {
     title: "Kontakt",
     href: "/contact",
     icon: Phone,
-    description: "Kontaktujte nás pro více informací",
-    hasDropdown: false
+    description: "Kontaktujte nás pro více informací"
   },
 ]
 
 export function SiteHeader() {
-  const [mounted, setMounted] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const { favorites, isLoaded } = useFavorites()
-  useEffect(() => setMounted(true), [])
+  const pathname = usePathname()
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="site-header sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
         {/*TODO (NL): Doplnit logo*/}
         <Link
           href="/"
+          aria-label="Fryštátská galerie – domů"
           className="flex items-center space-x-2">
-          <Text variant="h1">FG</Text>
+          <Text
+            as="span"
+            variant="h1">FG</Text>
         </Link>
 
-        {/* Desktop menu */}
-        <nav className="hidden md:flex flex-1 justify-center">
-          <NavigationMenu>
-            <NavigationMenuList>
-              {mainNavItems.map((item) => (
-                <NavigationMenuItem key={item.href}>
-                  <NavigationMenuLink
-                    asChild
-                    className={cn(
-                      "group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-all duration-300 hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
-                    )}
-                  >
-                    <Link
-                      href={item.href}
-                      className="flex items-center gap-2">
-                      <item.icon className="h-4 w-4" />
-                      {item.title}
-                    </Link>
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-              ))}
-            </NavigationMenuList>
-          </NavigationMenu>
+        <nav
+          aria-label="Hlavní navigace"
+          className="hidden lg:flex flex-1 justify-center">
+          <ul className="flex items-center gap-1">
+            {mainNavItems.map((item) => {
+              const isCurrentPage = pathname === item.href
+              const inSection = isCurrentPage || pathname.startsWith(item.href + "/")
+              return (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className="gallery-nav-link"
+                    aria-current={isCurrentPage ? "page" : inSection ? "location" : undefined}>
+                    <item.icon
+                      aria-hidden="true"
+                      className="h-4 w-4" />
+                    {item.title}
+                  </Link>
+                </li>
+              )
+            })}
+          </ul>
         </nav>
 
-        {/* Desktop favorites button */}
-        <div className="hidden md:flex items-center gap-4">
-          <Link href="/favorites">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="relative">
-              <Heart className="h-5 w-5" />
-              {isLoaded && favorites.length > 0 && (
-                <Text
-                  variant="caption"
-                  className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full h-5 w-5 flex items-center justify-center">
-                  {favorites.length > 99 ? "99+" : favorites.length}
-                </Text>
-              )}
-            </Button>
+        <div className="hidden lg:flex items-center">
+          <Link
+            href="/favorites"
+            className="gallery-nav-link relative"
+            aria-current={pathname === "/favorites" ? "page" : undefined}
+            aria-label={isLoaded && favorites.length ? `Oblíbené (${favorites.length})` : "Oblíbené"}>
+            <Heart
+              aria-hidden="true"
+              className="h-5 w-5" />
+            {isLoaded && favorites.length > 0 && (
+              <span
+                aria-hidden="true"
+                className="absolute -top-1 -right-1 bg-primary text-primary-foreground rounded-full h-5 min-w-5 px-0.5 flex items-center justify-center text-xs">
+                {favorites.length > 99 ? "99+" : favorites.length}
+              </span>
+            )}
           </Link>
         </div>
 
         {/* Mobile menu */}
-        <div className="md:hidden">
-          {mounted && (
+        <div className="lg:hidden">
             <Sheet
               open={menuOpen}
               onOpenChange={setMenuOpen}>
@@ -141,8 +133,9 @@ export function SiteHeader() {
               </SheetTrigger>
               <SheetContent
                 side="left"
-                className="p-0 w-80">
+                className="p-0 w-80 max-w-[calc(100vw-1rem)] overflow-y-auto overscroll-contain">
                 <SheetTitle className="sr-only">Navigační menu</SheetTitle>
+                <SheetDescription className="sr-only">Stránky Fryštátské galerie</SheetDescription>
                 <div className="p-6 border-b">
                   <Link
                     href="/"
@@ -157,11 +150,14 @@ export function SiteHeader() {
                       key={item.href}
                       href={item.href}
                       onClick={() => setMenuOpen(false)}
-                      className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-muted transition-all duration-300"
+                      aria-current={pathname === item.href ? "page" : pathname.startsWith(item.href + "/") ? "location" : undefined}
+                      className="gallery-mobile-nav-link"
                     >
                       <item.icon className="h-5 w-5 text-primary" />
                       <div>
-                        <Text variant="label">{item.title}</Text>
+                        <Text
+                          as="span"
+                          variant="label">{item.title}</Text>
                         <Text
                           variant="body2"
                           color="neutral">
@@ -173,11 +169,14 @@ export function SiteHeader() {
                   <Link
                     href="/favorites"
                     onClick={() => setMenuOpen(false)}
-                    className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-muted/50 transition-all duration-300"
+                    aria-current={pathname === "/favorites" ? "page" : undefined}
+                    className="gallery-mobile-nav-link"
                   >
                     <Heart className="h-5 w-5 text-primary" />
                     <div>
-                      <Text variant="label">Oblíbené</Text>
+                      <Text
+                        as="span"
+                        variant="label">Oblíbené</Text>
                       <Text
                         variant="body2"
                         color="neutral">
@@ -204,7 +203,6 @@ export function SiteHeader() {
                 </div>
               </SheetContent>
             </Sheet>
-          )}
         </div>
       </div>
     </header>

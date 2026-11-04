@@ -23,6 +23,12 @@ test("favorites recover from malformed JSON and wrong shapes", () => {
 test("favorites keep valid records, reject broken images, and deduplicate", () => {
   assert.deepEqual(parseFavorites(JSON.stringify([item, item, { ...item, _id: "bad", image: {} }, { ...item, _type: "bad" }])), [item])
 })
+test("favorites retain products with absent CMS fields and skip unrenderable records", () => {
+  const legacy = { ...item, image: null, artist: null }
+  const malformedImage = { ...item, _id: "bad-image", image: { _type: "image", asset: { _ref: "image-incomplete" } } }
+  const malformedText = { ...item, _id: "bad-text", description: { value: "bad" } }
+  assert.deepEqual(parseFavorites(JSON.stringify([malformedImage, legacy, malformedText])), [legacy])
+})
 test("CMS links support existing Czech paths, queries and safe external links", () => {
   assert.equal(contentLink("/obrazy?sort=price#top", "/"), "/artworks?sort=price#top")
   assert.equal(contentLink("/kontakt", "/"), "/contact")

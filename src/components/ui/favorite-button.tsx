@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, MouseEvent } from "react"
+import type { MouseEvent } from "react"
 
 import { Heart } from "lucide-react"
 
@@ -27,7 +27,6 @@ export function FavoriteButton({
   onToggle
 }: FavoriteButtonProps) {
   const { toggleFavorite, isFavorite, isLoaded } = useFavorites()
-  const [isAnimating, setIsAnimating] = useState(false)
 
   const handleClick = (e: MouseEvent) => {
     e.preventDefault()
@@ -35,11 +34,9 @@ export function FavoriteButton({
 
     if (!isLoaded) return
 
-    setIsAnimating(true)
     toggleFavorite(product)
     onToggle?.(!isFavorite(product._id))
 
-    setTimeout(() => setIsAnimating(false), 300)
   }
 
   const favorite = isFavorite(product._id)
@@ -49,20 +46,18 @@ export function FavoriteButton({
       variant={variant}
       size={size}
       className={cn(
-        "transition-all duration-300",
-        favorite && "text-red-500",
-        isAnimating && "scale-110",
         className
       )}
       onClick={handleClick}
       disabled={!isLoaded}
+      aria-pressed={favorite}
       aria-label={favorite ? "Odebrat z oblíbených" : "Přidat do oblíbených"}
     >
       <Heart
+        aria-hidden="true"
         className={cn(
-          "transition-all duration-300",
-          favorite && "fill-current",
-          isAnimating && "scale-125"
+          "transition-[fill] duration-150",
+          favorite && "fill-current"
         )}
       />
       {showText && (

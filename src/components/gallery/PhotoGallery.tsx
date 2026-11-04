@@ -52,13 +52,13 @@ export function PhotoGallery({ images, columns = 3 }: PhotoGalleryProps) {
             key={image.src}
             type="button"
             aria-label={`Zvětšit fotku ${index + 1}: ${image.alt}`}
-            className="relative aspect-square overflow-hidden rounded-lg border cursor-pointer group hover:shadow-lg transition-all duration-300"
+            className="relative aspect-square overflow-hidden rounded-lg border cursor-pointer group hover:shadow-md transition-shadow duration-200"
             onClick={() => setSelectedImage(index)}>
             <Image
               src={image.src}
               alt={image.alt}
               fill
-              className="object-cover transition-transform duration-300 group-hover:scale-105" />
+              className="object-cover transition-transform duration-200 group-hover:scale-[1.025]" />
             {image.title && (
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <div className="absolute bottom-0 left-0 right-0 p-4">

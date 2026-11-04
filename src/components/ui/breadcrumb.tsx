@@ -56,7 +56,7 @@ const BreadcrumbLink = forwardRef<
   return (
     <Comp
       ref={ref}
-      className={cn("hover:text-foreground transition-all duration-300", className)}
+      className={cn("hover:text-foreground transition-colors duration-150", className)}
       {...props}
     />
   )
