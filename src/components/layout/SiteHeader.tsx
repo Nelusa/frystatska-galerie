@@ -67,6 +67,7 @@ const mainNavItems = [
 
 export function SiteHeader() {
   const [mounted, setMounted] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
   const { favorites, isLoaded } = useFavorites()
   useEffect(() => setMounted(true), [])
 
@@ -127,7 +128,9 @@ export function SiteHeader() {
         {/* Mobile menu */}
         <div className="md:hidden">
           {mounted && (
-            <Sheet>
+            <Sheet
+              open={menuOpen}
+              onOpenChange={setMenuOpen}>
               <SheetTrigger asChild>
                 <Button
                   variant="ghost"
@@ -143,6 +146,7 @@ export function SiteHeader() {
                 <div className="p-6 border-b">
                   <Link
                     href="/"
+                    onClick={() => setMenuOpen(false)}
                     className="flex items-center space-x-2">
                     <Text variant="h4">Fryštátská Galerie</Text>
                   </Link>
@@ -152,6 +156,7 @@ export function SiteHeader() {
                     <Link
                       key={item.href}
                       href={item.href}
+                      onClick={() => setMenuOpen(false)}
                       className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-muted transition-all duration-300"
                     >
                       <item.icon className="h-5 w-5 text-primary" />
@@ -167,6 +172,7 @@ export function SiteHeader() {
                   ))}
                   <Link
                     href="/favorites"
+                    onClick={() => setMenuOpen(false)}
                     className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-muted/50 transition-all duration-300"
                   >
                     <Heart className="h-5 w-5 text-primary" />
@@ -185,10 +191,15 @@ export function SiteHeader() {
                 </nav>
                 <div className="p-4 border-t mt-auto">
                   <Button
+                    asChild
                     className="w-full"
                     size="lg">
-                    <Phone className="h-4 w-4 mr-2" />
-                    Kontaktovat
+                    <Link
+                      href="/contact"
+                      onClick={() => setMenuOpen(false)}>
+                      <Phone className="h-4 w-4 mr-2" />
+                      Kontaktovat
+                    </Link>
                   </Button>
                 </div>
               </SheetContent>

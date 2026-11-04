@@ -8,7 +8,7 @@ export const homepageContent = defineType({
     // Hero sekce
     defineField({
       name: "hero",
-      title: "Hero sekce",
+      title: "Úvod stránky",
       type: "object",
       fields: [
         defineField({
@@ -36,7 +36,7 @@ export const homepageContent = defineType({
           type: "object",
           fields: [
             defineField({ name: "text", title: "Text", type: "string", initialValue: "Prohlédnout kolekci" }),
-            defineField({ name: "link", title: "Odkaz", type: "string", initialValue: "/obrazy" })
+            defineField({ name: "link", title: "Odkaz", type: "string", initialValue: "/artworks" })
           ]
         }),
         defineField({
@@ -45,7 +45,7 @@ export const homepageContent = defineType({
           type: "object",
           fields: [
             defineField({ name: "text", title: "Text", type: "string", initialValue: "Kontaktujte nás" }),
-            defineField({ name: "link", title: "Odkaz", type: "string", initialValue: "/kontakt" })
+            defineField({ name: "link", title: "Odkaz", type: "string", initialValue: "/contact" })
           ]
         })
       ]
@@ -73,6 +73,7 @@ export const homepageContent = defineType({
           name: "image",
           title: "Obrázek",
           type: "image",
+          fields: [defineField({ name: "alt", title: "Co je na fotce", type: "string", description: "Krátký popis pro návštěvníky, kteří obrázek nevidí." })],
           options: { hotspot: true }
         }),
         defineField({
@@ -81,7 +82,7 @@ export const homepageContent = defineType({
           type: "object",
           fields: [
             defineField({ name: "text", title: "Text", type: "string", initialValue: "Více o nás" }),
-            defineField({ name: "link", title: "Odkaz", type: "string", initialValue: "/o-nas" })
+            defineField({ name: "link", title: "Odkaz", type: "string", initialValue: "/about" })
           ]
         })
       ]

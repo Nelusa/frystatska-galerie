@@ -10,7 +10,7 @@ interface Props {
 
 export default async function GiftDetailPage({ params }: Props) {
   const { slug } = await params
-  const giftItem = await getProductBySlug(slug)
+  const giftItem = await getProductBySlug(slug, "gifts")
 
   if (!giftItem || giftItem._type !== "gifts") {
     notFound()

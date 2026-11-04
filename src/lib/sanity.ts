@@ -8,7 +8,8 @@ import type { SanityImageSource } from "@sanity/image-url/lib/types/types"
 export const client = createClient({
   projectId: "lbgdxh20",
   dataset: "production",
-  useCdn: true,
+  useCdn: false,
+  perspective: "published",
   apiVersion: "2025-06-16",
 })
 
@@ -84,6 +85,7 @@ const seasonalBannerFields = `
 
 export interface SanityImage {
   _type: "image"
+  alt?: string
   asset: {
     _ref: string
     _type: "reference"
@@ -214,8 +216,8 @@ export const queries = {
       ${productFields}
     }
   `,
-  productsByType: (type: string) => `
-    *[_type == "${type}" && published == true]
+  productsByType: `
+    *[_type == $type && published == true]
     | order(_createdAt desc) {
       ${productFields}
     }
@@ -226,8 +228,8 @@ export const queries = {
       ${productFields}
     }
   `,
-  productBySlug: (slug: string) => `
-    *[_type in ["artwork", "ceramics", "glass", "gifts"] && slug.current == "${slug}" && published == true][0] {
+  productBySlug: `
+    *[_type in ["artwork", "ceramics", "glass", "gifts"] && slug.current == $slug && (!defined($type) || _type == $type) && published == true][0] {
       ${productFields}
     }
   `,
@@ -273,27 +275,27 @@ export const queries = {
       ${seasonalBannerFields}
     }
   `,
-  activeSeasonalBannerForPage: (page: string) => `
+  activeSeasonalBannerForPage: `
     *[
       _type == "seasonalBanner" &&
       published == true &&
       now() >= schedule.activeFrom &&
       now() <= schedule.activeTo &&
-      ("all" in targeting.showOnPages || "${page}" in targeting.showOnPages)
+      ("all" in targeting.showOnPages || $page in targeting.showOnPages)
     ]
     | order(styling.priority desc)[0] {
       ${seasonalBannerFields}
     }
   `,
-  searchProducts: (searchTerm: string) => `
+  searchProducts: `
     *[
       _type in ["artwork", "ceramics", "glass", "gifts"] &&
       published == true &&
       (
-        title match "${searchTerm}*" ||
-        description match "${searchTerm}*" ||
-        artist match "${searchTerm}*" ||
-        material match "${searchTerm}*"
+        title match $term ||
+        description match $term ||
+        artist match $term ||
+        material match $term
       )
     ] | order(_createdAt desc) {
       ${productFields}
@@ -307,19 +309,19 @@ export async function getAllProducts(): Promise<AllProducts[]> {
   return client.fetch(queries.allProducts)
 }
 export async function getProductsByType(type: string): Promise<AllProducts[]> {
-  return client.fetch(queries.productsByType(type))
+  return client.fetch(queries.productsByType, { type })
 }
 export async function getArtworksByCategory(): Promise<Artwork[]> {
-  return client.fetch(queries.productsByType("artwork"))
+  return client.fetch(queries.productsByType, { type: "artwork" })
 }
 export async function getCeramics(): Promise<Ceramics[]> {
-  return client.fetch(queries.productsByType("ceramics"))
+  return client.fetch(queries.productsByType, { type: "ceramics" })
 }
 export async function getGlass(): Promise<Glass[]> {
-  return client.fetch(queries.productsByType("glass"))
+  return client.fetch(queries.productsByType, { type: "glass" })
 }
 export async function getGifts(): Promise<Gifts[]> {
-  return client.fetch(queries.productsByType("gifts"))
+  return client.fetch(queries.productsByType, { type: "gifts" })
 }
 export async function getFeaturedProducts(): Promise<AllProducts[]> {
   return client.fetch(queries.featuredProducts)
@@ -327,23 +329,23 @@ export async function getFeaturedProducts(): Promise<AllProducts[]> {
 export async function getFeaturedArtworks(): Promise<AllProducts[]> {
   return client.fetch(queries.featuredProducts)
 }
-export async function getProductBySlug(slug: string): Promise<AllProducts | null> {
-  return client.fetch(queries.productBySlug(slug))
+export async function getProductBySlug(slug: string, type?: AllProducts["_type"]): Promise<AllProducts | null> {
+  return client.fetch(queries.productBySlug, { slug, type: type ?? null })
 }
 export async function getArtworkBySlug(slug: string): Promise<AllProducts | null> {
-  return client.fetch(queries.productBySlug(slug))
+  return getProductBySlug(slug, "artwork")
 }
 export async function getHomepageContent(): Promise<HomepageContent | null> {
   return client.fetch(queries.homepageContent)
 }
-export async function getActiveSeasonalBanner(): Promise<SeasonalBanner | null> {
+export async function getActiveSeasonalBanner(): Promise<SeasonalBanner[]> {
   return client.fetch(queries.activeSeasonalBanners)
 }
 export async function getActiveSeasonalBannerForPage(page: string): Promise<SeasonalBanner | null> {
-  return client.fetch(queries.activeSeasonalBannerForPage(page))
+  return client.fetch(queries.activeSeasonalBannerForPage, { page })
 }
 export async function searchProducts(searchTerm: string): Promise<AllProducts[]> {
-  return client.fetch(queries.searchProducts(searchTerm))
+  return client.fetch(queries.searchProducts, { term: `${searchTerm}*` })
 }
 
 // ========== HELPER FUNKCE ==========
@@ -372,5 +374,5 @@ export function getCategoryName(type: string): string {
 }
 
 export function getCategoryUrl(type: string): string {
-  return `/${getCategoryName(type)}`
+  return ({ artwork: "/artworks", ceramics: "/ceramics", glass: "/glass", gifts: "/gifts" } as Record<string, string>)[type] || "/all"
 }

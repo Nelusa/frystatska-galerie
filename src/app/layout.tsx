@@ -17,6 +17,9 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
+// Published CMS changes appear without rebuilding the website.
+export const revalidate = 60;
+
 export const metadata: Metadata = {
   title: "Fryštátská Galerie",
   description: "Galerie umění a dárkových předmětů ve Fryštátě",

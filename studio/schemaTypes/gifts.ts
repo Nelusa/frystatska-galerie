@@ -1,3 +1,4 @@
+import { productSlug } from "./productSlug"
 import { defineType, defineField } from "sanity"
 
 export const gifts = defineType({
@@ -19,14 +20,17 @@ export const gifts = defineType({
     }),
     defineField({
       name: "image",
-      title: "Hlavní obrázek",
+      title: "Hlavní fotka",
+      description: "Tato fotka bude na kartě produktu. V náhledu ořezu můžete označit důležité místo.",
       type: "image",
       options: { hotspot: true },
-      validation: Rule => Rule.required()
+      validation: Rule => Rule.required().custom(value =>
+        value?.asset?._ref ? true : "Nahrajte hlavní fotku a počkejte na dokončení nahrávání.")
     }),
     defineField({
       name: "gallery",
-      title: "Galerie obrázků",
+      title: "Další fotky",
+      description: "Nahrajte detaily a další pohledy. Pořadí fotek změníte přetažením.",
       type: "array",
       of: [{ type: "image", options: { hotspot: true } }]
     }),
@@ -118,15 +122,12 @@ export const gifts = defineType({
     defineField({
       name: "slug",
       title: "URL adresa",
+      description: "Vygenerujte z názvu. U již zveřejněného produktu ji neměňte, aby dál fungovaly uložené odkazy.",
       type: "slug",
       options: {
         source: "title",
         maxLength: 96,
-        slugify: input => input
-            .toLowerCase()
-            .replace(/\s+/g, "-")
-            .replace(/[^a-z0-9-]/g, "")
-            .slice(0, 96)
+        slugify: productSlug
       },
       validation: Rule => Rule.required()
     }),

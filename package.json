@@ -10,7 +10,9 @@
     "lint:fix": "eslint --fix .",
     "import:sanity": "tsx scripts/import-to-sanity.ts",
     "import:sanity:clean": "tsx scripts/import-to-sanity.ts --clean",
-    "import:sanity:update": "tsx scripts/import-to-sanity.ts --update"
+    "import:sanity:update": "tsx scripts/import-to-sanity.ts --update",
+    "test": "TSX_TSCONFIG_PATH=tests/tsconfig.json node --import tsx --test tests/*.test.tsx",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@portabletext/react": "^3.2.1",
@@ -22,14 +24,14 @@
     "@radix-ui/react-slot": "^1.2.3",
     "@sanity/client": "^7.6.0",
     "@sanity/image-url": "^1.1.0",
-    "@shadcn/ui": "^0.0.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.515.0",
-    "next": "15.3.6",
+    "next": "15.5.28",
     "next-themes": "^0.4.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "sharp": "0.35.5",
     "sonner": "^2.0.5",
     "tailwind-merge": "^3.3.1"
   },
@@ -41,15 +43,19 @@
     "@types/react-dom": "^19",
     "autoprefixer": "^10.4.21",
     "eslint": "^9",
-    "eslint-config-next": "15.3.6",
+    "eslint-config-next": "15.5.28",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import": "^2.32.0",
     "postcss": "^8.5.5",
-    "sanity": "^3.67.1",
     "tailwind-scrollbar": "^3.1.0",
     "tailwindcss": "^3.4.17",
     "tailwindcss-animate": "^1.0.7",
     "tsx": "^4.21.0",
     "typescript": "^5"
+  },
+  "overrides": {
+    "next": {
+      "postcss": "8.5.32"
+    }
   }
 }
