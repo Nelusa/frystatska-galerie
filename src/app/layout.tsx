@@ -3,6 +3,7 @@ import { ReactNode } from "react";
 import { Playfair_Display, Inter } from "next/font/google";
 
 import "./globals.css";
+import "./gallery-home.css";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 
 import type { Metadata } from "next";
