@@ -9,6 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { FavoriteButton } from "@/components/ui/favorite-button"
 import { Text } from "@/components/ui/text"
 import { urlFor, formatPrice, SanityImage, AllProducts, getCategoryUrl } from "@/lib/sanity"
+import { hasSanityImage } from "@/lib/sanityImage"
 
 interface ProductDetailPageProps {
   product: AllProducts
@@ -62,7 +63,7 @@ export function ProductDetailPage({
         <div className="grid gap-8 lg:grid-cols-2">
           <div className="space-y-4">
             <div className="relative w-full min-h-[400px] max-h-[800px] flex items-center justify-center overflow-hidden rounded-lg border bg-muted/30">
-              {product.image ? (
+              {hasSanityImage(product.image) ? (
                   <Image
                     src={urlFor(product.image).width(1200).url()}
                     alt={product.title}
@@ -84,7 +85,7 @@ export function ProductDetailPage({
                 {product.featured && (
                     <Badge variant="secondary">Doporučeno</Badge>
                 )}
-                {!product.inStock && (
+                {product.inStock === false && (
                     <Badge variant="destructive">Prodáno</Badge>
                 )}
               </div>
@@ -92,7 +93,7 @@ export function ProductDetailPage({
 
             {product.gallery && product.gallery.length > 0 && (
                 <div className="grid grid-cols-4 gap-2">
-                  {product.gallery.map((image: SanityImage, index: number) => (
+                  {product.gallery.filter(hasSanityImage).map((image: SanityImage, index: number) => (
                       <a
                         key={index}
                         href={urlFor(image).width(2400).url()}
@@ -129,7 +130,7 @@ export function ProductDetailPage({
                   variant="default"
                   size="sm"
                   showText={true}
-                  className="bg-purple-100 hover:bg-purple-200 text-purple-800 border-purple-200 flex-shrink-0 transition-all duration-300"
+                  className="bg-background hover:bg-muted text-primary flex-shrink-0"
                 />
               </div>
               <Text
@@ -225,14 +226,14 @@ export function ProductDetailPage({
                     <Link
                       key={relatedProduct._id}
                       href={`${getCategoryUrl(relatedProduct._type)}/${relatedProduct.slug.current}`}>
-                      <Card className="group hover:shadow-lg transition-all duration-300">
+                      <Card className="group hover:shadow-md transition-shadow duration-200">
                         <div className="aspect-square relative overflow-hidden">
-                          {relatedProduct.image ? (
+                          {hasSanityImage(relatedProduct.image) ? (
                               <Image
                                 src={urlFor(relatedProduct.image).width(300).height(300).url()}
                                 alt={relatedProduct.title}
                                 fill
-                                className="object-cover transition-transform duration-300 group-hover:scale-105"
+                                className="object-cover transition-transform duration-200 group-hover:scale-[1.025]"
                               />
                           ) : (
                               <div className="w-full h-full bg-gradient-to-br from-purple-50 to-purple-100 flex items-center justify-center">

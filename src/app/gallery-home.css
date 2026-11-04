@@ -225,14 +225,6 @@ body:has(.gallery-home) .site-header {
   color: var(--gh-ink);
   border-color: var(--gh-line);
 }
-body:has(.gallery-home) .site-header nav.hidden a {
-  background: transparent;
-  padding-inline: .55rem;
-}
-body:has(.gallery-home) .site-header nav.hidden a:hover,
-body:has(.gallery-home) .site-header nav.hidden a:focus-visible {
-  background: var(--gh-sand);
-}
 @media (max-width: 900px) {
   .gh-wrap { width: calc(100% - 3rem); }
 }

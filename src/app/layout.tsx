@@ -4,6 +4,7 @@ import { Playfair_Display, Inter } from "next/font/google";
 
 import "./globals.css";
 import "./gallery-home.css";
+import { PageContent } from "@/components/layout/PageContent";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 
 import type { Metadata } from "next";
@@ -38,7 +39,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       >
         <div className="relative flex min-h-screen flex-col">
           <SiteHeader />
-          <main className="flex-1">{children}</main>
+          <PageContent>{children}</PageContent>
         </div>
       </body>
     </html>

@@ -28,15 +28,18 @@ export function ProductPage({
   return (
       <div className="container px-4 md:px-6 py-8">
         <div className="flex items-center gap-4 mb-8">
-          <Link href="/">
-            <Button
-              variant="ghost"
-              size="sm"
-              className="gap-2">
-              <ArrowLeft className="h-4 w-4" />
-              Zpět na hlavní stránku
-            </Button>
-          </Link>
+          <Button
+            asChild
+            variant="ghost"
+            size="sm"
+            className="gap-2">
+              <Link href="/">
+                <ArrowLeft
+                  aria-hidden="true"
+                  className="h-4 w-4" />
+                Zpět na hlavní stránku
+              </Link>
+          </Button>
         </div>
 
         <div className="text-center mb-12">
@@ -77,11 +80,11 @@ export function ProductPage({
             {ctaDescription || `Kontaktujte nás pro více informací, možnost osobní prohlídky nebo rezervace ${title.toLowerCase().slice(0, -1)}u.`}
           </Text>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/contact">
-              <Button size="lg">
-                {ctaButtonText}
-              </Button>
-            </Link>
+            <Button
+              asChild
+              size="lg">
+              <Link href="/contact">{ctaButtonText}</Link>
+            </Button>
           </div>
         </div>
       </div>

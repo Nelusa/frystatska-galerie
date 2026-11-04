@@ -8,19 +8,20 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { FavoriteButton } from "@/components/ui/favorite-button"
 import { Text } from "@/components/ui/text"
+import type { FavoriteProduct } from "@/lib/favoritesStorage"
 import { urlFor, formatPrice } from "@/lib/sanity"
-import type { AllProducts } from "@/lib/sanity"
+import { hasSanityImage } from "@/lib/sanityImage"
 import { cn } from "@/lib/utils";
 
 interface ProductCardProps {
-  item: AllProducts
+  item: FavoriteProduct
   basePath: string
   variant?: "featured" | "grid"
 }
 
 export function ProductCard({ item, basePath, variant = "grid" }: ProductCardProps) {
   const aspectRatio = variant === "featured" ? "aspect-[4/3]" : "aspect-[3/4]"
-  const iconSize = "h-6 w-6"
+  const iconSize = "h-10 w-10"
   const detailUrl = `${basePath}/${item.slug.current}`
 
   return (
@@ -29,15 +30,15 @@ export function ProductCard({ item, basePath, variant = "grid" }: ProductCardPro
           href={detailUrl}
           aria-label={`Zobrazit detail: ${item.title}`}
           className="absolute inset-0 z-10 rounded-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary" />
-        <Card className="overflow-hidden group-hover:shadow-lg transition-all duration-300 cursor-pointer relative">
+        <Card className="overflow-hidden group-hover:shadow-md transition-shadow duration-200 cursor-pointer relative">
           <div className={cn(aspectRatio, "relative overflow-hidden bg-muted/30 flex items-center justify-center")}>
-          {item.image ? (
+          {hasSanityImage(item.image) ? (
               <Image
                 src={urlFor(item.image).width(variant === "featured" ? 800 : 600).url()}
                 alt={item.title}
                 width={variant === "featured" ? 800 : 600}
                 height={variant === "featured" ? 600 : 800}
-                className="object-contain w-full h-full transition-transform duration-300 group-hover:scale-105"
+                className="object-contain w-full h-full transition-transform duration-200 group-hover:scale-[1.025]"
               />
           ) : (
               <div className="w-full h-full bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
@@ -61,7 +62,7 @@ export function ProductCard({ item, basePath, variant = "grid" }: ProductCardPro
                   Doporučeno
                 </Badge>
             )}
-            {!item.inStock && (
+            {item.inStock === false && (
                 <Badge
                   variant="destructive"
                   className={variant === "featured" ? "" : "text-xs"}>
@@ -70,12 +71,12 @@ export function ProductCard({ item, basePath, variant = "grid" }: ProductCardPro
             )}
           </div>
 
-          <div className={cn("absolute opacity-0 group-hover:opacity-100 transition-opacity z-20 pointer-events-auto focus-within:opacity-100", variant === "featured" ? "top-4 right-4" : "top-3 right-3")}>
+          <div className={cn("absolute z-20", variant === "featured" ? "top-4 right-4" : "top-3 right-3")}>
             <FavoriteButton
               product={item}
               variant="default"
               size="icon"
-              className={cn(iconSize, "p-1 bg-purple-100 hover:bg-purple-200 text-purple-800 border-purple-200 transition-all duration-300")}
+              className={cn(iconSize, "bg-background hover:bg-muted text-primary shadow-sm")}
             />
           </div>
         </div>
@@ -158,7 +159,7 @@ export function ProductCard({ item, basePath, variant = "grid" }: ProductCardPro
 
           <div className={cn("flex relative z-20", variant === "featured" && "gap-2")}>
             <div className={variant === "featured" ? "flex-1" : "w-full"}>
-              {item.inStock ? (
+              {item.inStock !== false ? (
                 <Button
                   asChild
                   className="w-full mt-4"

@@ -7,6 +7,7 @@ import { ProductCard } from "@/components/products/ProductCard"
 import { businessInfo, openingHours } from "@/config/businessInfo"
 import { contentLink } from "@/lib/contentLinks"
 import { getCategoryUrl, getFeaturedArtworks, getHomepageContent, urlFor } from "@/lib/sanity"
+import { hasSanityImage } from "@/lib/sanityImage"
 
 const categories = [
   { title: "Obrazy", href: "/artworks", image: "/gallery/gallery-7.jpg", position: "center 56%" },
@@ -126,7 +127,7 @@ export default async function Home() {
         <div className="gh-wrap gh-story-grid">
           <div className="gh-story-image">
             <Image
-              src={aboutImage?.asset?._ref ? urlFor(aboutImage).width(1200).height(1200).fit("crop").url() : "/gallery/gallery-3.jpg"}
+              src={hasSanityImage(aboutImage) ? urlFor(aboutImage).width(1200).height(1200).fit("crop").url() : "/gallery/gallery-3.jpg"}
               alt={aboutImage?.alt || "Police s keramikou a obrazy ve Fryštátské galerii"}
               fill
               sizes="(max-width: 760px) 94vw, 44vw"

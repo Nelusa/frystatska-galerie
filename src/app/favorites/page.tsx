@@ -9,7 +9,7 @@ import { ProductCard } from "@/components/products/ProductCard"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
 import { Button } from "@/components/ui/button"
 import { Text } from "@/components/ui/text"
-import { AllProducts } from "@/lib/sanity";
+import { getCategoryUrl } from "@/lib/sanity";
 import { useFavorites } from "@/lib/useFavorites"
 
 export default function FavoritesPage() {
@@ -56,7 +56,7 @@ export default function FavoritesPage() {
         </BreadcrumbList>
       </Breadcrumb>
 
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
         <div className="flex items-center gap-3">
           <Heart className="h-8 w-8 text-red-500" />
           <div>
@@ -77,7 +77,7 @@ export default function FavoritesPage() {
           <Button
             variant="outline"
             onClick={clearFavorites}
-            className="text-destructive hover:text-destructive transition-all duration-300"
+            className="text-destructive hover:text-destructive transition-colors duration-150"
           >
             <Trash2 className="h-4 w-4 mr-2" />
             Vymazat vše
@@ -97,23 +97,20 @@ export default function FavoritesPage() {
             className="mb-6">
             Zatím jste si neuložili žádné produkty do oblíbených.
           </Text>
-          <div className="flex gap-3 justify-center">
-            <Link href="/artworks">
-              <Button>Procházet obrazy</Button>
-            </Link>
-            <Link href="/ceramics">
-              <Button variant="outline">Procházet keramiku</Button>
-            </Link>
+          <div className="flex flex-wrap gap-3 justify-center">
+            <Button asChild><Link href="/artworks">Procházet obrazy</Link></Button>
+            <Button
+              asChild
+              variant="outline"><Link href="/ceramics">Procházet keramiku</Link></Button>
           </div>
         </div>
       ) : (
-          //TOOD (NL): Upravit typ
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {favorites.map((product) => (
             <ProductCard
               key={product._id}
-              item={product as AllProducts}
-              basePath={`/${product._type === "artwork" ? "artworks" : product._type === "ceramics" ? "ceramics" : product._type === "glass" ? "glass" : "gifts"}`}
+              item={product}
+              basePath={getCategoryUrl(product._type)}
               variant="grid"
             />
           ))}
